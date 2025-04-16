@@ -6,35 +6,54 @@ export default defineNuxtConfig({
   modules: ['@nuxtjs/tailwindcss', '@vite-pwa/nuxt'],
   // workbox, manifest devOptions **must** be set. registerType might be able to also be autoUpdate, but haven't tried it
   pwa: {
-    registerType: 'prompt',
-
+    registerType: 'autoUpdate',
     manifest: {
-      name: 'pwa-test',
-      short_name: 'pwa-test',
-      description: 'just a test',
-      theme_color: '#ffffff',
+      name: 'FriendCare PWA',
+      short_name: 'FriendCare',
+      description: 'A Nuxt 3 Contact Management PWA',
+      theme_color: '#4A90E2',
+      icons: [
+        {
+          src: '/pwa-icon-192x192.png',
+          sizes: '192x192',
+          type: 'image/png',
+        },
+        {
+          src: '/pwa-icon-512x512.png',
+          sizes: '512x512',
+          type: 'image/png',
+        },
+      ],
+      screenshots: [
+        {
+          src: 'pwa-screenshot.jpg',
+          sizes: '640x480',
+          type: 'image/jpg',
+          form_factor: 'wide',
+          label: 'Wonder Widgets',
+        },
+        {
+          src: 'pwa-screenshot.jpg',
+          sizes: '640x480',
+          type: 'image/jpg',
+          label: 'Wonder Widgets',
+        },
+      ],
     },
-
     workbox: {
-      globPatterns: ['**/*.{js,css,html,svg,png,ico}'],
-      cleanupOutdatedCaches: true,
-      clientsClaim: true,
-    },
-
-    devOptions: {
-      enabled: false,
-      suppressWarnings: true,
-      navigateFallback: '/',
-      navigateFallbackAllowlist: [/^\/$/],
-      type: 'module',
-    },
-  },
-
-  // In addition, you *must* have this Nitro option set to pre-render the homepage, even if you have SSR turned off:
-
-  nitro: {
-    prerender: {
-      routes: ['/'],
+      // runtimeCaching: [
+      //   {
+      //     urlPattern: 'https://friendcare.netlify.app/.*',
+      //     handler: 'NetworkFirst',
+      //     options: {
+      //       cacheName: 'api-cache',
+      //       expiration: {
+      //         maxEntries: 50,
+      //         maxAgeSeconds: 86400,
+      //       },
+      //     },
+      //   },
+      // ],
     },
   },
 });

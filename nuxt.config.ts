@@ -3,15 +3,39 @@
 export default defineNuxtConfig({
   compatibilityDate: '2024-11-01',
   devtools: { enabled: true },
-  modules: ['@nuxtjs/tailwindcss', '@vite-pwa/nuxt'],
-  // workbox, manifest devOptions **must** be set. registerType might be able to also be autoUpdate, but haven't tried it
+  ssr: false, // Disable ssr since we're using localStorage
+  modules: ['@nuxtjs/tailwindcss', '@vite-pwa/nuxt', '@pinia/nuxt'],
+  app: {
+    head: {
+      title: 'FriendCare',
+      meta: [
+        { name: 'viewport', content: 'width=device-width, initial-scale=1' },
+      ],
+      link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
+    },
+  },
+  tailwindcss: {
+    config: {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            primary: 'slateblue',
+          },
+        },
+      },
+    },
+  },
+
+  // vite-pwa: workbox, manifest devOptions **must** be set.
+  // registerType might be able to also be autoUpdate, but haven't tried it
   pwa: {
     registerType: 'autoUpdate',
     manifest: {
       name: 'FriendCare PWA',
       short_name: 'FriendCare',
       description: 'A Nuxt 3 Contact Management PWA',
-      theme_color: '#4A90E2',
+      theme_color: 'slateblue',
       icons: [
         {
           src: '/pwa-icon-192x192.png',

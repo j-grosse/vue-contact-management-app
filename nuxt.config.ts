@@ -65,6 +65,9 @@ export default defineNuxtConfig({
       ],
     },
     workbox: {
+      globPatterns: ['**/*.{html,js,css,ico,png,jpg,jpeg,svg}'], // Include all necessary files
+      cleanupOutdatedCaches: true,
+      clientsClaim: true,
       // runtimeCaching: [
       //   {
       //     urlPattern: 'https://friendcare.netlify.app/.*',
@@ -78,6 +81,19 @@ export default defineNuxtConfig({
       //     },
       //   },
       // ],
+    },
+    devOptions: {
+      enabled: false,
+      suppressWarnings: true,
+      navigateFallback: '/',
+      navigateFallbackAllowlist: [/^\/$/],
+      type: 'module',
+    },
+  },
+  // you *must* have this Nitro option set to pre-render the homepage, even if you have SSR turned off:
+  nitro: {
+    prerender: {
+      routes: ['/'],
     },
   },
 });

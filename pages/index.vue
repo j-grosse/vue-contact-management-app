@@ -4,15 +4,18 @@
 
     <div class="mb-4 flex justify-between gap-2">
       <SearchBar v-if="appStore.viewMode === 'cards'" v-model="searchQuery" />
+      <div v-else></div>
       <button
         @click="openAddFriendModal"
         class="bg-primary hover:bg-primary/80 text-white p-2 rounded-full flex items-center justify-center w-10 h-10"
         title="Freund hinzufügen"
       >
-        <i class="fas fa-plus"></i>
+        <FontAwesomeIcon icon="fa-plus"></FontAwesomeIcon>
       </button>
     </div>
+    <Chatbot />
 
+    <EventRecommender />
     <TableView
       v-if="appStore.viewMode === 'table'"
       :upcoming-contacts="upcomingContacts"
@@ -70,6 +73,8 @@ import EmptyState from '~/components/EmptyState.vue';
 import FriendModal from '~/components/Modals/FriendModal.vue';
 import DeleteModal from '~/components/Modals/DeleteModal.vue';
 import PreferencesModal from '~/components/Modals/PreferencesModal.vue';
+import Chatbot from '~/components/Chatbot';
+import EventRecommender from '~/components/EventRecommender.vue';
 
 const friendStore = useFriendsStore();
 const appStore = useAppStore();

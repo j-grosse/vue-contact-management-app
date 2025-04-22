@@ -7,7 +7,7 @@
       <div
         v-for="friend in friends"
         :key="'recent-' + friend.id"
-        class="bg-white dark:bg-gray-800 rounded-lg p-3 shadow-sm border border-yellow-100 dark:border-yellow-800/30 cursor-pointer hover:shadow-md transition-shadow"
+        class="bg-white dark:bg-gray-800 rounded-lg p-3 shadow-sm cursor-pointer hover:shadow-md transition-shadow"
         @click="$emit('edit', friend)"
       >
         <div class="flex items-start gap-3">

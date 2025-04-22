@@ -7,7 +7,7 @@
       <div
         v-for="friend in friends"
         :key="'upcoming-' + friend.id"
-        class="bg-white dark:bg-gray-800 rounded-lg p-3 shadow-sm border border-yellow-100 dark:border-yellow-800/30 cursor-pointer hover:shadow-md transition-shadow"
+        class="bg-white dark:bg-gray-800 rounded-lg p-3 shadow-sm cursor-pointer hover:shadow-md transition-shadow"
         @click="$emit('edit', friend)"
       >
         <div class="flex items-start gap-3">
@@ -35,7 +35,7 @@
                   class="bg-primary hover:bg-primary/80 text-white w-8 h-8 rounded-full flex items-center justify-center"
                   title="Als kontaktiert markieren"
                 >
-                  <i class="fas fa-check"></i>
+                  <FontAwesomeIcon icon="fa-check"></FontAwesomeIcon>
                 </button>
               </span>
             </div>

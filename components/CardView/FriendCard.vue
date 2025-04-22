@@ -31,7 +31,7 @@
           class="bg-primary hover:bg-primary/80 text-white w-7 h-7 rounded-full flex items-center justify-center"
           title="Als kontaktiert markieren"
         >
-          <i class="fas fa-check text-xs"></i>
+          <FontAwesomeIcon icon="fa-check" class="text-xs"></FontAwesomeIcon>
         </button>
       </div>
 

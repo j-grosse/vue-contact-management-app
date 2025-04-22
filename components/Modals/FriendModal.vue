@@ -29,7 +29,10 @@
                   v-else
                   class="w-full h-full flex items-center justify-center text-gray-400"
                 >
-                  <i class="fas fa-user text-3xl"></i>
+                  <FontAwesomeIcon
+                    icon="fa-user"
+                    class="text-3xl"
+                  ></FontAwesomeIcon>
                 </div>
 
                 <!-- Photo upload and conversion -->
@@ -50,7 +53,7 @@
                     class="bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 border border-gray-300 dark:border-gray-600 p-2 rounded-full flex items-center justify-center w-10 h-10 text-gray-800 dark:text-gray-200 mb-2"
                     title="Profilbild importieren"
                   >
-                    <i class="fas fa-image"></i>
+                    <FontAwesomeIcon icon="fa-image"></FontAwesomeIcon>
                   </button>
                   <!-- <span class="text-center dark:text-white">Profilbild importieren</span> -->
                 </div>
@@ -132,7 +135,8 @@
                 @click="$emit('delete-request')"
                 class="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg text-base flex items-center"
               >
-                <i class="fas fa-trash mr-2"></i> Löschen
+                <FontAwesomeIcon icon="fa-trash" class="mr-2"></FontAwesomeIcon>
+                Löschen
               </button>
             </div>
             <div class="flex gap-3">

@@ -50,6 +50,8 @@ export default defineNuxtConfig({
       short_name: 'FriendCare',
       description: 'A Nuxt 3 Contact Management PWA',
       theme_color: '#111827',
+      id: "/?homescreen=1",
+      start_url: "/?homescreen=1",
       icons: [
         {
           src: '/pwa-icon-192x192.png',

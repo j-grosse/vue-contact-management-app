@@ -23,9 +23,9 @@
                   : 'Zum dunklen Modus wechseln'
               "
             >
-              <i
-                :class="[appStore.isDarkMode ? 'fas fa-sun' : 'fas fa-moon']"
-              ></i>
+              <FontAwesomeIcon
+                :icon="appStore.isDarkMode ? 'fa-sun' : 'fa-moon'"
+              ></FontAwesomeIcon>
             </button>
           </div>
         </div>
@@ -37,7 +37,7 @@
               class="bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 border border-gray-300 dark:border-gray-600 p-2 rounded-full flex items-center justify-center w-10 h-10 text-gray-800 dark:text-gray-200"
               title="'Daten exportieren'"
             >
-              <i class="fas fa-floppy-disk"></i>
+              <FontAwesomeIcon icon="fa-floppy-disk"></FontAwesomeIcon>
             </button>
           </div>
 
@@ -55,7 +55,7 @@
               class="bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 border border-gray-300 dark:border-gray-600 p-2 rounded-full flex items-center justify-center w-10 h-10 text-gray-800 dark:text-gray-200"
               title="'Daten importieren'"
             >
-              <i class="fas fa-file-import"></i>
+              <FontAwesomeIcon icon="fa-file-import"></FontAwesomeIcon>
             </button>
           </div>
         </div>

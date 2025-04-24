@@ -14,6 +14,20 @@ export default defineNuxtConfig({
       link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
     },
   },
+  css: ['@fortawesome/fontawesome-svg-core/styles.css'],
+  plugins: ['./plugins/fontawesome.js'],
+  build: {
+    transpile: [
+      '@fortawesome/fontawesome-svg-core',
+      '@fortawesome/free-solid-svg-icons',
+      '@fortawesome/vue-fontawesome'
+    ]
+  },
+  vue: {
+    compilerOptions: {
+      isCustomElement: (tag) => ['font-awesome-icon'].includes(tag),
+    },
+  },
   tailwindcss: {
     config: {
       darkMode: 'class',
@@ -30,12 +44,12 @@ export default defineNuxtConfig({
   // vite-pwa: workbox, manifest devOptions **must** be set.
   // registerType might be able to also be autoUpdate, but haven't tried it
   pwa: {
-    registerType: 'autoUpdate',
+    registerType: 'prompt',
     manifest: {
       name: 'FriendCare PWA',
       short_name: 'FriendCare',
       description: 'A Nuxt 3 Contact Management PWA',
-      theme_color: 'slateblue',
+      theme_color: '#111827',
       icons: [
         {
           src: '/pwa-icon-192x192.png',

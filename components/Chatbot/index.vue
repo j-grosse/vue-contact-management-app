@@ -23,9 +23,7 @@
         <div v-for="(message, index) in chatMessages" :key="index" class="mb-3">
           <!-- User message -->
           <div v-if="message.role === 'user'" class="flex justify-end">
-            <div
-              class="bg-primary text-white rounded-lg py-2 px-4 max-w-[80%]"
-            >
+            <div class="bg-primary text-white rounded-lg py-2 px-4 max-w-[80%]">
               {{ message.content }}
             </div>
           </div>
@@ -37,7 +35,7 @@
               <div v-if="message.isLoading" class="flex items-center">
                 <div class="dot-flashing"></div>
               </div>
-              <div v-else v-html="formatMessage(message.content)"></div>
+              <div v-else v-html="formatMessage(message.content)" class="markdown-body"></div>
             </div>
           </div>
         </div>
@@ -73,6 +71,7 @@
 <script setup lang="ts">
 import { ref, onMounted, nextTick } from 'vue';
 import { useFriendsStore } from '~/stores/friends';
+import { marked } from 'marked';
 
 const isOpen = ref(true);
 const isLoading = ref(false);
@@ -108,13 +107,9 @@ const friendStore = useFriendsStore() as { friends: Friend[] };
 let lastMentionedFriend: Friend | null = null;
 
 // Format bot messages to detect and highlight URLs
-const formatMessage = (message: any) => {
-  const urlRegex = /(https?:\/\/[^\s]+)/g;
-  return message.replace(
-    urlRegex,
-    (url: string) =>
-      `<a href="${url}" target="_blank" class="text-primary underline">${url}</a>`
-  );
+const formatMessage = (message: string) => {
+  // marked will convert Markdown and \n\n to <p> and single \n to <br> if needed
+  return marked.parse(message);
 };
 
 // Function to determine the next friend to contact
@@ -167,7 +162,7 @@ const sendMessage = async () => {
     isLoading: false,
   });
 
-  // Clear input,update the DOM
+  // Clear input
   const userQuestion = userInput.value;
   userInput.value = '';
 
@@ -265,7 +260,6 @@ onMounted(async () => {
         content: text,
         isLoading: false,
       });
-
     } catch (error) {
       console.error('Error getting initial response:', error);
     }
@@ -276,6 +270,9 @@ onMounted(async () => {
 </script>
 
 <style scoped>
+.markdown-body p {
+  margin: 0 0 0.5em 0;
+}
 /* Typing indicator animation */
 .dot-flashing {
   position: relative;

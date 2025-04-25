@@ -45,12 +45,12 @@
 
       <div class="flex items-center">
         <input
+          ref="userInputRef"
           v-model="userInput"
           @keyup.enter="sendMessage"
           type="text"
           placeholder="Frage nach Freizeitaktivitäten..."
           class="flex-1 px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary dark:bg-gray-800 dark:text-white dark:border-gray-700"
-          :disabled="isLoading"
         />
         <button
           @click="sendMessage"
@@ -77,6 +77,7 @@ import { useFriendsStore } from '~/stores/friends';
 const isOpen = ref(true);
 const isLoading = ref(false);
 const userInput = ref('');
+const userInputRef = ref<HTMLInputElement | null>(null);
 
 type ChatMessage = {
   role: 'ai' | 'user';
@@ -104,6 +105,7 @@ type Friend = {
 const friendStore = useFriendsStore() as { friends: Friend[] };
 
 let initialAnswerGiven = false;
+let lastMentionedFriend: Friend | null = null;
 
 // Format bot messages to detect and highlight URLs
 const formatMessage = (message: any) => {
@@ -135,6 +137,25 @@ const buildFriendNotesContext = () => {
   );
 };
 
+// Function to build the conversation context
+const buildConversationContext = () => {
+  const maxTokens = 1000; // API's token limit
+  let context = '';
+  const recentMessages = chatMessages.value.slice(-10); // Start with the last 5 messages
+
+  for (const message of recentMessages) {
+    const formattedMessage =
+      message.role === 'user'
+        ? `User: ${message.content}`
+        : `AI: ${message.content}`;
+    // truncate older messages to stay within the API's token limit
+    if (context.length + formattedMessage.length > maxTokens) break;
+    context += formattedMessage + '\n';
+  }
+
+  return context.trim();
+};
+
 // Function to send a message to the chatbot
 const sendMessage = async () => {
   if (!userInput.value.trim() || isLoading.value) return;
@@ -150,6 +171,9 @@ const sendMessage = async () => {
   const userQuestion = userInput.value;
   userInput.value = '';
 
+  // Keep the cursor in the input field
+  userInputRef.value?.focus();
+
   // Add loading message
   chatMessages.value.push({
     role: 'ai',
@@ -161,7 +185,8 @@ const sendMessage = async () => {
 
   try {
     // Prepare the final prompt
-    let finalPrompt = userQuestion;
+    const conversationContext = buildConversationContext();
+    let finalPrompt = `${conversationContext}\n\nUser: ${userQuestion}\n\nAI:`;
 
     // Check if the user question contains a friend's name
     const friendNotesContext = buildFriendNotesContext();
@@ -171,17 +196,19 @@ const sendMessage = async () => {
         userQuestion.toLowerCase().includes(part)
       );
     });
-
+    // if question contains a friend's name, use their notes
     if (matchingFriend) {
-      finalPrompt = `Du bist ein deutscher Recommendation-Chatbot. 
-       Falls der User etwas zu dem Freund gefragt hat beantworte diese Frage: ${userQuestion}. Ansonsten Empfehle dem User seinen Kontakt mit dem Namen ${matchingFriend.name} zu kontaktieren und gib einen Vorschlag für eine Nachricht aufgrund der folgenden Notizen zum letzten Gespräch mit dem Freund:
-      Notizen: ${matchingFriend.notes}
-     
-      Bitte antworte in mehreren Absätzen. Beginne deine Antwort mit "OK."`;
-    } else {
-      finalPrompt = `Du bist ein deutscher Recommendation-Chatbot. Beantworte die folgende Frage:
-      
-      Frage: ${userQuestion}`;
+      lastMentionedFriend = matchingFriend;
+      finalPrompt = `${conversationContext}\n\nAI: Du bist ein deutscher Recommendation-Chatbot. Der User fragt nach ${matchingFriend.name}. Beantworte die Frage basierend zu ${matchingFriend.name}\n\n und den Notizen: ${matchingFriend.notes}\n\n User: ${userQuestion}
+
+\n\n Wenn der User nur den Namen ${matchingFriend.name} als Promt gegeben hat, empfehle dem User ${matchingFriend.name} zu kontaktieren und gib einen Vorschlag für eine Nachricht basierend auf den folgenden
+Notizen: ${matchingFriend.notes}
+Bitte antworte in mehreren Absätzen. Beginne deine Antwort mit "OK."`;
+      // if question contains a friend's name, use their notes
+    } else if (!matchingFriend && lastMentionedFriend) {
+      finalPrompt = `${conversationContext}\n\nAI: Der User hat zuvor nach ${lastMentionedFriend.name} gefragt. Beziehe das Pronomen in der Frage auf ${lastMentionedFriend.name} und ${lastMentionedFriend.notes}, wenn dieses zur Person passt und beantworte die Frage\n\nUser: ${userQuestion}`;
+    } else if (!matchingFriend) {
+      finalPrompt = `${conversationContext}\n\nAI: Du bist ein deutscher Recommendation-Chatbot. Der User hat folgende allgemeine Frage: \n\nUser: ${userQuestion}`;
     }
 
     // Call the nuxt server's API with the final prompt

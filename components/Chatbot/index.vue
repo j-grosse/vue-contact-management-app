@@ -1,8 +1,8 @@
 <template>
-  <!-- Chatbot window -->
   <div
     class="bg-white dark:bg-yellow-900/20 rounded-lg shadow-md overflow-hidden my-2"
   >
+    <!-- Chatbot window header -->
     <div
       class="p-4 bg-primary text-white rounded-t-lg flex justify-between items-center"
     >
@@ -14,19 +14,22 @@
       </button>
     </div>
 
+    <!-- Chatbot window content -->
     <div v-if="isOpen" class="p-4">
       <div
+        ref="chatContainerRef"
         class="mb-4 h-64 overflow-y-auto bg-gray-50 dark:bg-gray-900 rounded-lg p-3"
       >
         <div v-for="(message, index) in chatMessages" :key="index" class="mb-3">
           <!-- User message -->
           <div v-if="message.role === 'user'" class="flex justify-end">
-            <div class="bg-primary text-white rounded-lg py-2 px-4 max-w-[80%]">
+            <div
+              class="bg-primary text-white rounded-lg py-2 px-4 max-w-[80%]"
+            >
               {{ message.content }}
             </div>
           </div>
-
-          <!-- Bot message -->
+          <!-- AI message -->
           <div v-else class="flex justify-start">
             <div
               class="bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 rounded-lg py-2 px-4 max-w-[80%]"
@@ -35,9 +38,6 @@
                 <div class="dot-flashing"></div>
               </div>
               <div v-else v-html="formatMessage(message.content)"></div>
-              <!-- <button @click="" class="text-white hover:text-gray-200">
-                <FontAwesomeIcon icon="fa-repeat" class="text-black dark:text-white" />
-              </button> -->
             </div>
           </div>
         </div>
@@ -71,13 +71,14 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, nextTick } from 'vue';
 import { useFriendsStore } from '~/stores/friends';
 
 const isOpen = ref(true);
 const isLoading = ref(false);
 const userInput = ref('');
 const userInputRef = ref<HTMLInputElement | null>(null);
+const chatContainerRef = ref<HTMLElement | null>(null);
 
 type ChatMessage = {
   role: 'ai' | 'user';
@@ -104,7 +105,6 @@ type Friend = {
 };
 const friendStore = useFriendsStore() as { friends: Friend[] };
 
-let initialAnswerGiven = false;
 let lastMentionedFriend: Friend | null = null;
 
 // Format bot messages to detect and highlight URLs
@@ -167,12 +167,16 @@ const sendMessage = async () => {
     isLoading: false,
   });
 
-  // Clear input
+  // Clear input,update the DOM
   const userQuestion = userInput.value;
   userInput.value = '';
 
-  // Keep the cursor in the input field
-  userInputRef.value?.focus();
+  // Scroll to the bottom before the chatbot answered
+  await nextTick();
+  chatContainerRef.value?.scrollTo({
+    top: chatContainerRef.value.scrollHeight,
+    behavior: 'smooth',
+  });
 
   // Add loading message
   chatMessages.value.push({
@@ -190,19 +194,23 @@ const sendMessage = async () => {
 
     // Check if the user question contains a friend's name
     const friendNotesContext = buildFriendNotesContext();
+
     const matchingFriend = friendStore.friends.find((friend) => {
       const nameParts = friend.name.toLowerCase().split(' '); // Split the friend's name into parts
       return nameParts.some((part) =>
         userQuestion.toLowerCase().includes(part)
       );
     });
-    // if question contains a friend's name, use their notes
+
     if (matchingFriend) {
       lastMentionedFriend = matchingFriend;
-      finalPrompt = `${conversationContext}\n\nAI: Du bist ein deutscher Recommendation-Chatbot. Der User fragt nach ${matchingFriend.name}. Beantworte die Frage basierend zu ${matchingFriend.name}\n\n und den Notizen: ${matchingFriend.notes}\n\n User: ${userQuestion}
+    }
 
+    // if question contains a friend's name, use their notes
+    if (matchingFriend) {
+      finalPrompt = `${conversationContext}\n\nAI: Du bist ein deutscher Recommendation-Chatbot. Der User fragt nach \n\n User: ${userQuestion}
 \n\n Wenn der User nur den Namen ${matchingFriend.name} als Promt gegeben hat, empfehle dem User ${matchingFriend.name} zu kontaktieren und gib einen Vorschlag für eine Nachricht basierend auf den folgenden
-Notizen: ${matchingFriend.notes}
+Notizen: ${matchingFriend.notes}\n\n Ansonsten beantworte seine Frage zu ${matchingFriend.name}\n\n und den Notizen: ${matchingFriend.notes}
 Bitte antworte in mehreren Absätzen. Beginne deine Antwort mit "OK."`;
       // if question contains a friend's name, use their notes
     } else if (!matchingFriend && lastMentionedFriend) {
@@ -258,11 +266,12 @@ onMounted(async () => {
         isLoading: false,
       });
 
-      initialAnswerGiven = true;
     } catch (error) {
       console.error('Error getting initial response:', error);
     }
   }
+  // set focus on chatbot input field
+  userInputRef.value?.focus();
 });
 </script>
 

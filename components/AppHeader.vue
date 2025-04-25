@@ -9,12 +9,12 @@
         class="bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 border border-gray-300 dark:border-gray-600 p-2 rounded-full flex items-center justify-center w-10 h-10 text-gray-800 dark:text-gray-200"
         :title="
           appStore.viewMode === 'table'
-            ? 'Zur Kartenansicht'
+            ? 'Zur Gitteransicht'
             : 'Zur Tabellenansicht'
         "
       >
         <FontAwesomeIcon
-          :icon="appStore.viewMode === 'table' ? 'fa-th' : 'fa-list'"
+          :icon="appStore.viewMode === 'table' ? 'fa-list' : 'fa-th'"
         ></FontAwesomeIcon>
       </button>
 

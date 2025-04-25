@@ -72,26 +72,25 @@
 
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
-// import { useEvents } from '~/composables/useEvents';
 import { useFriendsStore } from '~/stores/friends';
 
 const isOpen = ref(true);
 const isLoading = ref(false);
 const userInput = ref('');
-const chatMessages = ref([
+
+type ChatMessage = {
+  role: 'ai' | 'user';
+  content: string;
+  isLoading: boolean;
+};
+
+const chatMessages = ref<ChatMessage[]>([
   {
     role: 'ai',
     content: 'Hallo!',
     isLoading: false,
   },
 ]);
-// const messages = ref<{ role: string; content: string }[]>([]);
-// const { fetchEvents, events } = useEvents();
-// type Event = {
-//   title: string;
-//   date: string;
-//   location?: string;
-// };
 
 type Friend = {
   id: number;
@@ -106,10 +105,6 @@ const friendStore = useFriendsStore() as { friends: Friend[] };
 
 let initialAnswerGiven = false;
 
-onMounted(async () => {
-  // await fetchEvents();
-});
-
 // Format bot messages to detect and highlight URLs
 const formatMessage = (message: any) => {
   const urlRegex = /(https?:\/\/[^\s]+)/g;
@@ -120,7 +115,27 @@ const formatMessage = (message: any) => {
   );
 };
 
-// Send user message and get response
+// Function to determine the next friend to contact
+const getNextFriendToContact = () => {
+  return friendStore.friends.slice().sort((a, b) => {
+    return (
+      new Date(a.nextContactDate).getTime() -
+      new Date(b.nextContactDate).getTime()
+    );
+  })[0];
+};
+
+// Function to build the friend notes context
+const buildFriendNotesContext = () => {
+  return (
+    'Freunde und Notizen:\n' +
+    friendStore.friends
+      .map((friend) => `${friend.name}: ${friend.notes}`)
+      .join('\n')
+  );
+};
+
+// Function to send a message to the chatbot
 const sendMessage = async () => {
   if (!userInput.value.trim() || isLoading.value) return;
 
@@ -146,50 +161,41 @@ const sendMessage = async () => {
 
   try {
     // Prepare the final prompt
-    let finalPrompt = userInput.value;
+    let finalPrompt = userQuestion;
 
-    // Build prompt context. Here we add friend notes for context.
-    let friendNotesContext = '';
-    if (friendStore.friends.length) {
-      friendNotesContext =
-        'Freunde und Notizen:\n' +
-        friendStore.friends
-          .map((friend) => `${friend.name}: ${friend.notes}`)
-          .join('\n');
-    }
-    const friendDue = friendStore.friends.slice().sort((a, b) => {
-      return (
-        new Date(a.nextContactDate).getTime() -
-        new Date(b.nextContactDate).getTime()
+    // Check if the user question contains a friend's name
+    const friendNotesContext = buildFriendNotesContext();
+    const matchingFriend = friendStore.friends.find((friend) => {
+      const nameParts = friend.name.toLowerCase().split(' '); // Split the friend's name into parts
+      return nameParts.some((part) =>
+        userQuestion.toLowerCase().includes(part)
       );
-    })[0];
+    });
 
-    // Append the event context to the user's prompt
-    finalPrompt = `Du bist ein deutscher Recommendation-Chatbot. Empfehle dem User seinen Kontakt mit dem Namen ${
-      !initialAnswerGiven ? friendDue.name : userQuestion
-    } zu kontaktieren und gib einen Vorschlag für eine Nachricht aufgrund der die folgenden Notizen zum letzten Gespräch mit dem Freund:
-  ${!initialAnswerGiven ? friendDue.notes : friendNotesContext}
-  Bitte antworte in mehreren Absätzen: \n\n.
-  Beginne deine Antwort mit: Stay in touch!`;
-
-    initialAnswerGiven = true;
-    console.log(friendDue, friendNotesContext);
-    console.log('Prompt: ', finalPrompt);
+    if (matchingFriend) {
+      finalPrompt = `Du bist ein deutscher Recommendation-Chatbot. 
+       Falls der User etwas zu dem Freund gefragt hat beantworte diese Frage: ${userQuestion}. Ansonsten Empfehle dem User seinen Kontakt mit dem Namen ${matchingFriend.name} zu kontaktieren und gib einen Vorschlag für eine Nachricht aufgrund der folgenden Notizen zum letzten Gespräch mit dem Freund:
+      Notizen: ${matchingFriend.notes}
+     
+      Bitte antworte in mehreren Absätzen. Beginne deine Antwort mit "OK."`;
+    } else {
+      finalPrompt = `Du bist ein deutscher Recommendation-Chatbot. Beantworte die folgende Frage:
+      
+      Frage: ${userQuestion}`;
+    }
 
     // Call the nuxt server's API with the final prompt
     const { text } = await $fetch('/api/chat', {
       method: 'POST',
       body: { prompt: finalPrompt },
     });
+
     // Update chat with response
     chatMessages.value[chatMessages.value.length - 1] = {
       role: 'ai',
       content: text,
       isLoading: false,
     };
-
-    // Clear input
-    userInput.value = '';
   } catch (error) {
     console.error('Error getting response:', error);
     chatMessages.value[chatMessages.value.length - 1] = {
@@ -201,6 +207,36 @@ const sendMessage = async () => {
     isLoading.value = false;
   }
 };
+
+// Make an initial API call on app start
+onMounted(async () => {
+  const friendDue = getNextFriendToContact();
+  if (friendDue) {
+    const initialPrompt = `Du bist ein deutscher Recommendation-Chatbot. Empfehle dem User seinen Kontakt mit dem Namen ${friendDue.name} zu kontaktieren und gib einen Vorschlag für eine Nachricht aufgrund der folgenden Notizen zum letzten Gespräch mit dem Freund:
+    
+    ${friendDue.notes}
+    
+    Bitte antworte in mehreren Absätzen. Beginne deine Antwort mit: Stay in touch!`;
+
+    try {
+      const { text } = await $fetch('/api/chat', {
+        method: 'POST',
+        body: { prompt: initialPrompt },
+      });
+
+      // Add the initial response to the chat
+      chatMessages.value.push({
+        role: 'ai',
+        content: text,
+        isLoading: false,
+      });
+
+      initialAnswerGiven = true;
+    } catch (error) {
+      console.error('Error getting initial response:', error);
+    }
+  }
+});
 </script>
 
 <style scoped>

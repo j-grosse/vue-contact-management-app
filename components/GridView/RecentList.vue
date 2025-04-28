@@ -14,7 +14,7 @@
           <img
             :src="friend.photo || 'https://i.imgur.com/tdi3NGa.png'"
             :alt="friend.name"
-            class="w-16 h-16 md:w-20 md:h-20 rounded-full object-cover border-2 border-white dark:border-gray-800 shadow-md hover:border-primary dark:hover:border-primary"
+            class="w-16 h-16 md:w-20 md:h-20 rounded-full object-cover border-2 border-white dark:border-gray-800 shadow-md transition-transform hover:scale-[1.20]"
           />
           <span class="text-sm text-gray-700 dark:text-gray-300 mt-1">{{
             getFirstName(friend.name)

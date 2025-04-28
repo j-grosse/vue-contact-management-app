@@ -4,3 +4,8 @@
 
 @layer components {
 }
+
+img {
+  user-drag: none;
+  -webkit-user-drag: none; /* For Safari and Chrome */
+}

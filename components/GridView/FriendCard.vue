@@ -1,6 +1,6 @@
 <template>
   <div
-    class="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden transition-transform hover:shadow-lg hover:scale-[1.02] border border-gray-200 dark:border-gray-700 cursor-pointer"
+    class="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden transition-transform hover:shadow-lg hover:scale-[1.05] border border-gray-200 dark:border-gray-700 cursor-pointer"
     @click="$emit('edit', friend)"
   >
     <div class="relative">

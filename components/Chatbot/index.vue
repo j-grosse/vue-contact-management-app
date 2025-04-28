@@ -64,11 +64,11 @@
         </button>
       </div>
 
-      <!-- <div class="mt-3">
+      <div class="mt-3">
         <p class="text-xs pl-2 text-gray-500 dark:text-gray-400">
-          Tipps: Frage nach "Anna Schmidt" oder "Idee für 3 Freunde"
+          Tipps: Frage nach "Events" oder "Julia"
         </p>
-      </div> -->
+      </div>
     </div>
   </div>
 </template>
@@ -135,12 +135,17 @@ const getNextFriendToContact = () => {
   })[0];
 };
 
+const friendPhoto = (friendName: string): string | undefined => {
+  const friend = friendStore.friends.find((f) => f.name === friendName);
+  return friend?.photo;
+};
+
 // Function to build the friend notes context
 const buildFriendNotesContext = () => {
   return (
-    'Freunde und Notizen:\n' +
+    'Liste mit Freunden und Notizen:\n\n' +
     friendStore.friends
-      .map((friend) => `${friend.name}: ${friend.notes}`)
+      .map((friend) => `${friend.name}: ${friend.notes};`)
       .join('\n')
   );
 };
@@ -149,7 +154,7 @@ const buildFriendNotesContext = () => {
 const buildConversationContext = () => {
   const maxTokens = 1000; // API's token limit
   let context = '';
-  const recentMessages = chatMessages.value.slice(-3); // Start with the last 5 messages
+  const recentMessages = chatMessages.value.slice(-4); // Start with the last 3 messages
 
   for (const message of recentMessages) {
     const formattedMessage =
@@ -200,7 +205,8 @@ const sendMessage = async () => {
 
     // Prepare the final prompt
     const conversationContext = buildConversationContext();
-    let finalPrompt = `${conversationContext}\n\n ${friendNotesContext}\n\n User: ${userQuestion}\n\nAI: `;
+    let basicPrompt = `\n\nUser: ${userQuestion} \n\nFriends data: ${friendNotesContext} \n\nConversation context: ${conversationContext} \n\nAI: `;
+    let finalPrompt = basicPrompt;
 
     // Check if the user question contains a friend's name
     const matchingFriend = friendStore.friends.find((friend) => {
@@ -213,38 +219,88 @@ const sendMessage = async () => {
     if (matchingFriend) {
       lastMentionedFriend = matchingFriend;
     }
+    // Check if eventList is needed for userQuestion
+    finalPrompt += `
+      Wenn dieFrage des Users sich auf Events, Veranstaltungen oder Unternehmungen bezieht und du noch keinen Zugriff auf Eventdaten hast, antworte bitte ausschließlich mit dem Text #EVENTS_NEEDED. Schreibe dann nichts anderes.
+      Wenn die Frage nichts mit Events zu tun hat oder du keine Eventdaten brauchst, beantworte die Frage direkt.`;
 
     // if question contains a friend's name, use their notes
     if (matchingFriend) {
-      finalPrompt += `Du bist ein deutscher Recommendation-Chatbot.
+      finalPrompt += `
+      Du bist ein deutscher Recommendation-Chatbot.
       \n\n Mache Vorschläge für die Kontaktaufnahme mit ${matchingFriend.name} basierend auf den
       Notizen \n\n ${matchingFriend.notes} \n\n Ansonsten beantworte seine Frage zu ${matchingFriend.name}\n\n und den Notizen: ${matchingFriend.notes}
       Bitte antworte in mehreren Absätzen. Beginne deine Antwort mit "OK."`;
 
       // if question contains a pronoun, use their notes
     } else if (!matchingFriend && lastMentionedFriend) {
-      finalPrompt += `Der User hat zuvor nach ${lastMentionedFriend.name} gefragt. Beziehe das Pronomen in der Frage auf ${lastMentionedFriend.name} und ${lastMentionedFriend.notes}, wenn dieses zur Person passt und beantworte die Frage.`;
-    } else {
-      finalPrompt += `Wenn der User nach Events, Veranstaltungen oder Unternehmungen fragt, empfehle ihm zu einigen Freunden passende Events an:\n\n'<u><a href="{link}" target="_blank class="text-blue-500">{title}</a></u>'\n\n Eventliste: ${eventList}`
+      finalPrompt += `
+      Der User hat zuvor nach ${lastMentionedFriend.name} gefragt. Beziehe das Pronomen in der Frage auf ${lastMentionedFriend.name} 
+      und ${lastMentionedFriend.notes}, wenn dieses zur Person passt und beantworte die Frage.`;
     }
-    
+
+    console.log('Prompt with context: ', finalPrompt);
+    console.log('\n\nPrompt length:', finalPrompt.length, ' characters');
+
     // Call the nuxt server's API with the final prompt
     const { text } = await $fetch('/api/chat', {
       method: 'POST',
       body: { prompt: finalPrompt },
     });
+    console.log('API response:', text);
 
-    // Update chat with response
-    chatMessages.value[chatMessages.value.length - 1] = {
-      role: 'ai',
-      content: text,
-      isLoading: false,
-    };
-  } catch (error) {
+    // If the response contains #EVENTS_NEEDED, change prompt to contain eventList
+    if (text.trim().toUpperCase().startsWith('#EVENTS_NEEDED')) {
+      basicPrompt += `\n\nEvents: ${eventList}`;
+      const newPrompt = `
+        Context: "${finalPrompt}"
+
+         Bitte schlage dem User passende Events für ${
+           matchingFriend?.name || 'seinen Freund'
+         } vor und zeige sie im folgenden Format an: 
+        <u><a href="{link}" target="_blank" class="text-blue-500">{title}</a></u>
+
+        \n\nWenn keine passenden Events dabei sind, schreibe das bitte auch.
+        Hier ist eine Liste mit Events (Titel und Link):\n\n
+        ${eventList}
+        `;
+
+      const promptWithEvents = basicPrompt + newPrompt;
+      console.log(promptWithEvents);
+      console.log('\n\nPrompt length:', promptWithEvents.length, ' characters');
+
+      // send new prompt
+      const { text: answerWithEvents } = await $fetch('/api/chat', {
+        method: 'POST',
+        body: { prompt: promptWithEvents },
+      });
+
+      // Antwort anzeigen
+      chatMessages.value[chatMessages.value.length - 1] = {
+        role: 'ai',
+        content: answerWithEvents,
+        isLoading: false,
+      };
+    } else {
+      // Update chat with response
+      chatMessages.value[chatMessages.value.length - 1] = {
+        role: 'ai',
+        content: text,
+        isLoading: false,
+      };
+    }
+  } catch (error: any) {
     console.error('Error getting response:', error);
+    let errorMsg = 'Entschuldigung, es ist ein Fehler aufgetreten.';
+    if (error?.response?.status === '429') {
+      errorMsg =
+        'Zu viele Anfragen. Bitte warte eine Minute und versuche es erneut.';
+    } else if (error?.message) {
+      errorMsg += ' ' + error.message;
+    }
     chatMessages.value[chatMessages.value.length - 1] = {
       role: 'ai',
-      content: 'Entschuldigung, es ist ein Fehler aufgetreten.',
+      content: errorMsg,
       isLoading: false,
     };
   } finally {
@@ -256,23 +312,27 @@ const sendMessage = async () => {
 onMounted(async () => {
   // Fetch events on mount
   await fetchEvents();
-  
-   // Convert fetched events JSON Array into clickable html tag, for use in prompt
-   eventList = events.value
-  .map(
-    (event: Event) =>
-      `${event.title}: ${event.link}`
-      // `<u><a href="${event.link}" target="_blank">${event.title}</a></u>`
-  )
-  .join(', ');
-  console.log(eventList);
 
+  // Convert fetched events JSON Array into a string
+  eventList = events.value
+    .map(
+      (event: Event) => `${event.title}: ${event.link}`
+      // `<u><a href="${event.link}" target="_blank">${event.title}</a></u>`
+    )
+    .join(', ');
+console.log(eventList, '\n\nEventList length: ', eventList.length, ' characters');
+  // Check if there are any friends to contact and get a recommendation from the Google Gemini API
   const friendDue = getNextFriendToContact();
   if (friendDue) {
+    // show photo of due friend
+    chatMessages.value.push({
+        role: 'ai',
+        content: `<img src=${friendDue.photo} />`,
+        isLoading: false,
+      });
     const initialPrompt = `Du bist ein deutscher Recommendation-Chatbot. Schlage dem User eine Nachricht für die anstehende Kontaktaufnahme mit ${friendDue.name} vor.
     Nutze die Notizen ${friendDue.notes}.
     Bitte antworte in mehreren Absätzen. Beginne deine Antwort mit: Stay in touch!`;
-
     try {
       const { text } = await $fetch('/api/chat', {
         method: 'POST',
@@ -287,6 +347,8 @@ onMounted(async () => {
       });
     } catch (error) {
       console.error('Error getting initial response:', error);
+    } finally {
+      isLoading.value = false;
     }
   }
   // set focus on chatbot input field

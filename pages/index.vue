@@ -13,9 +13,11 @@
         <FontAwesomeIcon icon="fa-plus"></FontAwesomeIcon>
       </button>
     </div>
+
     <Chatbot />
 
-    <EventRecommender />
+    <!-- <EventRecommender /> -->
+    
     <TableView
       v-if="appStore.viewMode === 'table'"
       :upcoming-contacts="upcomingContacts"

@@ -54,8 +54,8 @@ export const useFriendsStore = defineStore('friends', {
       return [
         {
           id: '1',
-          name: 'Anna Schmidt',
-          photo: 'https://loremfaces.net/96/id/1.jpg',
+          name:'Zoe Schneider',
+          photo: 'https://randomuser.me/api/portraits/women/27.jpg',
           notes: 'Liebt Wandern und Fotografie',
           lastContactDate: createDateWithOffset(-1),
           contactInterval: 7,
@@ -64,8 +64,8 @@ export const useFriendsStore = defineStore('friends', {
         },
         {
           id: '2',
-          name: 'Thomas Müller',
-          photo: 'https://loremfaces.net/96/id/2.jpg',
+          name: 'Rick Smith',
+          photo: 'https://randomuser.me/api/portraits/men/54.jpg',
           notes: 'Fußballfan, trifft sich gerne zum Sport',
           lastContactDate: createDateWithOffset(-25),
           contactInterval: 30,
@@ -84,8 +84,8 @@ export const useFriendsStore = defineStore('friends', {
         },
         {
           id: '4',
-          name: 'Markus Fischer',
-          photo: 'https://loremfaces.net/96/id/4.jpg',
+          name: 'Dev Singh',
+          photo: 'https://randomuser.me/api/portraits/men/39.jpg',
           notes: 'Arbeitet als Grafiker, Kaffee-Enthusiast',
           lastContactDate: createDateWithOffset(-80),
           contactInterval: 60,
@@ -95,7 +95,7 @@ export const useFriendsStore = defineStore('friends', {
         {
           id: '5',
           name: 'Julia Klein',
-          photo: 'https://loremfaces.net/96/id/5.jpg',
+          photo: 'https://randomuser.me/api/portraits/women/47.jpg',
           notes: 'Reist viel, sammelt Postkarten',
           lastContactDate: createDateWithOffset(-2),
           contactInterval: 21,
@@ -104,7 +104,7 @@ export const useFriendsStore = defineStore('friends', {
         },
         {
           id: '6',
-          name: 'Michael Becker',
+          name: 'Mike Becker',
           photo: 'https://randomuser.me/api/portraits/men/23.jpg',
           notes: 'Buchliebhaber, hat gute Filmempfehlungen',
           lastContactDate: createDateWithOffset(-45),
@@ -114,7 +114,7 @@ export const useFriendsStore = defineStore('friends', {
         },
         {
           id: '7',
-          name: 'Laura Wagner',
+          name: 'Lu Chen',
           photo: 'https://randomuser.me/api/portraits/women/2.jpg',
           notes: 'Fitnesstrainerin, teilt gesunde Rezepte',
           lastContactDate: createDateWithOffset(-27),
@@ -124,9 +124,9 @@ export const useFriendsStore = defineStore('friends', {
         },
         {
           id: '8',
-          name: 'David Hoffmann',
+          name: 'David Bukowski',
           photo: 'https://randomuser.me/api/portraits/men/14.jpg',
-          notes: 'Programmierer, kennt sich mit Technik aus',
+          notes: 'Programmierer, DJ, kennt sich mit Technik aus, war bei seiner Party 03/2025',
           lastContactDate: createDateWithOffset(-3),
           contactInterval: 10,
           nextContactDate: createDateWithOffset(7), // -3 + 10

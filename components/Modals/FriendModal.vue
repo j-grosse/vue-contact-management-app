@@ -128,31 +128,31 @@
           </div>
 
           <div class="flex justify-between mt-6">
-            <div>
-              <button
-                v-if="editing"
-                type="button"
-                @click="$emit('delete-request')"
-                class="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg text-base flex items-center"
-              >
-                <FontAwesomeIcon icon="fa-trash" class="mr-2"></FontAwesomeIcon>
-                Löschen
-              </button>
-            </div>
-            <div class="flex gap-3">
-              <button
-                type="button"
-                @click="$emit('close')"
-                class="px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 text-base"
-              >
-                Abbrechen
-              </button>
-              <button
-                type="submit"
-                class="px-4 py-2 bg-primary hover:bg-primary/80 text-white rounded-lg text-base"
-              >
-                Speichern
-              </button>
+            <button
+              v-if="editing"
+              type="button"
+              @click="$emit('delete-request')"
+              class="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg text-base flex items-center"
+            >
+              <FontAwesomeIcon icon="fa-trash" class="mr-2"></FontAwesomeIcon>
+            </button>
+            <button v-if="!editing"></button>
+            <div class="flex justify-between gap-3">
+              <div class="flex gap-3">
+                <button
+                  type="button"
+                  @click="$emit('close')"
+                  class="px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 text-base"
+                >
+                  <FontAwesomeIcon icon="fa-times" />
+                </button>
+                <button
+                  type="submit"
+                  class="px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 text-base"
+                >
+                  <FontAwesomeIcon icon="fa-check" />
+                </button>
+              </div>
             </div>
           </div>
         </form>

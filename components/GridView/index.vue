@@ -1,6 +1,6 @@
 <template>
   <div
-    class="mb-2 bg-yellow-50 dark:bg-yellow-900/20 p-3 rounded-lg"
+    class="mb-2 p-3 dark:bg-yellow-900/20 rounded-lg shadow-md"
   >
     <!-- Recent Contacts Photo Row -->
     <RecentList

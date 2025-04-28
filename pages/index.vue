@@ -13,9 +13,11 @@
         <FontAwesomeIcon icon="fa-plus"></FontAwesomeIcon>
       </button>
     </div>
+
     <Chatbot />
 
-    <EventRecommender />
+    <!-- <EventRecommender /> -->
+    
     <TableView
       v-if="appStore.viewMode === 'table'"
       :upcoming-contacts="upcomingContacts"
@@ -24,7 +26,7 @@
       @contact="markAsContacted"
     />
 
-    <CardView
+    <GridView
       v-else
       :filtered-friends="filteredFriends"
       :recent-contacts="recentlyContactedFriends"
@@ -67,16 +69,15 @@ import { useFriendsStore } from '~/stores/friends';
 import { useAppStore } from '~/stores/app';
 import AppHeader from '~/components/AppHeader.vue';
 import SearchBar from '~/components/SearchBar.vue';
-import CardView from '~/components/CardView/index.vue';
+import GridView from '~/components/GridView/index.vue';
 import TableView from '~/components/TableView/index.vue';
 import EmptyState from '~/components/EmptyState.vue';
 import FriendModal from '~/components/Modals/FriendModal.vue';
 import DeleteModal from '~/components/Modals/DeleteModal.vue';
 import PreferencesModal from '~/components/Modals/PreferencesModal.vue';
 import Chatbot from '~/components/Chatbot';
-import EventRecommender from '~/components/EventRecommender.vue';
 
-const friendStore = useFriendsStore();
+const friendStore = useFriendsStore ();
 const appStore = useAppStore();
 
 // Local state

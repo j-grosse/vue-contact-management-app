@@ -18,13 +18,13 @@
           @click="$emit('close')"
           class="px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
         >
-          Abbrechen
+          <FontAwesomeIcon icon="fa-times" />
         </button>
         <button
           @click="$emit('confirm')"
           class="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg"
         >
-          Löschen
+          <FontAwesomeIcon icon="fa-trash" />
         </button>
       </div>
     </div>

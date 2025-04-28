@@ -1,7 +1,7 @@
 <template>
   <NuxtPwaManifest />
   <div
-    class="min-h-screen min-w-[320px] overflow-hidden max-w-2xl mx-auto bg-white dark:bg-gray-900 transition-colors duration-300"
+    class="min-h-screen min-w-[320px] overflow-hidden max-w-3xl mx-auto bg-white dark:bg-gray-900 transition-colors duration-300"
   >
     <NuxtPage />
   </div>

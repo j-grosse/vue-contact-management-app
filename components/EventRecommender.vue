@@ -1,11 +1,16 @@
 <template>
+  <!-- Chatbot window -->
   <div
     class="bg-white dark:bg-yellow-900/20 rounded-lg shadow-md overflow-hidden my-2"
   >
-    <div class="p-4 bg-primary text-white flex justify-between items-center">
+    <div
+      class="p-4 bg-primary text-white rounded-t-lg flex justify-between items-center"
+    >
       <h3 class="font-semibold">Freizeitberater</h3>
       <button @click="isOpen = !isOpen" class="text-white hover:text-gray-200">
-        <i :class="isOpen ? 'fas fa-chevron-down' : 'fas fa-chevron-up'"></i>
+        <FontAwesomeIcon
+          :icon="isOpen ? 'fa-chevron-down' : 'fa-chevron-up'"
+        ></FontAwesomeIcon>
       </button>
     </div>
 
@@ -30,6 +35,13 @@
                 <div class="dot-flashing"></div>
               </div>
               <div v-else v-html="formatMessage(message.content)"></div>
+              Events:
+              <button
+                @click="handleEventCategoryClick('ausstellung')"
+                class="text-white hover:text-gray-200"
+              >
+                <FontAwesomeIcon icon="fa-cocktail" class="text-black" />
+              </button>
             </div>
           </div>
         </div>
@@ -49,7 +61,7 @@
           class="ml-2 bg-primary hover:bg-primary/80 text-white p-2 rounded-full flex items-center justify-center w-10 h-10"
           :disabled="isLoading"
         >
-          <i class="fas fa-paper-plane"></i>
+          <FontAwesomeIcon icon="fa-paper-plane"></FontAwesomeIcon>
         </button>
       </div>
 
@@ -73,13 +85,13 @@ const chatMessages = ref([
   {
     role: 'assistant',
     content:
-      'Hallo! Ich kann dir helfen, tolle Aktivitäten für dich und deine Freunde zu finden. Was hättet ihr gerne unternommen?',
+      'Hallo! Ich kann dir helfen, tolle Aktivitäten zu finden. Was hättet ihr gerne unternommen?',
   },
 ]);
 const isLoading = ref(false);
 const { fetchEvents, events } = useEvents();
-const dailyRequestLimit = ref(15);
-const remainingRequests = ref(15);
+const dailyRequestLimit = ref(1500);
+const remainingRequests = ref(1500);
 
 // Check local storage for remaining daily requests
 onMounted(async () => {
@@ -102,7 +114,13 @@ onMounted(async () => {
 
   // Fetch events on mount
   await fetchEvents();
+  // console.log(events.value);
 });
+
+const handleEventCategoryClick = (category) => {
+  userInput.value = category;
+  sendMessage();
+};
 
 // Format bot messages to detect and highlight URLs
 const formatMessage = (message) => {
@@ -152,6 +170,7 @@ const sendMessage = async () => {
       };
     } else {
       // Filter events based on user query
+      console.log(events.value);
       const filteredEvents = events.value.filter(
         (event) =>
           (event.title &&
@@ -162,16 +181,21 @@ const sendMessage = async () => {
 
       let response;
       if (filteredEvents.length > 0) {
+        // Remove duplicate events using findIndex
+        const uniqueEvents = filteredEvents.filter((event, index, self) => {
+          return index === self.findIndex((e) => e.title === event.title);
+        });
+
         response =
-          'Hier sind einige passende Veranstaltungen:\n\n' +
-          filteredEvents
+          'Hier sind einige passende Veranstaltungen: <br/>' +
+          uniqueEvents
             .map(
               (event) =>
                 `• ${event.title} am ${new Date(event.date).toLocaleDateString(
                   'de-DE'
                 )} in ${event.location}`
             )
-            .join('\n');
+            .join('<br>');
       } else {
         response =
           'Entschuldigung, ich konnte keine passenden Veranstaltungen finden.';
@@ -254,3 +278,5 @@ const sendMessage = async () => {
   }
 }
 </style>
+
+

@@ -76,7 +76,6 @@ import FriendModal from '~/components/Modals/FriendModal.vue';
 import DeleteModal from '~/components/Modals/DeleteModal.vue';
 import PreferencesModal from '~/components/Modals/PreferencesModal.vue';
 import Chatbot from '~/components/Chatbot';
-import EventRecommender from '~/components/EventRecommender.vue';
 
 const friendStore = useFriendsStore ();
 const appStore = useAppStore();

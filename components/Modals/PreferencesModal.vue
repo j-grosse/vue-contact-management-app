@@ -11,9 +11,8 @@
         <h2 class="text-2xl font-bold text-gray-800 dark:text-white mb-4">
           Einstellungen
         </h2>
-        <div class="flex flex-col items-center gap-2">
-          <div class="flex flex-col items-center gap-2 dark:text-white">
-            Theme
+        <div class="flex flex-col items-left gap-2">
+          <div class="flex items-center gap-2 dark:text-white">
             <button
               @click="appStore.toggleDarkMode()"
               class="bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 border border-gray-300 dark:border-gray-600 p-2 rounded-full flex items-center justify-center w-10 h-10 text-gray-800 dark:text-gray-200"
@@ -24,14 +23,12 @@
               "
             >
               <FontAwesomeIcon
-                :icon="appStore.isDarkMode ? 'fa-sun' : 'fa-moon'"
+                :icon="appStore.isDarkMode ? 'fa-moon' : 'fa-sun'"
               ></FontAwesomeIcon>
             </button>
+            Theme
           </div>
-        </div>
-        <div class="flex justify-center my-10 gap-4">
-          <div class="flex flex-col items-center gap-2 dark:text-white">
-            Backup erstellen
+          <div class="flex items-center gap-2 dark:text-white">
             <button
               @click="exportData"
               class="bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 border border-gray-300 dark:border-gray-600 p-2 rounded-full flex items-center justify-center w-10 h-10 text-gray-800 dark:text-gray-200"
@@ -39,10 +36,9 @@
             >
               <FontAwesomeIcon icon="fa-floppy-disk"></FontAwesomeIcon>
             </button>
+            Backup erstellen
           </div>
-
-          <div class="flex flex-col items-center gap-2 dark:text-white">
-            Backup importieren
+          <div class="flex items-center gap-2 dark:text-white">
             <!-- Hidden file input -->
             <input
               type="file"
@@ -57,6 +53,7 @@
             >
               <FontAwesomeIcon icon="fa-file-import"></FontAwesomeIcon>
             </button>
+            Backup importieren
           </div>
         </div>
 
@@ -67,7 +64,7 @@
               @click="$emit('close')"
               class="px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 text-base"
             >
-              Schließen
+              <FontAwesomeIcon icon="fa-check" />
             </button>
           </div>
         </div>

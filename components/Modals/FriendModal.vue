@@ -216,24 +216,31 @@ const handleFileUpload = (event) => {
   reader.onload = (e) => {
     const img = new Image();
     img.onload = () => {
-      // Create canvas to resize the image
+      const cropSize = 192;
+      const { width, height } = img;
+
+      // Calculate scale to cover the crop area (center crop, cover style)
+      const scale = Math.max(cropSize / width, cropSize / height);
+
+      const scaledWidth = width * scale;
+      const scaledHeight = height * scale;
+
+      // Calculate offset to center the image
+      const offsetX = (cropSize - scaledWidth) / 2;
+      const offsetY = (cropSize - scaledHeight) / 2;
+
       const canvas = document.createElement('canvas');
       const ctx = canvas.getContext('2d');
+      canvas.width = cropSize;
+      canvas.height = cropSize;
 
-      // Set canvas dimensions to 96x96
-      canvas.width = 96;
-      canvas.height = 96;
+      // Draw the scaled and centered image
+      ctx.drawImage(
+        img,
+        offsetX, offsetY, scaledWidth, scaledHeight
+      );
 
-      // Draw the image onto the canvas
-      ctx.drawImage(img, 0, 0, 96, 96);
-
-      // Convert canvas to Base64 string
-      const base64String = canvas.toDataURL('image/jpeg');
-
-      // Set the base64 string to form.photo
-      form.photo = base64String;
-
-      // alert('Profilbild wurde importiert!');
+      form.photo = canvas.toDataURL('image/jpeg');
     };
     img.src = e.target.result;
   };

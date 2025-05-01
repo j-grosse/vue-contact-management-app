@@ -16,8 +16,6 @@
 
     <Chatbot />
 
-    <!-- <EventRecommender /> -->
-    
     <TableView
       v-if="appStore.viewMode === 'table'"
       :upcoming-contacts="upcomingContacts"
@@ -77,7 +75,7 @@ import DeleteModal from '~/components/Modals/DeleteModal.vue';
 import PreferencesModal from '~/components/Modals/PreferencesModal.vue';
 import Chatbot from '~/components/Chatbot';
 
-const friendStore = useFriendsStore ();
+const friendStore = useFriendsStore();
 const appStore = useAppStore();
 
 // Local state

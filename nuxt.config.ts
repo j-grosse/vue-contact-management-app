@@ -5,6 +5,11 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
   ssr: false, // Disable ssr since we're using localStorage
   modules: ['@nuxtjs/tailwindcss', '@vite-pwa/nuxt', '@pinia/nuxt'],
+  runtimeConfig: {
+    public: {
+      VAPID_PUBLIC_KEY: process.env.PUBLIC_VAPID_KEY
+    }
+  },
   app: {
     head: {
       title: 'FriendCare',
@@ -21,7 +26,7 @@ export default defineNuxtConfig({
       '@fortawesome/fontawesome-svg-core',
       '@fortawesome/free-solid-svg-icons',
       '@fortawesome/vue-fontawesome'
-    ]
+    ],
   },
   vue: {
     compilerOptions: {
@@ -44,14 +49,17 @@ export default defineNuxtConfig({
   // vite-pwa: workbox, manifest devOptions **must** be set.
   // registerType might be able to also be autoUpdate, but haven't tried it
   pwa: {
-    registerType: 'prompt',
+    registerType: 'autoUpdate',
+    strategies: 'injectManifest',
+
     manifest: {
       name: 'FriendCare PWA',
       short_name: 'FriendCare',
       description: 'A Nuxt 3 Contact Management PWA',
       theme_color: '#111827',
-      id: "/?homescreen=1",
-      start_url: "/?homescreen=1",
+      id: '/?homescreen=1',
+      start_url: '/?homescreen=1',
+      display: 'standalone',
       icons: [
         {
           src: '/pwa-icon-192x192.png',
@@ -99,7 +107,7 @@ export default defineNuxtConfig({
       // ],
     },
     devOptions: {
-      enabled: false,
+      enabled: true,
       suppressWarnings: true,
       navigateFallback: '/',
       navigateFallbackAllowlist: [/^\/$/],

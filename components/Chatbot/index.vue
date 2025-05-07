@@ -19,7 +19,7 @@
     <div v-if="isOpen" class="p-4">
       <div
         ref="chatContainerRef"
-        class="mb-4 h-64 overflow-y-auto bg-gray-50 dark:bg-gray-900 border rounded-lg p-3"
+        class="mb-4 h-64 overflow-y-auto overflow-x-hidden bg-gray-50 dark:bg-gray-900 rounded-lg p-3"
       >
         <div v-for="(message, index) in chatMessages" :key="index" class="mb-3">
           <!-- User message -->

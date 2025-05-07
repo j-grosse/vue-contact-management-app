@@ -22,7 +22,8 @@
                 <img
                   v-if="form.photo"
                   :src="form.photo"
-                  class="w-full h-full object-cover"
+                  @click="imageFileInput?.click()"
+                  class="w-full h-full object-cover cursor-pointer"
                   alt="Freund"
                 />
                 <div
@@ -216,7 +217,7 @@ const handleFileUpload = (event) => {
   reader.onload = (e) => {
     const img = new Image();
     img.onload = () => {
-      const cropSize = 192;
+      const cropSize = 128;
       const { width, height } = img;
 
       // Calculate scale to cover the crop area (center crop, cover style)
@@ -239,6 +240,18 @@ const handleFileUpload = (event) => {
         img,
         offsetX, offsetY, scaledWidth, scaledHeight
       );
+
+      // Reduce to 16 colors (4 bits per channel, simple quantization)
+      const imageData = ctx.getImageData(0, 0, cropSize, cropSize);
+      const data = imageData.data;
+      for (let i = 0; i < data.length; i += 4) {
+        // Quantize each channel to 4 bits (0-240, step 16)
+        data[i] = Math.round(data[i] / 16) * 16;
+        data[i + 1] = Math.round(data[i + 1] / 16) * 16;
+        data[i + 2] = Math.round(data[i + 2] / 16) * 16;
+        // Alpha stays the same
+      }
+      ctx.putImageData(imageData, 0, 0);
 
       form.photo = canvas.toDataURL('image/jpeg');
     };

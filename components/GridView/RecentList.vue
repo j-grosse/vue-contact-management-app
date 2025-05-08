@@ -5,7 +5,7 @@
     </h2>
     <div class="flex flex-wrap justify-around gap-4">
       <div
-        v-for="friend in friends"
+        v-for="friend in friends.slice(0, 4)"
         :key="'recent-photo-' + friend.id"
         class="relative cursor-pointer"
         @click="$emit('edit', friend)"

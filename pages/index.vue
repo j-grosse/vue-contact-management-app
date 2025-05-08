@@ -90,14 +90,14 @@ onMounted(() => {
 
   // Setup dark mode from user preferences
   if (
-    process.client &&
+    import.meta.client &&
     window.matchMedia &&
     window.matchMedia('(prefers-color-scheme: dark)').matches
   ) {
     appStore.setDarkMode(true);
   }
 
-  if (process.client) {
+  if (import.meta.client) {
     window
       .matchMedia('(prefers-color-scheme: dark)')
       .addEventListener('change', (event) => {

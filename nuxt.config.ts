@@ -7,8 +7,8 @@ export default defineNuxtConfig({
   modules: ['@nuxtjs/tailwindcss', '@vite-pwa/nuxt', '@pinia/nuxt'],
   runtimeConfig: {
     public: {
-      VAPID_PUBLIC_KEY: process.env.PUBLIC_VAPID_KEY
-    }
+      VAPID_PUBLIC_KEY: process.env.PUBLIC_VAPID_KEY,
+    },
   },
   app: {
     head: {
@@ -25,7 +25,7 @@ export default defineNuxtConfig({
     transpile: [
       '@fortawesome/fontawesome-svg-core',
       '@fortawesome/free-solid-svg-icons',
-      '@fortawesome/vue-fontawesome'
+      '@fortawesome/vue-fontawesome',
     ],
   },
   vue: {
@@ -50,7 +50,6 @@ export default defineNuxtConfig({
   // registerType might be able to also be autoUpdate, but haven't tried it
   pwa: {
     registerType: 'autoUpdate',
-    strategies: 'injectManifest',
 
     manifest: {
       name: 'FriendCare PWA',

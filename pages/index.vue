@@ -1,7 +1,5 @@
 <template>
-  <div class="container mx-auto px-4 py-4">
-    <AppHeader />
-
+  <div>
     <div class="mb-4 flex justify-between gap-2">
       <SearchBar v-if="appStore.viewMode === 'cards'" v-model="searchQuery" />
       <div v-else></div>
@@ -16,8 +14,6 @@
 
     <Chatbot />
 
-    <!-- <EventRecommender /> -->
-    
     <TableView
       v-if="appStore.viewMode === 'table'"
       :upcoming-contacts="upcomingContacts"
@@ -64,6 +60,10 @@
 </template>
 
 <script setup>
+definePageMeta({
+  layout: 'default',
+});
+
 import { ref, computed, onMounted } from 'vue';
 import { useFriendsStore } from '~/stores/friends';
 import { useAppStore } from '~/stores/app';
@@ -77,7 +77,7 @@ import DeleteModal from '~/components/Modals/DeleteModal.vue';
 import PreferencesModal from '~/components/Modals/PreferencesModal.vue';
 import Chatbot from '~/components/Chatbot';
 
-const friendStore = useFriendsStore ();
+const friendStore = useFriendsStore();
 const appStore = useAppStore();
 
 // Local state

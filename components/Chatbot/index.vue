@@ -19,7 +19,7 @@
     <div v-if="isOpen" class="p-4">
       <div
         ref="chatContainerRef"
-        class="mb-4 h-64 overflow-y-auto bg-gray-50 dark:bg-gray-900 border rounded-lg p-3"
+        class="mb-4 h-64 overflow-y-auto overflow-x-hidden bg-gray-50 dark:bg-gray-900 rounded-lg p-3"
       >
         <div v-for="(message, index) in chatMessages" :key="index" class="mb-3">
           <!-- User message -->
@@ -320,16 +320,21 @@ onMounted(async () => {
       // `<u><a href="${event.link}" target="_blank">${event.title}</a></u>`
     )
     .join(', ');
-console.log(eventList, '\n\nEventList length: ', eventList.length, ' characters');
+  console.log(
+    eventList,
+    '\n\nEventList length: ',
+    eventList.length,
+    ' characters'
+  );
   // Check if there are any friends to contact and get a recommendation from the Google Gemini API
   const friendDue = getNextFriendToContact();
   if (friendDue) {
     // show photo of due friend
     chatMessages.value.push({
-        role: 'ai',
-        content: `<img src=${friendDue.photo} />`,
-        isLoading: false,
-      });
+      role: 'ai',
+      content: `<img src="${friendDue.photo}" height="96px" width="96px"/>`,
+      isLoading: false,
+    });
     const initialPrompt = `Du bist ein deutscher Recommendation-Chatbot. Schlage dem User eine Nachricht für die anstehende Kontaktaufnahme mit ${friendDue.name} vor.
     Nutze die Notizen ${friendDue.notes}.
     Bitte antworte in mehreren Absätzen. Beginne deine Antwort mit: Stay in touch!`;

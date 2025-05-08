@@ -26,7 +26,7 @@
                 :icon="appStore.isDarkMode ? 'fa-moon' : 'fa-sun'"
               ></FontAwesomeIcon>
             </button>
-            Theme
+            <p @click="appStore.toggleDarkMode()">Theme</p>
           </div>
           <div class="flex items-center gap-2 dark:text-white">
             <button
@@ -36,7 +36,7 @@
             >
               <FontAwesomeIcon icon="fa-floppy-disk"></FontAwesomeIcon>
             </button>
-            Backup erstellen
+            <p @click="exportData">Backup erstellen</p>
           </div>
           <div class="flex items-center gap-2 dark:text-white">
             <!-- Hidden file input -->
@@ -45,6 +45,7 @@
               @change="importData"
               ref="fileInput"
               class="hidden"
+              accept=".json"
             />
             <button
               @click="fileInput?.click()"
@@ -53,7 +54,7 @@
             >
               <FontAwesomeIcon icon="fa-file-import"></FontAwesomeIcon>
             </button>
-            Backup importieren
+            <p @click="fileInput?.click()">Backup importieren</p>
           </div>
         </div>
 

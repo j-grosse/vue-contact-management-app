@@ -7,18 +7,37 @@
       <img
         :src="friend.photo || 'https://i.imgur.com/tdi3NGa.png'"
         alt="Freund"
-        class="w-full h-20 object-cover"
+        class="w-full h-40 object-cover"
       />
       <div
-        class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-1"
+        class="absolute top-0 left-0 right-0 bg-gradient-to-b from-black/70 to-transparent p-1"
       >
         <h3 class="text-xs font-semibold text-white truncate">
           {{ friend.name }}
         </h3>
       </div>
+      <div
+        class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-1"
+      >
+        <div class="flex justify-between items-center">
+          <span
+            :class="getContactStatusClass(friend)"
+            class="px-2 py-1 rounded-full text-xs font-medium"
+          >
+            {{ getContactStatus(friend) }}
+          </span>
+          <button
+            @click.stop="$emit('contact', friend)"
+            class="bg-primary hover:bg-primary/80 text-white w-7 h-7 rounded-full flex items-center justify-center"
+            title="Als kontaktiert markieren"
+          >
+            <FontAwesomeIcon icon="fa-check" class="text-xs"></FontAwesomeIcon>
+          </button>
+        </div>
+      </div>
     </div>
 
-    <div class="p-1">
+    <!-- <div class="p-1">
       <div class="flex justify-between items-center">
         <span
           :class="getContactStatusClass(friend)"
@@ -40,7 +59,7 @@
           {{ friend.notes }}
         </p>
       </div>
-    </div>
+    </div> -->
   </div>
 </template>
 

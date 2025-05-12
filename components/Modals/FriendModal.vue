@@ -241,14 +241,14 @@ const handleFileUpload = (event) => {
         offsetX, offsetY, scaledWidth, scaledHeight
       );
 
-      // Reduce to 16 colors (4 bits per channel, simple quantization)
+      // Reduce to 1024 colors (5 bits per channel, simple quantization)
       const imageData = ctx.getImageData(0, 0, cropSize, cropSize);
       const data = imageData.data;
       for (let i = 0; i < data.length; i += 4) {
-        // Quantize each channel to 4 bits (0-240, step 16)
-        data[i] = Math.round(data[i] / 16) * 16;
-        data[i + 1] = Math.round(data[i + 1] / 16) * 16;
-        data[i + 2] = Math.round(data[i + 2] / 16) * 16;
+        // Quantize each channel to 5 bits (0-248, step 8)
+        data[i] = Math.round(data[i] / 8) * 8;
+        data[i + 1] = Math.round(data[i + 1] / 8) * 8;
+        data[i + 2] = Math.round(data[i + 2] / 8) * 8;
         // Alpha stays the same
       }
       ctx.putImageData(imageData, 0, 0);

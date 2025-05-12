@@ -46,10 +46,8 @@ export default defineNuxtConfig({
     },
   },
 
-  // vite-pwa: workbox, manifest devOptions **must** be set.
-  // registerType might be able to also be autoUpdate, but haven't tried it
   pwa: {
-    registerType: 'autoUpdate',
+    registerType: 'prompt',
 
     manifest: {
       name: 'FriendCare PWA',

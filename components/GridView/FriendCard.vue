@@ -7,7 +7,7 @@
       <img
         :src="friend.photo || 'https://i.imgur.com/tdi3NGa.png'"
         alt="Freund"
-        class="w-full h-40 object-cover"
+        class="w-full h-40 w-40 object-cover"
       />
       <div
         class="absolute top-0 left-0 right-0 bg-gradient-to-b from-black/70 to-transparent p-1"

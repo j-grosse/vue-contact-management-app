@@ -251,7 +251,7 @@ const sendMessage = async () => {
         `;
 
       const promptWithEvents = basicPrompt + newPrompt;
-      console.log(promptWithEvents);
+      // console.log(promptWithEvents);
       console.log('\n\nPrompt length:', promptWithEvents.length, ' characters');
 
       // send new prompt
@@ -303,7 +303,6 @@ onMounted(async () => {
     .map((event: Event) => `${event.title}: ${event.link}`)
     .join(', ');
   console.log(
-    eventList,
     '\n\nEventList length: ',
     eventList.length,
     ' characters'

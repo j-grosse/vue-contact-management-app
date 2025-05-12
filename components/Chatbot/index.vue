@@ -24,14 +24,14 @@
         <div v-for="(message, index) in chatMessages" :key="index" class="mb-3">
           <!-- User message -->
           <div v-if="message.role === 'user'" class="flex justify-end">
-            <div class="bg-primary text-white rounded-lg py-2 px-4 max-w-[80%]">
+            <div class="bg-primary text-white rounded-lg py-2 px-4 max-w-[90%]">
               {{ message.content }}
             </div>
           </div>
           <!-- AI message -->
           <div v-else class="flex justify-start">
             <div
-              class="bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 rounded-lg py-2 px-4 max-w-[80%]"
+              class="bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 rounded-lg py-2 px-4 max-w-[90%]"
             >
               <div v-if="message.isLoading" class="flex items-center">
                 <div class="dot-flashing"></div>
@@ -66,7 +66,7 @@
 
       <div class="mt-3">
         <p class="text-xs pl-2 text-gray-500 dark:text-gray-400">
-          Tipps: Frage nach "Events" oder "Julia"
+          Tipps: Schreibe "Julia" oder "Events" für Vorschläge
         </p>
       </div>
     </div>
@@ -116,8 +116,6 @@ type Friend = {
   nextContactDate: Date;
 };
 const friendStore = useFriendsStore() as { friends: Friend[] };
-
-let lastMentionedFriend: Friend | null = null;
 
 // Format bot messages to detect and highlight URLs
 const formatMessage = (message: string) => {
@@ -217,26 +215,11 @@ const sendMessage = async () => {
     });
 
     if (matchingFriend) {
-      lastMentionedFriend = matchingFriend;
-    }
-    // Check if eventList is needed for userQuestion
-    finalPrompt += `
-      Wenn dieFrage des Users sich auf Events, Veranstaltungen oder Unternehmungen bezieht und du noch keinen Zugriff auf Eventdaten hast, antworte bitte ausschließlich mit dem Text #EVENTS_NEEDED. Schreibe dann nichts anderes.
-      Wenn die Frage nichts mit Events zu tun hat oder du keine Eventdaten brauchst, beantworte die Frage direkt.`;
-
-    // if question contains a friend's name, use their notes
-    if (matchingFriend) {
       finalPrompt += `
       Du bist ein deutscher Recommendation-Chatbot.
       \n\n Mache Vorschläge für die Kontaktaufnahme mit ${matchingFriend.name} basierend auf den
-      Notizen \n\n ${matchingFriend.notes} \n\n Ansonsten beantworte seine Frage zu ${matchingFriend.name}\n\n und den Notizen: ${matchingFriend.notes}
+      Notizen \n\n ${matchingFriend.notes} \n\n Ansonsten beantworte seine Frage zu ${matchingFriend.name}\n\n und den Notizen \n\n${matchingFriend.notes}
       Bitte antworte in mehreren Absätzen. Beginne deine Antwort mit "OK."`;
-
-      // if question contains a pronoun, use their notes
-    } else if (!matchingFriend && lastMentionedFriend) {
-      finalPrompt += `
-      Der User hat zuvor nach ${lastMentionedFriend.name} gefragt. Beziehe das Pronomen in der Frage auf ${lastMentionedFriend.name} 
-      und ${lastMentionedFriend.notes}, wenn dieses zur Person passt und beantworte die Frage.`;
     }
 
     console.log('Prompt with context: ', finalPrompt);
@@ -250,10 +233,10 @@ const sendMessage = async () => {
     console.log('API response:', text);
 
     // If the response contains #EVENTS_NEEDED, change prompt to contain eventList
-    if (text.trim().toUpperCase().startsWith('#EVENTS_NEEDED')) {
+    if (userQuestion.trim().toLowerCase().includes('events')) {
       basicPrompt += `\n\nEvents: ${eventList}`;
       const newPrompt = `
-        Context: "${finalPrompt}"
+        Conversation context: ${finalPrompt}
 
          Bitte schlage dem User passende Events für ${
            matchingFriend?.name || 'seinen Freund'
@@ -315,10 +298,7 @@ onMounted(async () => {
 
   // Convert fetched events JSON Array into a string
   eventList = events.value
-    .map(
-      (event: Event) => `${event.title}: ${event.link}`
-      // `<u><a href="${event.link}" target="_blank">${event.title}</a></u>`
-    )
+    .map((event: Event) => `${event.title}: ${event.link}`)
     .join(', ');
   console.log(
     eventList,
@@ -335,6 +315,15 @@ onMounted(async () => {
       content: `<img src="${friendDue.photo}" height="96px" width="96px"/>`,
       isLoading: false,
     });
+
+    // Add loading dots while waiting for the initial response
+    chatMessages.value.push({
+      role: 'ai',
+      content: '',
+      isLoading: true,
+    });
+    isLoading.value = true;
+
     const initialPrompt = `Du bist ein deutscher Recommendation-Chatbot. Schlage dem User eine Nachricht für die anstehende Kontaktaufnahme mit ${friendDue.name} vor.
     Nutze die Notizen ${friendDue.notes}.
     Bitte antworte in mehreren Absätzen. Beginne deine Antwort mit: Stay in touch!`;
@@ -344,14 +333,19 @@ onMounted(async () => {
         body: { prompt: initialPrompt },
       });
 
-      // Add the initial response to the chat
-      chatMessages.value.push({
+      // Replace the loading message with the actual response
+      chatMessages.value[chatMessages.value.length - 1] = {
         role: 'ai',
         content: text,
         isLoading: false,
-      });
+      };
     } catch (error) {
       console.error('Error getting initial response:', error);
+      chatMessages.value[chatMessages.value.length - 1] = {
+        role: 'ai',
+        content: 'Entschuldigung, es ist ein Fehler aufgetreten.',
+        isLoading: false,
+      };
     } finally {
       isLoading.value = false;
     }

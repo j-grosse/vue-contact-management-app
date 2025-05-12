@@ -3,7 +3,7 @@
     <h2 class="text-xl font-semibold text-yellow-800 dark:text-yellow-500 mb-4">
       Zuletzt
     </h2>
-    <div class="flex flex-wrap justify-around gap-4">
+    <div class="flex flex-wrap justify-around">
       <div
         v-for="friend in friends.slice(0, 4)"
         :key="'recent-photo-' + friend.id"

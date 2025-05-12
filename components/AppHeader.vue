@@ -1,8 +1,11 @@
 <template>
   <header class="mb-4 flex justify-between items-center">
-    <h1 class="text-2xl sm:text-3xl font-bold text-gray-800 dark:text-white">
-      FriendCare
-    </h1>
+    <div class="flex gap-2">
+      <img alt="Logo" src="../public/logo.png" class="w-8 h-8" />
+      <h1 class="text-2xl sm:text-3xl font-bold text-gray-800 dark:text-white">
+        FriendCare
+      </h1>
+    </div>
     <div class="flex items-center gap-3">
       <button
         @click="appStore.toggleViewMode"

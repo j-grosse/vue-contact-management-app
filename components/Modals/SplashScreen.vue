@@ -2,28 +2,32 @@
   <div class="splash-screen-overlay" v-if="visible">
     <div
       class="fixed inset-0 bg-black/70 flex items-center justify-center p-4 z-50"
+      @click="closeModal()"
     >
       <div
         class="bg-white dark:bg-gray-800 rounded-lg shadow-xl w-full max-w-sm mx-auto p-4 overflow-hidden max-h-[90vh] overflow-y-auto"
+        @click.stop
       >
         <h3 class="text-xl font-bold text-gray-800 dark:text-white mb-4">
           Willkommen bei FriendCare!
         </h3>
         <p class="text-gray-600 dark:text-gray-300 mb-6">
           Diese App erinnert dich daran deine Friends und Bekannten regelmäßig
-          zu kontaktieren. Füge einen Friend und seine Interessen hinzu und lege ein Kontaktintervall
-          fest. Die App wird dich dann regelmmäßig daran erinnern dich zu melden.
-          <br /><br />Der Chatbot gibt dir zudem Tipps für die Kontaktaufnahme und
-          schlägt dir mögliche Nachrichten an deine Friends vor. Er kann dir
+          zu kontaktieren. Füge einen Friend und seine Interessen hinzu und lege
+          ein Kontaktintervall fest. Die App wird dich dann regelmäßig daran
+          erinnern dich zu melden.
+          <br /><br />Der Chatbot gibt dir zudem Tipps für die Kontaktaufnahme
+          und schlägt dir mögliche Nachrichten an deine Friends vor. Er kann dir
           auch aktuelle Events in deiner Umgebung anzeigen, die ihren Interessen
-          entsprechen. <br /><br />Lade deine Friends und Bekannten ein die App ebenfalls zu
-          nutzen. So bleibt ihr in Kontakt! <FontAwesomeIcon icon="fa-regular fa-face-smile-wink" class="px-1" />
+          entsprechen. <br /><br />Lade deine Friends und Bekannten ein die App
+          ebenfalls zu nutzen. So bleibt ihr in Kontakt!
+          <FontAwesomeIcon icon="fa-regular fa-face-smile-wink" class="px-1" />
           <br />
         </p>
-        <h3 class="text-lg font-bold text-gray-800 dark:text-white mb-4">
+        <h3 class="text-lg font-bold text-gray-600 dark:text-gray-300 mb-4">
           App zum Homescreen hinzufügen:
         </h3>
-        <p>
+        <p class="text-gray-600 dark:text-gray-300">
           <strong>iOS:</strong> Tippe im Safari Browser unten auf
           <FontAwesomeIcon
             icon="fa-solid fa-arrow-up-from-bracket"
@@ -34,7 +38,7 @@
           "Zum Home-Bildschirm".
         </p>
         <br />
-        <p>
+        <p class="text-gray-600 dark:text-gray-300">
           <strong>Android:</strong> Tippe auf das
           <FontAwesomeIcon icon="fa-solid fa-ellipsis-vertical" class="px-1" />
           Menü-Symbol oben rechts und dann auf "Zum Home-Bildschirm".

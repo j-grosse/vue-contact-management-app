@@ -5,7 +5,7 @@
   >
     <NuxtLayout>
       <NuxtPage />
-      <SplashScreen v-if="showSplashScreen" />
+      <SplashScreen v-if="showSplashScreen" @close="closeModal" />
     </NuxtLayout>
   </div>
 </template>
@@ -22,6 +22,10 @@ const {
 } = usePushNotifications();
 
 const showSplashScreen = ref(false);
+
+const closeModal = () => {
+  showSplashScreen.value = false;
+};
 
 onMounted(async () => {
   // show splash screen if not shown before

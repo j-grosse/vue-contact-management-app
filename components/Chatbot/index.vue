@@ -136,11 +136,6 @@ const getNextFriendToContact = () => {
   })[0];
 };
 
-const friendPhoto = (friendName: string): string | undefined => {
-  const friend = friendStore.friends.find((f) => f.name === friendName);
-  return friend?.photo;
-};
-
 // Function to build the friend notes context
 const buildFriendNotesContext = () => {
   return (

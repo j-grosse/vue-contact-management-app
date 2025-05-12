@@ -8,7 +8,10 @@
       class="p-4 bg-primary text-white rounded-t-lg flex justify-between items-center"
     >
       <h3 class="font-semibold">Empfehlungsassistent</h3>
-      <button @click="isOpen = !isOpen" class="text-white hover:text-gray-200">
+      <button
+        @click.stop="isOpen = !isOpen"
+        class="text-white hover:text-gray-200"
+      >
         <FontAwesomeIcon
           :icon="isOpen ? 'fa-chevron-down' : 'fa-chevron-up'"
         ></FontAwesomeIcon>
@@ -66,7 +69,7 @@
 
       <div class="mt-3">
         <p class="text-xs pl-2 text-gray-500 dark:text-gray-400">
-          Tipps: Schreibe "Julia" oder "Events" für Vorschläge
+          Schreibe "Events" oder "Julia", um Empfehlungen zu erhalten.
         </p>
       </div>
     </div>
@@ -230,7 +233,6 @@ const sendMessage = async () => {
       method: 'POST',
       body: { prompt: finalPrompt },
     });
-    console.log('API response:', text);
 
     // If the response contains #EVENTS_NEEDED, change prompt to contain eventList
     if (userQuestion.trim().toLowerCase().includes('events')) {

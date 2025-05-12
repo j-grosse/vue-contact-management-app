@@ -4,7 +4,7 @@
     @click="$emit('close')"
   >
     <div
-      class="bg-white dark:bg-gray-800 rounded-lg shadow-xl w-full max-w-md mx-auto overflow-hidden"
+      class="bg-white dark:bg-gray-800 rounded-lg shadow-xl w-full max-w-md mx-auto overflow-hidden max-h-[90vh] overflow-y-auto"
       @click.stop
     >
       <div class="p-6">
@@ -26,7 +26,9 @@
                 :icon="appStore.isDarkMode ? 'fa-moon' : 'fa-sun'"
               ></FontAwesomeIcon>
             </button>
-            <p @click="appStore.toggleDarkMode()">Theme</p>
+            <p @click="appStore.toggleDarkMode()" class="cursor-pointer">
+              Theme
+            </p>
           </div>
           <div class="flex items-center gap-2 dark:text-white">
             <button
@@ -36,7 +38,7 @@
             >
               <FontAwesomeIcon icon="fa-floppy-disk"></FontAwesomeIcon>
             </button>
-            <p @click="exportData">Backup erstellen</p>
+            <p @click="exportData" class="cursor-pointer">Backup erstellen</p>
           </div>
           <div class="flex items-center gap-2 dark:text-white">
             <!-- Hidden file input -->
@@ -54,7 +56,21 @@
             >
               <FontAwesomeIcon icon="fa-file-import"></FontAwesomeIcon>
             </button>
-            <p @click="fileInput?.click()">Backup importieren</p>
+            <p @click="fileInput?.click()" class="cursor-pointer">
+              Backup importieren
+            </p>
+          </div>
+          <div class="flex items-center gap-2 dark:text-white">
+            <button
+              @click="openSplashScreen"
+              class="bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 border border-gray-300 dark:border-gray-600 p-2 rounded-full flex items-center justify-center w-10 h-10 text-gray-800 dark:text-gray-200"
+              title="'Über diese App'"
+            >
+              <FontAwesomeIcon icon="fa-info"></FontAwesomeIcon>
+            </button>
+            <p @click="openSplashScreen" class="cursor-pointer">
+              Über diese App
+            </p>
           </div>
         </div>
 
@@ -72,16 +88,21 @@
       </div>
     </div>
   </div>
+
+  <SplashScreen v-if="showSplashScreen" @click="$emit('close')" />
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, onMounted, onBeforeUnmount } from 'vue';
 import { useAppStore } from '~/stores/app';
 import { useFileUtils } from '~/composables/useFileUtils';
+import SplashScreen from './SplashScreen.vue';
 
 const appStore = useAppStore();
 const fileInput = ref(null);
 const { exportFromLocalStorage, importToLocalStorage } = useFileUtils();
+
+const showSplashScreen = ref(false);
 
 const exportData = () => {
   if (process.client) {
@@ -95,5 +116,17 @@ const importData = (event) => {
   }
 };
 
+const openSplashScreen = () => {
+  showSplashScreen.value = true;
+};
+
 defineEmits(['close']);
+
+onMounted(() => {
+  document.body.classList.add('modal-open');
+});
+
+onBeforeUnmount(() => {
+  document.body.classList.remove('modal-open');
+});
 </script>

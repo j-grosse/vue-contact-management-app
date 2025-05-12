@@ -69,7 +69,7 @@
 
       <div class="mt-3">
         <p class="text-xs pl-2 text-gray-500 dark:text-gray-400">
-          Schreibe "Events" oder "Julia", um Empfehlungen zu erhalten.
+          Tipp: Schreibe "Events" oder "Julia", um Empfehlungen zu erhalten.
         </p>
       </div>
     </div>
@@ -134,11 +134,6 @@ const getNextFriendToContact = () => {
       new Date(b.nextContactDate).getTime()
     );
   })[0];
-};
-
-const friendPhoto = (friendName: string): string | undefined => {
-  const friend = friendStore.friends.find((f) => f.name === friendName);
-  return friend?.photo;
 };
 
 // Function to build the friend notes context
@@ -251,7 +246,7 @@ const sendMessage = async () => {
         `;
 
       const promptWithEvents = basicPrompt + newPrompt;
-      console.log(promptWithEvents);
+      // console.log(promptWithEvents);
       console.log('\n\nPrompt length:', promptWithEvents.length, ' characters');
 
       // send new prompt
@@ -303,7 +298,6 @@ onMounted(async () => {
     .map((event: Event) => `${event.title}: ${event.link}`)
     .join(', ');
   console.log(
-    eventList,
     '\n\nEventList length: ',
     eventList.length,
     ' characters'

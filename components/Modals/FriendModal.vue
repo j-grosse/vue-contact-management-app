@@ -4,7 +4,7 @@
     @click="$emit('close')"
   >
     <div
-      class="bg-white dark:bg-gray-800 rounded-lg shadow-xl w-full max-w-md mx-auto overflow-hidden"
+      class="bg-white dark:bg-gray-800 rounded-lg shadow-xl w-full max-w-md mx-auto overflow-hidden max-h-[90vh] overflow-y-auto"
       @click.stop
     >
       <div class="p-6">
@@ -18,7 +18,7 @@
             <div class="relative flex flex-col items-center">
               <div
                 @click="imageFileInput?.click()"
-                class="w-32 h-32 rounded-full overflow-hidden bg-gray-200 dark:bg-gray-700 mb-2 cursor-pointer"
+                class="w-32 h-32 rounded-full overflow-hidden bg-gray-200 dark:bg-gray-700 mb-0 cursor-pointer"
               >
                 <img
                   v-if="form.photo"
@@ -135,25 +135,23 @@
               @click="$emit('delete-request')"
               class="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg text-base flex items-center"
             >
-              <FontAwesomeIcon icon="fa-trash" class="mr-2"></FontAwesomeIcon>
+              <FontAwesomeIcon icon="fa-trash"></FontAwesomeIcon>
             </button>
             <button v-if="!editing"></button>
             <div class="flex justify-between gap-3">
-              <div class="flex gap-3">
-                <button
-                  type="button"
-                  @click="$emit('close')"
-                  class="px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 text-base"
-                >
-                  <FontAwesomeIcon icon="fa-times" />
-                </button>
-                <button
-                  type="submit"
-                  class="px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 text-base"
-                >
-                  <FontAwesomeIcon icon="fa-check" />
-                </button>
-              </div>
+              <button
+                type="button"
+                @click="$emit('close')"
+                class="px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 text-base"
+              >
+                <FontAwesomeIcon icon="fa-times" />
+              </button>
+              <button
+                type="submit"
+                class="px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 text-base"
+              >
+                <FontAwesomeIcon icon="fa-check" />
+              </button>
             </div>
           </div>
         </form>
@@ -163,7 +161,7 @@
 </template>
 
 <script setup>
-import { ref, reactive, onMounted } from 'vue';
+import { ref, reactive, onMounted, onBeforeUnmount } from 'vue';
 import { useFriendsStore } from '~/stores/friends';
 
 const props = defineProps({
@@ -189,9 +187,14 @@ const form = reactive({
 
 // Initialize form with editing data if available
 onMounted(() => {
+  document.body.classList.add('modal-open');
   if (props.editing) {
     Object.assign(form, props.editing);
   }
+});
+
+onBeforeUnmount(() => {
+  document.body.classList.remove('modal-open');
 });
 
 // Calculate next contact date and prepare the form data for saving

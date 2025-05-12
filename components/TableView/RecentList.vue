@@ -7,7 +7,7 @@
       <div
         v-for="friend in friends"
         :key="'recent-' + friend.id"
-        class="bg-white dark:bg-gray-800 rounded-lg p-3 shadow-md hover:shadow-lg transition-shadow cursor-pointer"
+        class="bg-white dark:bg-gray-800 rounded-lg p-3 shadow-md hover:shadow-lg cursor-pointer transition-transform hover:scale-[1.05]"
         @click="$emit('edit', friend)"
       >
         <div class="flex items-start gap-3">
@@ -15,7 +15,7 @@
             <img
               :src="friend.photo || 'https://i.imgur.com/tdi3NGa.png'"
               alt="Freund"
-              class="w-12 h-12 rounded-full object-cover"
+              class="w-12 h-12 rounded-lg object-cover"
             />
             <span
               :class="getContactStatusClass(friend)"

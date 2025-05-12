@@ -32,6 +32,9 @@ onMounted(async () => {
 
 <style>
 /* Apply global styles */
+body.modal-open {
+  overflow: hidden;
+}
 /* body {
   @apply bg-white dark:bg-gray-900;
 } */

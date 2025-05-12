@@ -4,7 +4,7 @@
     @click="$emit('close')"
   >
     <div
-      class="bg-white dark:bg-gray-800 rounded-lg shadow-xl w-full max-w-md mx-auto overflow-hidden"
+      class="bg-white dark:bg-gray-800 rounded-lg shadow-xl w-full max-w-md mx-auto overflow-hidden max-h-[90vh] overflow-y-auto"
       @click.stop
     >
       <div class="p-6">
@@ -75,7 +75,7 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, onMounted, onBeforeUnmount } from 'vue';
 import { useAppStore } from '~/stores/app';
 import { useFileUtils } from '~/composables/useFileUtils';
 
@@ -96,4 +96,12 @@ const importData = (event) => {
 };
 
 defineEmits(['close']);
+
+onMounted(() => {
+  document.body.classList.add('modal-open');
+});
+
+onBeforeUnmount(() => {
+  document.body.classList.remove('modal-open');
+});
 </script>

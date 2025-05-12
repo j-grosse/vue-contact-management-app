@@ -4,7 +4,7 @@
     @click="$emit('close')"
   >
     <div
-      class="bg-white dark:bg-gray-800 rounded-lg shadow-xl w-full max-w-md mx-auto overflow-hidden"
+      class="bg-white dark:bg-gray-800 rounded-lg shadow-xl w-full max-w-md mx-auto overflow-hidden max-h-[90vh] overflow-y-auto"
       @click.stop
     >
       <div class="p-6">
@@ -139,21 +139,19 @@
             </button>
             <button v-if="!editing"></button>
             <div class="flex justify-between gap-3">
-              <div class="flex gap-3">
-                <button
-                  type="button"
-                  @click="$emit('close')"
-                  class="px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 text-base"
-                >
-                  <FontAwesomeIcon icon="fa-times" />
-                </button>
-                <button
-                  type="submit"
-                  class="px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 text-base"
-                >
-                  <FontAwesomeIcon icon="fa-check" />
-                </button>
-              </div>
+              <button
+                type="button"
+                @click="$emit('close')"
+                class="px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 text-base"
+              >
+                <FontAwesomeIcon icon="fa-times" />
+              </button>
+              <button
+                type="submit"
+                class="px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 text-base"
+              >
+                <FontAwesomeIcon icon="fa-check" />
+              </button>
             </div>
           </div>
         </form>
@@ -163,7 +161,7 @@
 </template>
 
 <script setup>
-import { ref, reactive, onMounted } from 'vue';
+import { ref, reactive, onMounted, onBeforeUnmount } from 'vue';
 import { useFriendsStore } from '~/stores/friends';
 
 const props = defineProps({
@@ -189,9 +187,14 @@ const form = reactive({
 
 // Initialize form with editing data if available
 onMounted(() => {
+  document.body.classList.add('modal-open');
   if (props.editing) {
     Object.assign(form, props.editing);
   }
+});
+
+onBeforeUnmount(() => {
+  document.body.classList.remove('modal-open');
 });
 
 // Calculate next contact date and prepare the form data for saving

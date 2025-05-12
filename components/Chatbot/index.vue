@@ -69,7 +69,7 @@
 
       <div class="mt-3">
         <p class="text-xs pl-2 text-gray-500 dark:text-gray-400">
-          Schreibe "Events" oder "Julia", um Empfehlungen zu erhalten.
+          Tipp: Schreibe "Events" oder "Julia", um Empfehlungen zu erhalten.
         </p>
       </div>
     </div>

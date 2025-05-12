@@ -1,7 +1,5 @@
 <template>
-  <div
-    class="mb-2 p-3 dark:bg-yellow-900/20 rounded-lg shadow-md"
-  >
+  <div class="mb-2 p-3 dark:bg-yellow-900/20 rounded-lg shadow-md">
     <!-- Recent Contacts Photo Row -->
     <RecentList
       v-if="recentContacts.length > 0"

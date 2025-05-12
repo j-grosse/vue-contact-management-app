@@ -18,7 +18,7 @@
             <div class="relative flex flex-col items-center">
               <div
                 @click="imageFileInput?.click()"
-                class="w-32 h-32 rounded-full overflow-hidden bg-gray-200 dark:bg-gray-700 mb-2 cursor-pointer"
+                class="w-32 h-32 rounded-full overflow-hidden bg-gray-200 dark:bg-gray-700 mb-0 cursor-pointer"
               >
                 <img
                   v-if="form.photo"
@@ -135,7 +135,7 @@
               @click="$emit('delete-request')"
               class="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg text-base flex items-center"
             >
-              <FontAwesomeIcon icon="fa-trash" class="mr-2"></FontAwesomeIcon>
+              <FontAwesomeIcon icon="fa-trash"></FontAwesomeIcon>
             </button>
             <button v-if="!editing"></button>
             <div class="flex justify-between gap-3">

@@ -15,7 +15,7 @@
             <img
               :src="friend.photo || 'https://i.imgur.com/tdi3NGa.png'"
               alt="Freund"
-              class="w-12 h-12 rounded-full object-cover"
+              class="w-12 h-12 rounded-lg object-cover"
             />
             <span
               :class="getContactStatusClass(friend)"

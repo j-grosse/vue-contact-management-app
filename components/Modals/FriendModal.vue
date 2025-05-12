@@ -17,13 +17,13 @@
             <!-- Photo preview and upload -->
             <div class="relative flex flex-col items-center">
               <div
-                class="w-32 h-32 rounded-full overflow-hidden bg-gray-200 dark:bg-gray-700 mb-2"
+                @click="imageFileInput?.click()"
+                class="w-32 h-32 rounded-full overflow-hidden bg-gray-200 dark:bg-gray-700 mb-2 cursor-pointer"
               >
                 <img
                   v-if="form.photo"
                   :src="form.photo"
-                  @click="imageFileInput?.click()"
-                  class="w-full h-full object-cover cursor-pointer"
+                  class="w-full h-full object-cover"
                   alt="Freund"
                 />
                 <div
@@ -35,29 +35,29 @@
                     class="text-3xl"
                   ></FontAwesomeIcon>
                 </div>
+              </div>
 
-                <!-- Photo upload and conversion -->
-                <div
-                  class="absolute bottom-0 left-24 right-0 flex flex-col items-center gap-2"
+              <!-- Photo upload and conversion -->
+              <div
+                class="absolute bottom-0 left-24 right-0 flex flex-col items-center gap-2"
+              >
+                <!-- Hidden file input -->
+                <input
+                  type="file"
+                  @change="handleFileUpload"
+                  ref="imageFileInput"
+                  class="hidden"
+                  accept="image/*"
+                />
+                <button
+                  type="button"
+                  @click="imageFileInput?.click()"
+                  class="bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 border border-gray-300 dark:border-gray-600 p-2 rounded-full flex items-center justify-center w-10 h-10 text-gray-800 dark:text-gray-200 mb-2"
+                  title="Profilbild importieren"
                 >
-                  <!-- Hidden file input -->
-                  <input
-                    type="file"
-                    @change="handleFileUpload"
-                    ref="imageFileInput"
-                    class="hidden"
-                    accept="image/*"
-                  />
-                  <button
-                    type="button"
-                    @click="imageFileInput?.click()"
-                    class="bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 border border-gray-300 dark:border-gray-600 p-2 rounded-full flex items-center justify-center w-10 h-10 text-gray-800 dark:text-gray-200 mb-2"
-                    title="Profilbild importieren"
-                  >
-                    <FontAwesomeIcon icon="fa-image"></FontAwesomeIcon>
-                  </button>
-                  <!-- <span class="text-center dark:text-white">Profilbild importieren</span> -->
-                </div>
+                  <FontAwesomeIcon icon="fa-image"></FontAwesomeIcon>
+                </button>
+                <!-- <span class="text-center dark:text-white">Profilbild importieren</span> -->
               </div>
             </div>
 
@@ -236,10 +236,7 @@ const handleFileUpload = (event) => {
       canvas.height = cropSize;
 
       // Draw the scaled and centered image
-      ctx.drawImage(
-        img,
-        offsetX, offsetY, scaledWidth, scaledHeight
-      );
+      ctx.drawImage(img, offsetX, offsetY, scaledWidth, scaledHeight);
 
       // Reduce to 1024 colors (5 bits per channel, simple quantization)
       const imageData = ctx.getImageData(0, 0, cropSize, cropSize);

@@ -5,13 +5,15 @@
   >
     <NuxtLayout>
       <NuxtPage />
+      <SplashScreen v-if="showSplashScreen" />
     </NuxtLayout>
   </div>
 </template>
 
 <script setup>
-import { onMounted } from 'vue';
+import { ref, onMounted } from 'vue';
 import { usePushNotifications } from '~/composables/usePushNotifications';
+import SplashScreen from './components/Modals/SplashScreen.vue';
 
 const {
   registerServiceWorker,
@@ -19,7 +21,16 @@ const {
   requestNotificationPermission,
 } = usePushNotifications();
 
+const showSplashScreen = ref(false);
+
 onMounted(async () => {
+  // show splash screen if not shown before
+  const splashScreenShown = localStorage.getItem('splashScreenShown');
+  if (!splashScreenShown) {
+    showSplashScreen.value = true;
+  }
+
+  // Check if the service worker is already registered
   const registration = await registerServiceWorker();
   if (registration) {
     const permissionGranted = await requestNotificationPermission();

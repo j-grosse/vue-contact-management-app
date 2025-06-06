@@ -44,7 +44,10 @@
         <!-- Interactions Tab active  -->
         <div v-if="activeTab === 'interactions'">
           <AddInteraction @add="addNewInteraction" />
-          <InteractionList :interactions="form.interactions" />
+          <InteractionList 
+            :interactions="form.interactions" 
+            @delete="deleteInteraction"
+          />
         </div>
 
         <!-- Info Tab active  -->
@@ -337,6 +340,19 @@ const addNewInteraction = (interaction) => {
   });
   
   // Immediately update the store when adding a new interaction
+  if (props.editing) {
+    friendsStore.updateFriend(props.editing.id, {
+      ...form,
+      interactions: form.interactions
+    });
+  }
+};
+
+const deleteInteraction = (interactionId) => {
+  // Remove the interaction from the form
+  form.interactions = form.interactions.filter(i => i.id !== interactionId);
+  
+  // Update the store if we're editing an existing friend
   if (props.editing) {
     friendsStore.updateFriend(props.editing.id, {
       ...form,

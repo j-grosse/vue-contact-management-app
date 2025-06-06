@@ -4,26 +4,37 @@
     <div
       v-for="interaction in [...interactions].sort((a, b) => new Date(a.date) - new Date(b.date)).reverse()"
       :key="interaction.id"
-      class="interaction-item mb-3 border-b"
+      class="interaction-item mb-4 border-l pl-2"
     >
-    <div class="date text-lg block text-gray-700 dark:text-gray-300">
-        {{ formatDate(interaction.date) }}
-        <span class="text-lg text-gray-700 dark:text-gray-300 pl-1">
-            ({{ getDaysAgo(interaction.date) }})
-        </span>
-    </div>
+      <div class="date text-lg block text-gray-700 dark:text-gray-300">
+          {{ formatDate(interaction.date) }}
+          <span class="text-lg text-gray-700 dark:text-gray-300 pl-1">
+              ({{ getDaysAgo(interaction.date) }})
+          </span>
+          <button
+          @click="$emit('delete', interaction.id)"
+          class="px-4 py-2 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 text-base px-4 py-2 ml-auto"
+        >
+          <FontAwesomeIcon icon="fa-xmark" />
+        </button>
+      </div>
       <div class="text-md p-1 rounded-lg">{{ interaction.text }}</div>
     </div>
   </div>
 </template>
 
 <script setup>
-defineProps({
+import { ref } from 'vue';
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
+
+const props = defineProps({
   interactions: {
     type: Array,
     required: true
   }
 });
+
+const emit = defineEmits(['delete']);
 
 const formatDate = (date) => {
   const d = new Date(date);

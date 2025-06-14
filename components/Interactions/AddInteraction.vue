@@ -5,13 +5,13 @@
           type="date" 
           v-model="date" 
           required 
-          class="date-input text-lg block text-gray-700 dark:text-gray-300 mb-1 mr-auto"
+          class="date-input text-lg block rounded-lg text-gray-700 dark:text-gray-300 dark:bg-gray-700 mb-1 px-1 mr-auto"
           />
         <textarea 
           v-model="text" 
           placeholder="Text..." 
           required
-          class="text-input border rounded-lg p-3"
+          class="text-input dark:text-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary dark:bg-gray-700 dark:caret-gray-300 p-3"
           >
       </textarea>
     </div>

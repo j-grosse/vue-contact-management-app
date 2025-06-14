@@ -11,14 +11,17 @@
           <span class="text-lg text-gray-700 dark:text-gray-300 pl-1">
               ({{ getDaysAgo(interaction.date) }})
           </span>
-          <button
-          @click="$emit('delete', interaction.id)"
-          class="px-4 py-2 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 text-base px-4 py-2 ml-auto"
-        >
-          <FontAwesomeIcon icon="fa-xmark" />
-        </button>
+          
       </div>
-      <div class="text-md p-1 rounded-lg">{{ interaction.text }}</div>
+      <div class="flex">
+        <div class="text-md text-gray-700 dark:text-gray-300 p-1 rounded-lg">{{ interaction.text }}</div>
+        <button
+            @click="$emit('delete', interaction.id)"
+            class="px-4 py-2 rounded-lg text-gray-700 dark:text-gray-300 hover:text-gray-400 dark:hover:text-gray-100 px-4 py-2 ml-auto"
+          >
+            <FontAwesomeIcon icon="fa-times" />
+          </button>
+      </div>
     </div>
   </div>
 </template>

@@ -1,8 +1,8 @@
 # FriendCare App
 
-A Progressive Web App made with Vue 3 / Nuxt 3 and Tailwind CSS
-The order of the freinds to contact next changes depending of the individually set contact period.
-The Chatbot recommends topics, messages and events to visit that fit to your notes that contain of the friends interests and interactions with you.
+A Progressive Web App made with Vue 3 / Nuxt 3 and Tailwind CSS  
+The order of the freinds to contact next changes depending of the individually set contact period.  
+The Chatbot recommends topics, messages and events to visit that fit to your notes of the friends' interests.
 
 - Chatbot (Google gemini-2.0-flash-lite LLM)
 - local storage import and export

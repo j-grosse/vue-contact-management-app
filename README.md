@@ -1,14 +1,16 @@
 # FriendCare App
 
-A Progressive Web App made with Vue 3 / Nuxt 3 and Tailwind CSS  
-The order of the freinds to contact next changes depending of the individually set contact period.  
-The Chatbot recommends topics, messages and events to visit that fit to your notes of the friends' interests.
+A Progressive Web App made with Vue 3 / Nuxt 3 and Tailwind CSS.  
+Never forget to keep in contact with your friends on a regular basis.  
+Set a an individual contact period for each of your friends and the app shows you the friends to cantact next.     
+The AI Chatbot recommends message drafts and events that fit to your friend's interests.  
 
-- Chatbot (Google gemini-2.0-flash-lite LLM)
+- progressive web app with persistent data saved to local storage
 - local storage import and export
-- profile photo import (coverts to 192px x 192px Base64 image)
-- light and dark mode
-- grid view and table view
+- light/dark mode
+- grid view/table view
+- profile image import (coverted to Base64)
+- AI Chatbot (Google gemini-2.0-flash-lite LLM)
 
 ![](./assets/screenshot1.jpg)
 ![](./assets/screenshot2.jpg)

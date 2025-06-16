@@ -12,7 +12,43 @@
       </button>
     </div>
 
-    <Chatbot />
+    <!-- Tab -->
+    <div class="tabs flex justify-center gap-2 bg-gray-300 dark:bg-gray-700 border-2 border-gray-300 dark:border-gray-600 rounded-lg p-1 mb-4">
+          <button
+            :class="[
+              'w-1/2 py-2 rounded-lg font-medium transition-colors duration-150 focus:outline-none',
+              activeTab === 'globalInteractions'
+                ? 'bg-white dark:bg-gray-800 text-primary-500 dark:text-gray-300 shadow'
+                : 'bg-transparent text-gray-600 dark:text-gray-300'
+            ]"
+            @click="activeTab = 'globalInteractions'"
+            type="button"
+          >
+            Interaktionen
+          </button>
+          <button
+            :class="[
+              'w-1/2 py-2 rounded-lg font-medium transition-colors duration-150 focus:outline-none',
+              activeTab === 'chatbot'
+                ? 'bg-white dark:bg-gray-800 text-primary-500 dark:text-gray-300 shadow'
+                : 'bg-transparent text-gray-600 dark:text-gray-300'
+            ]"
+            @click="activeTab = 'chatbot'"
+            type="button"
+          >
+            Chatbot
+          </button>
+        </div>
+
+           <!-- Interactions Tab active  -->
+           <div v-if="activeTab === 'globalInteractions'">
+          <GlobalInteractions />  
+        </div>
+
+        <!-- Chatbot Tab active  -->
+        <div v-if="activeTab === 'chatbot'">
+          <Chatbot />
+        </div>
 
     <TableView
       v-if="appStore.viewMode === 'table'"
@@ -76,13 +112,15 @@ import FriendModal from '~/components/Modals/FriendModal.vue';
 import DeleteModal from '~/components/Modals/DeleteModal.vue';
 import PreferencesModal from '~/components/Modals/PreferencesModal.vue';
 import Chatbot from '~/components/Chatbot';
-
+import GlobalInteractions from '~/components/GlobalInteractions';
 const friendStore = useFriendsStore();
 const appStore = useAppStore();
 
 // Local state
 const searchQuery = ref('');
 const editingFriend = ref(null);
+
+const activeTab = ref('globalInteractions');
 
 // Initialize app
 onMounted(() => {

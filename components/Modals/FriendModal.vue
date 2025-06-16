@@ -17,7 +17,7 @@
         <div class="tabs flex justify-center gap-2 bg-gray-300 dark:bg-gray-700 border-2 border-gray-300 dark:border-gray-600 rounded-lg p-1 mb-4">
           <button
             :class="[
-              'w-1/2 px-4 py-2 rounded-lg font-medium transition-colors duration-150 focus:outline-none',
+              'w-1/2 py-2 rounded-lg font-medium transition-colors duration-150 focus:outline-none',
               activeTab === 'interactions'
                 ? 'bg-white dark:bg-gray-800 text-primary-500 dark:text-gray-300 shadow'
                 : 'bg-transparent text-gray-600 dark:text-gray-300'
@@ -29,7 +29,7 @@
           </button>
           <button
             :class="[
-              'w-1/2 px-4 py-2 rounded-lg font-medium transition-colors duration-150 focus:outline-none',
+              'w-1/2 py-2 rounded-lg font-medium transition-colors duration-150 focus:outline-none',
               activeTab === 'info'
                 ? 'bg-white dark:bg-gray-800 text-primary-500 dark:text-gray-300 shadow'
                 : 'bg-transparent text-gray-600 dark:text-gray-300'

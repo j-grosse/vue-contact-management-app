@@ -29,6 +29,8 @@
 <script setup>
 import { ref } from 'vue';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
+import { getDaysAgo } from '~/utils/dateHelper';
+import { formatDate } from '~/utils/dateHelper';
 
 const props = defineProps({
   interactions: {
@@ -39,30 +41,4 @@ const props = defineProps({
 
 const emit = defineEmits(['delete']);
 
-const formatDate = (date) => {
-  const d = new Date(date);
-  const day = d.getDate().toString().padStart(2, '0');
-  const month = (d.getMonth() + 1).toString().padStart(2, '0');
-  const year = d.getFullYear();
-  return `${day}.${month}.${year}`;
-};
-
-const getDaysAgo = (date) => {
-  const today = new Date();
-  const interactionDate = new Date(date);
-  
-  // Reset time part to compare only dates
-  today.setHours(0, 0, 0, 0);
-  interactionDate.setHours(0, 0, 0, 0);
-  
-  const diffTime = today - interactionDate;
-  const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
-  
-  if (diffDays === 0) return 'Heute';
-  if (diffDays === 1) return 'Gestern';
-  if (diffDays < 21) return `Vor ${diffDays} Tagen`;
-  if (diffDays < 30) return `Vor ${Math.floor(diffDays / 7)} Wochen`;
-  if (diffDays < 365) return `Vor ${Math.floor(diffDays / 30)} Monaten`;
-  return `Vor ${Math.floor(diffDays / 365)} Jahren`;
-};
 </script>

@@ -13,6 +13,7 @@ The AI Chatbot recommends message drafts and events that fit to your friend's in
 - AI Chatbot (Google gemini-2.0-flash-lite LLM)
 
 ![FriendCare v1 0 0](https://github.com/user-attachments/assets/a71c4b19-c644-4a37-b130-40a836f94e10)
+
 ![](./assets/screenshot1.jpg)
 ![](./assets/screenshot2.jpg)
 

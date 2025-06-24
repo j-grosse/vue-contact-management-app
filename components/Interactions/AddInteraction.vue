@@ -5,7 +5,7 @@
           type="date" 
           v-model="date" 
           required 
-          class="date-input text-lg block rounded-lg text-gray-700 dark:text-gray-300 dark:bg-gray-700 mb-1 px-1 mr-auto"
+          class="date-input text-lg block rounded-lg text-gray-700 dark:text-gray-300 dark:bg-gray-700 mb-2 p-2"
           />
         <textarea 
           v-model="text" 

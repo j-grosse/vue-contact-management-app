@@ -1,67 +1,91 @@
 <template>
-    <div class="global-interactions">
-      <div class="space-y-3 max-h-[400px] overflow-y-auto pr-2">
-        <div
-          v-for="interaction in visibleInteractions"
-          :key="interaction.id"
-          class="bg-white dark:bg-gray-800 rounded-lg p-3 shadow-md hover:shadow-lg cursor-pointer transition-transform"
-        >
-          <div class="flex items-start gap-3">
-            <div class="flex flex-col text-center gap-2">
-              <img
-                :src="interaction.friend.photo || 'https://i.imgur.com/tdi3NGa.png'"
-                alt="Freund"
-                class="w-12 h-12 rounded-lg object-cover"
-              />
-            </div>
-            <div class="flex-1">
-              <div class="flex justify-between items-start">
-                <div class="font-medium text-gray-800 dark:text-gray-200">
-                  {{ interaction.friend.name }}
-                  <br />
-                  <div class="text-sm text-gray-500 dark:text-gray-400">
-                      {{ getDaysAgo(interaction.date) }}
-                  </div>
-                </div>
-                <div class="text-sm text-gray-500 dark:text-gray-400">
-                    {{ formatDate(interaction.date) }}
-                </div>
+  <div class="dark:bg-yellow-900/20 rounded-lg shadow-md overflow-hidden my-2 mb-4"
+  >
+    <!-- Chatbot window content -->
+    <div class="p-4">
+      <div
+        class="mb-4 h-64 overflow-y-auto overflow-x-hidden bg-gray-50 dark:bg-gray-900 rounded-lg p-3"
+      >
+        <!-- global interactions window content-->
+        <div class="space-y-3 max-h-[400px] overflow-y-auto pr-2">
+          <div
+            v-for="interaction in visibleInteractions"
+            :key="interaction.id"
+            class="bg-white dark:bg-gray-800 rounded-lg p-3 cursor-pointer transition-transform"
+          >
+            <div class="flex items-start gap-3">
+              <div class="flex flex-col text-center gap-2">
+                <img
+                  :src="interaction.friend.photo || 'https://i.imgur.com/tdi3NGa.png'"
+                  alt="Freund"
+                  class="w-12 h-12 rounded-lg object-cover"
+                />
               </div>
-              <div class="mt-1 text-gray-700 dark:text-gray-300 text-sm">
-                {{ interaction.text }}
+              <div class="flex-1">
+                <div class="flex justify-between items-start">
+                  <div class="font-medium text-gray-800 dark:text-gray-200">
+                    {{ interaction.friend.name }} 
+                  </div>
+                  <span class="text-sm text-gray-500 dark:text-gray-400">
+                        ({{ getDaysAgo(interaction.date) }})
+                    </span>
+                  <!-- <div class="text-sm text-gray-500 dark:text-gray-400">
+                      {{ formatDate(interaction.date) }}
+                  </div> -->
+                </div>
+                <div class="mt-1 text-gray-700 dark:text-gray-300 text-sm">
+                  {{ interaction.text }}
+                </div>
               </div>
             </div>
           </div>
-        </div>
-        <div v-if="allInteractions.length === 0" class="text-center text-gray-400 dark:text-gray-500 py-8">
-          Noch keine Interaktionen vorhanden.
+          <div v-if="allInteractions.length === 0" class="text-center text-gray-400 dark:text-gray-500 py-8">
+            Noch keine Interaktionen vorhanden.
+          </div>
         </div>
       </div>
     </div>
+  </div>
+
+
+ 
   </template>
   
   <script setup>
-  import { computed } from 'vue';
+  import { ref, computed, watch } from 'vue';
   import { useFriendsStore } from '~/stores/friends';
   import { getDaysAgo } from '~/utils/dateHelper';
   import { formatDate } from '~/utils/dateHelper';
 
   const friendsStore = useFriendsStore();
   
-  const allInteractions = computed(() => {
-    // Flatten all interactions and attach friend info
-    return friendsStore.friends
+  // Use ref instead of computed for allInteractions
+  const allInteractions = ref([]);
+  
+  // Function to update interactions
+  const updateInteractions = () => {
+    allInteractions.value = friendsStore.friends
       .flatMap(friend =>
         (friend.interactions || []).map(interaction => ({
           ...interaction,
           friend
         }))
       )
-      .sort((a, b) => new Date(b.date) - new Date(a.date)); // newest first
-  });
+      .sort((a, b) => new Date(b.date) - new Date(a.date));
+  };
+  
+  // Watch for changes in the friends store
+  watch(
+    () => friendsStore.friends,
+    () => {
+      updateInteractions();
+    },
+    { deep: true, immediate: true }
+  );
   
   // Only show the last 4 interactions initially
   const visibleInteractions = computed(() => {
-    return allInteractions.value.slice(0, 4);
+    return allInteractions.value;
+    // return allInteractions.value.slice(0, 4);
   });
   </script>

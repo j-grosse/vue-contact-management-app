@@ -47,6 +47,7 @@
           <InteractionList 
             :interactions="form.interactions" 
             @delete="deleteInteraction"
+            @edit="editInteraction"
           />
         </div>
 
@@ -244,7 +245,12 @@ const form = reactive({
 onMounted(() => {
   document.body.classList.add('modal-open');
   if (props.editing) {
-    Object.assign(form, props.editing);
+    // Copy all properties except interactions
+    const { interactions, ...otherProps } = props.editing;
+    Object.assign(form, otherProps);
+    
+    // Properly copy the interactions array
+    form.interactions = interactions ? [...interactions] : [];
   }
 });
 
@@ -358,6 +364,26 @@ const deleteInteraction = (interactionId) => {
       ...form,
       interactions: form.interactions
     });
+  }
+};
+
+const editInteraction = (editedInteraction) => {
+  // Find and update the interaction in the form
+  const index = form.interactions.findIndex(i => i.id === editedInteraction.id);
+  if (index !== -1) {
+    form.interactions[index] = {
+      ...form.interactions[index],
+      date: editedInteraction.date,
+      text: editedInteraction.text
+    };
+    
+    // Update the store if we're editing an existing friend
+    if (props.editing) {
+      friendsStore.updateFriend(props.editing.id, {
+        ...form,
+        interactions: form.interactions
+      });
+    }
   }
 };
 </script>

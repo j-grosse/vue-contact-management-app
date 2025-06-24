@@ -241,16 +241,20 @@ export const useFriendsStore = defineStore('friends', {
     },
 
     addInteraction(friendId, interaction) {
-      const friend = this.friends.find(f => f.id === friendId);
-      if (friend) {
-        if (!friend.interactions) {
-          friend.interactions = [];
-        }
-        friend.interactions.push({
-          id: Date.now().toString(),
-          date: interaction.date,
-          text: interaction.text
-        });
+      const index = this.friends.findIndex(f => f.id === friendId);
+      if (index !== -1) {
+        const friend = this.friends[index];
+        this.friends[index] = {
+          ...friend,
+          interactions: [
+            ...(friend.interactions || []),
+            {
+              id: Date.now().toString(),
+              date: interaction.date,
+              text: interaction.text
+            }
+          ]
+        };
         this.saveFriendsToStorage();
       }
     }

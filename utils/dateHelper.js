@@ -10,10 +10,10 @@ export const getDaysAgo = (date) => {
     const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
     if (diffDays === 0) return 'heute';
     if (diffDays === 1) return 'gestern';
-    if (diffDays < 14) return `vor ${diffDays} Tagen`;
-    if (diffDays < 30) return `vor ${Math.floor(diffDays / 7)} Wochen`;
-    if (diffDays < 365) return `vor ${Math.floor(diffDays / 30)} Monaten`;
-    return `Vor ${Math.floor(diffDays / 365)} Jahren`;
+    if (diffDays < 14) return `vor ${diffDays} Tg.`;
+    if (diffDays < 30) return `vor ${Math.floor(diffDays / 7)} Wo.`;
+    if (diffDays < 365) return `vor ${Math.floor(diffDays / 30)} Mo.`;
+    return `Vor ${Math.floor(diffDays / 365)} J.`;
   };
 
   export const formatDate = (date) => {

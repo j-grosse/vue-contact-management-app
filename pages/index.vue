@@ -42,7 +42,8 @@
 
            <!-- Interactions Tab active  -->
            <div v-if="activeTab === 'globalInteractions'">
-          <GlobalInteractions />  
+          <GlobalInteractions @edit="editFriend"
+            />  
         </div>
 
         <!-- Chatbot Tab active  -->

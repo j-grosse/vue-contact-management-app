@@ -13,6 +13,7 @@ export const useFriendsStore = defineStore('friends', {
       lastContactDate: new Date().toISOString().split('T')[0],
       contactInterval: 30,
       nextContactDate: null,
+      interactions: [],
     },
   }),
 
@@ -163,7 +164,14 @@ export const useFriendsStore = defineStore('friends', {
     updateFriend(id, friendData) {
       const index = this.friends.findIndex((f) => f.id === id);
       if (index !== -1) {
-        this.friends[index] = { ...friendData, id };
+        // Preserve the existing friend's data and update with new data
+        const existingFriend = this.friends[index];
+        this.friends[index] = {
+          ...existingFriend,
+          ...friendData,
+          id, // Ensure ID stays the same
+          interactions: friendData.interactions || existingFriend.interactions || [] // Preserve interactions
+        };
         this.saveFriendsToStorage();
       }
     },
@@ -231,5 +239,24 @@ export const useFriendsStore = defineStore('friends', {
         }
       }
     },
+
+    addInteraction(friendId, interaction) {
+      const index = this.friends.findIndex(f => f.id === friendId);
+      if (index !== -1) {
+        const friend = this.friends[index];
+        this.friends[index] = {
+          ...friend,
+          interactions: [
+            ...(friend.interactions || []),
+            {
+              id: Date.now().toString(),
+              date: interaction.date,
+              text: interaction.text
+            }
+          ]
+        };
+        this.saveFriendsToStorage();
+      }
+    }
   },
 });

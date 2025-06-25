@@ -1,25 +1,9 @@
 <template>
   <div
-    class="dark:bg-yellow-900/20 rounded-lg shadow-md overflow-hidden my-2 mb-4"
+    class="min-h-[24rem] dark:bg-yellow-900/20 rounded-lg shadow-md overflow-hidden my-2 mb-4"
   >
-    <!-- Chatbot window header -->
-    <div
-      @click="isOpen = !isOpen"
-      class="p-4 bg-primary text-white rounded-t-lg flex justify-between items-center"
-    >
-      <h3 class="font-semibold">Empfehlungsassistent</h3>
-      <button
-        @click.stop="isOpen = !isOpen"
-        class="text-white hover:text-gray-200"
-      >
-        <FontAwesomeIcon
-          :icon="isOpen ? 'fa-chevron-down' : 'fa-chevron-up'"
-        ></FontAwesomeIcon>
-      </button>
-    </div>
-
     <!-- Chatbot window content -->
-    <div v-if="isOpen" class="p-4">
+    <div class="p-4">
       <div
         ref="chatContainerRef"
         class="mb-4 h-64 overflow-y-auto overflow-x-hidden bg-gray-50 dark:bg-gray-900 rounded-lg p-3"
@@ -83,7 +67,6 @@ import { marked } from 'marked';
 import { useEvents } from '~/composables/useEvents';
 const { fetchEvents, events } = useEvents();
 
-const isOpen = ref(true);
 const isLoading = ref(false);
 const userInput = ref('');
 const userInputRef = ref<HTMLInputElement | null>(null);

@@ -70,8 +70,8 @@
       .sort((a, b) => new Date(b.date) - new Date(a.date));
   });
   
-  // Only show the last 4 interactions initially
+  // Only show the last 30 interactions initially
   const visibleInteractions = computed(() => {
-    return allInteractions.value.slice(0, 4);
+    return allInteractions.value.slice(0, 30);
   });
   </script>

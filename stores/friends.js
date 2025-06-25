@@ -186,6 +186,12 @@ export const useFriendsStore = defineStore('friends', {
       if (index !== -1) {
         const friend = this.friends[index];
         const today = new Date().toISOString().split('T')[0];
+        
+        // Check if the friend was already contacted today
+        if (friend.lastContactDate === today) {
+          return false; // Already contacted today, no change needed
+        }
+        
         const nextContactDate = new Date();
         nextContactDate.setDate(
           nextContactDate.getDate() + parseInt(friend.contactInterval)
@@ -198,6 +204,7 @@ export const useFriendsStore = defineStore('friends', {
         };
 
         this.saveFriendsToStorage();
+        return true; // Indicate that something changed
       }
     },
 

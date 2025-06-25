@@ -116,6 +116,9 @@ import Chatbot from '~/components/Chatbot';
 import GlobalInteractions from '~/components/GlobalInteractions';
 const friendStore = useFriendsStore();
 const appStore = useAppStore();
+import { useConfetti } from '~/composables/useConfetti';
+
+const confettiBomb = useConfetti;
 
 // Local state
 const searchQuery = ref('');
@@ -213,6 +216,8 @@ const deleteFriend = () => {
 };
 
 const markAsContacted = (friend) => {
-  friendStore.markAsContacted(friend.id);
+  if (friendStore.markAsContacted(friend.id)) {
+    confettiBomb();
+  }
 };
 </script>

@@ -29,10 +29,7 @@
                   </div>
                   <span class="text-sm text-gray-500 dark:text-gray-400">
                         {{ getDaysAgo(interaction.date) }}
-                    </span>
-                  <!-- <div class="text-sm text-gray-500 dark:text-gray-400">
-                      {{ formatDate(interaction.date) }}
-                  </div> -->
+                  </span>
                 </div>
                 <div class="mt-1 text-gray-700 dark:text-gray-300 text-sm">
                   {{ interaction.text }}
@@ -56,7 +53,6 @@
   import { computed } from 'vue';
   import { useFriendsStore } from '~/stores/friends';
   import { getDaysAgo } from '~/utils/dateHelper';
-  import { formatDate } from '~/utils/dateHelper';
 
   defineEmits(['edit']);
 

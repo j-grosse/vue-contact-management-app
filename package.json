@@ -19,6 +19,7 @@
     "@huggingface/inference": "^3.8.1",
     "@pinia/nuxt": "^0.11.0",
     "@vite-pwa/nuxt": "^1.0.0",
+    "canvas-confetti": "^1.9.3",
     "dotenv": "^16.5.0",
     "marked": "^15.0.11",
     "nuxt": "^3.16.2",

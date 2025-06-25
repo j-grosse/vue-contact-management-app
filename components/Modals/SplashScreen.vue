@@ -58,7 +58,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, onBeforeUnmount } from 'vue';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
 const visible = ref(true);
@@ -66,6 +66,7 @@ const visible = ref(true);
 function closeModal() {
   visible.value = false;
   localStorage.setItem('splashScreenShown', 'true');
+  document.body.classList.remove('modal-open');
 }
 
 onMounted(() => {

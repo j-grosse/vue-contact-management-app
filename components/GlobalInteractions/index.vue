@@ -7,7 +7,7 @@
         class="mb-4 h-80 overflow-y-auto overflow-x-hidden bg-gray-50 dark:bg-gray-900 rounded-lg p-3"
       >
         <!-- global interactions window content-->
-        <div class="space-y-3 max-h-[400px] overflow-y-auto pr-2">
+        <div class="space-y-3 max-h-[400px] pr-2">
           <div
             v-for="interaction in visibleInteractions"
             :key="interaction.id"
@@ -29,10 +29,7 @@
                   </div>
                   <span class="text-sm text-gray-500 dark:text-gray-400">
                         {{ getDaysAgo(interaction.date) }}
-                    </span>
-                  <!-- <div class="text-sm text-gray-500 dark:text-gray-400">
-                      {{ formatDate(interaction.date) }}
-                  </div> -->
+                  </span>
                 </div>
                 <div class="mt-1 text-gray-700 dark:text-gray-300 text-sm">
                   {{ interaction.text }}
@@ -53,21 +50,17 @@
   </template>
   
   <script setup>
-  import { ref, computed, watch } from 'vue';
+  import { computed } from 'vue';
   import { useFriendsStore } from '~/stores/friends';
   import { getDaysAgo } from '~/utils/dateHelper';
-  import { formatDate } from '~/utils/dateHelper';
 
   defineEmits(['edit']);
 
   const friendsStore = useFriendsStore();
   
-  // Use ref instead of computed for allInteractions
-  const allInteractions = ref([]);
-  
-  // Function to update interactions
-  const updateInteractions = () => {
-    allInteractions.value = friendsStore.friends
+  // Use computed property - it will automatically update when the store changes
+  const allInteractions = computed(() => {
+    return friendsStore.friends
       .flatMap(friend =>
         (friend.interactions || []).map(interaction => ({
           ...interaction,
@@ -75,20 +68,10 @@
         }))
       )
       .sort((a, b) => new Date(b.date) - new Date(a.date));
-  };
+  });
   
-  // Watch for changes in the friends store
-  watch(
-    () => friendsStore.friends,
-    () => {
-      updateInteractions();
-    },
-    { deep: true, immediate: true }
-  );
-  
-  // Only show the last 4 interactions initially
+  // Only show the last 30 interactions initially
   const visibleInteractions = computed(() => {
-    return allInteractions.value;
-    // return allInteractions.value.slice(0, 4);
+    return allInteractions.value.slice(0, 30);
   });
   </script>

@@ -228,7 +228,7 @@ const props = defineProps({
 const emit = defineEmits(['close', 'save', 'delete-request']);
 const friendsStore = useFriendsStore();
 const imageFileInput = ref(null);
-const activeTab = ref('interactions');
+const activeTab = ref('info');
 
 // Form state
 const form = reactive({
@@ -251,6 +251,12 @@ onMounted(() => {
     
     // Properly copy the interactions array
     form.interactions = interactions ? [...interactions] : [];
+    
+    // Set tab to interactions when editing (since they likely want to see existing interactions)
+    activeTab.value = 'interactions';
+  } else {
+    // Set tab to info when adding a new friend
+    activeTab.value = 'info';
   }
 });
 

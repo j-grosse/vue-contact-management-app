@@ -58,10 +58,17 @@ export const useFriendsStore = defineStore('friends', {
           name:'Zoe Schneider',
           photo: 'https://randomuser.me/api/portraits/women/27.jpg',
           notes: 'Liebt Wandern und Fotografie',
-          lastContactDate: createDateWithOffset(-1),
+          lastContactDate: createDateWithOffset(-6),
           contactInterval: 7,
-          nextContactDate: createDateWithOffset(6), // -1 + 7
+          nextContactDate: createDateWithOffset(0), // -1 + 7
           showDeleteConfirm: false,
+          interactions: [
+            {
+              id: "1750855414181",
+              date: createDateWithOffset(-6),
+              text: "Wanderung auf den Drachenfels in Bonn"
+            }
+          ]
         },
         {
           id: '2',
@@ -72,6 +79,18 @@ export const useFriendsStore = defineStore('friends', {
           contactInterval: 30,
           nextContactDate: createDateWithOffset(5), // -25 + 30
           showDeleteConfirm: false,
+          interactions: [
+            {
+              id: "1750855414182",
+              date: createDateWithOffset(-20),
+              text: "Fußballspiel im Park - Bayern vs Dortmund geschaut"
+            },
+            {
+              id: "1750855414183",
+              date: createDateWithOffset(-15),
+              text: "Jogging-Runde zusammen gemacht"
+            }
+          ]
         },
         {
           id: '3',
@@ -82,6 +101,18 @@ export const useFriendsStore = defineStore('friends', {
           contactInterval: 14,
           nextContactDate: createDateWithOffset(2), // -12 + 14
           showDeleteConfirm: false,
+          interactions: [
+            {
+              id: "1750855414184",
+              date: createDateWithOffset(-10),
+              text: "Konzert von Die Ärzte besucht - war mega!"
+            },
+            {
+              id: "1750855414185",
+              date: createDateWithOffset(-8),
+              text: "Über Medizinstudium und Prüfungen gesprochen"
+            }
+          ]
         },
         {
           id: '4',
@@ -92,6 +123,18 @@ export const useFriendsStore = defineStore('friends', {
           contactInterval: 60,
           nextContactDate: createDateWithOffset(-20), // -80 + 60, fällig!
           showDeleteConfirm: false,
+          interactions: [
+            {
+              id: "1750855414186",
+              date: createDateWithOffset(-75),
+              text: "Neue Kaffeerösterei in der Stadt entdeckt"
+            },
+            {
+              id: "1750855414187",
+              date: createDateWithOffset(-70),
+              text: "Über Design-Projekte und Adobe Creative Suite gesprochen"
+            }
+          ]
         },
         {
           id: '5',
@@ -102,6 +145,18 @@ export const useFriendsStore = defineStore('friends', {
           contactInterval: 21,
           nextContactDate: createDateWithOffset(19), // -2 + 21
           showDeleteConfirm: false,
+          interactions: [
+            {
+              id: "1750855414188",
+              date: createDateWithOffset(-5),
+              text: "Postkarte aus Barcelona erhalten - war dort im Urlaub"
+            },
+            {
+              id: "1750855414189",
+              date: createDateWithOffset(-3),
+              text: "Über nächste Reisepläne nach Portugal gesprochen"
+            }
+          ]
         },
         {
           id: '6',
@@ -112,6 +167,18 @@ export const useFriendsStore = defineStore('friends', {
           contactInterval: 45,
           nextContactDate: createDateWithOffset(0), // -45 + 45, heute!
           showDeleteConfirm: false,
+          interactions: [
+            {
+              id: "1750855414190",
+              date: createDateWithOffset(-40),
+              text: "Neues Buch 'Der Alchemist' empfohlen bekommen"
+            },
+            {
+              id: "1750855414191",
+              date: createDateWithOffset(-35),
+              text: "Filmabend - 'Inception' zusammen geschaut"
+            }
+          ]
         },
         {
           id: '7',
@@ -122,6 +189,18 @@ export const useFriendsStore = defineStore('friends', {
           contactInterval: 30,
           nextContactDate: createDateWithOffset(3), // -27 + 30
           showDeleteConfirm: false,
+          interactions: [
+            {
+              id: "1750855414192",
+              date: createDateWithOffset(-25),
+              text: "Neues Protein-Smoothie Rezept ausgetauscht"
+            },
+            {
+              id: "1750855414193",
+              date: createDateWithOffset(-22),
+              text: "Gemeinsames Workout im Fitnessstudio"
+            }
+          ]
         },
         {
           id: '8',
@@ -132,6 +211,18 @@ export const useFriendsStore = defineStore('friends', {
           contactInterval: 10,
           nextContactDate: createDateWithOffset(7), // -3 + 10
           showDeleteConfirm: false,
+          interactions: [
+            {
+              id: "1750855414194",
+              date: createDateWithOffset(-8),
+              text: "Über neue JavaScript-Frameworks diskutiert"
+            },
+            {
+              id: "1750855414195",
+              date: createDateWithOffset(-5),
+              text: "DJ-Set bei seiner Geburtstagsparty gehört"
+            }
+          ]
         },
       ];
     },
@@ -186,6 +277,12 @@ export const useFriendsStore = defineStore('friends', {
       if (index !== -1) {
         const friend = this.friends[index];
         const today = new Date().toISOString().split('T')[0];
+        
+        // Check if the friend was already contacted today
+        if (friend.lastContactDate === today) {
+          return false; // Already contacted today, no change needed
+        }
+        
         const nextContactDate = new Date();
         nextContactDate.setDate(
           nextContactDate.getDate() + parseInt(friend.contactInterval)
@@ -198,6 +295,7 @@ export const useFriendsStore = defineStore('friends', {
         };
 
         this.saveFriendsToStorage();
+        return true; // Indicate that something changed
       }
     },
 

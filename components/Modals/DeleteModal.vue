@@ -1,12 +1,13 @@
 <template>
   <div
     class="fixed inset-0 bg-black/70 flex items-center justify-center p-4 z-50"
+    @click="$emit('close')"
   >
     <div
-      class="bg-white dark:bg-gray-800 rounded-lg shadow-xl w-full max-w-sm mx-auto p-6"
+      class="bg-white dark:bg-gray-800 rounded-lg shadow-xl w-full max-w-md mx-auto p-6"
     >
       <h3 class="text-xl font-bold text-gray-800 dark:text-white mb-4">
-        Freund löschen?
+        Friend löschen?
       </h3>
       <p class="text-gray-600 dark:text-gray-300 mb-6">
         Bist du sicher, dass du

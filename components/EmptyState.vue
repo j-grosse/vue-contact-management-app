@@ -7,13 +7,13 @@
       ></FontAwesomeIcon>
     </div>
     <h3 class="text-xl font-semibold text-gray-700 dark:text-gray-300 mb-2">
-      Keine Freunde gefunden
+      Keine Friends gefunden
     </h3>
     <p class="text-gray-500 dark:text-gray-400 text-center mb-6">
       {{
         searchQuery
-          ? 'Es wurden keine Freunde gefunden, die deiner Suche entsprechen.'
-          : 'Füge deinen ersten Freund hinzu, um zu beginnen.'
+          ? 'Es wurden keine Friends gefunden, die deiner Suche entsprechen.'
+          : 'Füge deinen ersten Friend hinzu, um zu beginnen.'
       }}
     </p>
     <button

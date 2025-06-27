@@ -39,7 +39,7 @@
           v-model="userInput"
           @keyup.enter="sendMessage"
           type="text"
-          placeholder="Frage nach Freunden, Freizeitaktivitäten etc. ..."
+          placeholder="Frage nach Friends, Freizeitaktivitäten etc. ..."
           class="flex-1 px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary dark:bg-gray-800 dark:text-white dark:border-gray-700"
         />
         <button
@@ -122,7 +122,7 @@ const getNextFriendToContact = () => {
 // Function to build the friend notes context
 const buildFriendNotesContext = () => {
   return (
-    'Liste mit Freunden und Notizen:\n\n' +
+    'Liste mit Friends und Notizen:\n\n' +
     friendStore.friends
       .map((friend) => `${friend.name}: ${friend.notes};`)
       .join('\n')
@@ -219,7 +219,7 @@ const sendMessage = async () => {
         Conversation context: ${finalPrompt}
 
          Bitte schlage dem User passende Events für ${
-           matchingFriend?.name || 'seinen Freund'
+           matchingFriend?.name || 'seinen Friend'
          } vor und zeige sie im folgenden Format an: 
         <u><a href="{link}" target="_blank" class="text-blue-500">{title}</a></u>
 

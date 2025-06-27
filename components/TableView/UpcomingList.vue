@@ -14,7 +14,7 @@
           <div class="flex flex-col text-center gap-2">
             <img
               :src="friend.photo || 'https://i.imgur.com/tdi3NGa.png'"
-              alt="Freund"
+              alt="Friend"
               class="w-12 h-12 rounded-lg object-cover"
             />
             <span
@@ -32,7 +32,7 @@
               <span class="flex justify-end mt-1">
                 <button
                   @click.stop="$emit('contact', friend)"
-                  class="bg-primary hover:bg-primary/80 text-white w-8 h-8 rounded-full flex items-center justify-center"
+                  class="bg-primary hover:bg-primary/80 text-white w-10 h-10 rounded-full flex items-center justify-center"
                   title="Als kontaktiert markieren"
                 >
                   <FontAwesomeIcon icon="fa-check"></FontAwesomeIcon>

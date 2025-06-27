@@ -16,6 +16,8 @@
           zu kontaktieren. Füge einen Friend und seine Interessen hinzu und lege
           ein Kontaktintervall fest. Die App wird dich dann regelmäßig daran
           erinnern dich zu melden.
+          <br />Wenn du mit einem Friend interagiert hast kannst du dies
+          eintragen und hast so stets einen Überblick über eure Interaktionen.
           <br /><br />Der Chatbot gibt dir zudem Tipps für die Kontaktaufnahme
           und schlägt dir mögliche Nachrichten an deine Friends vor. Er kann dir
           auch aktuelle Events in deiner Umgebung anzeigen, die ihren Interessen

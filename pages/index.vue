@@ -7,7 +7,7 @@
       <button
         @click="openAddFriendModal"
         class="bg-primary hover:bg-primary/80 text-white p-2 rounded-full flex items-center justify-center w-10 h-10"
-        title="Freund hinzufügen"
+        title="Friend hinzufügen"
       >
         <FontAwesomeIcon icon="fa-plus"></FontAwesomeIcon>
       </button>
@@ -19,7 +19,7 @@
             :class="[
               'w-1/2 py-2 rounded-lg font-medium transition-colors duration-150 focus:outline-none',
               activeTab === 'globalInteractions'
-                ? 'bg-white dark:bg-gray-800 text-primary-500 dark:text-gray-300 shadow'
+                ? 'bg-white dark:bg-gray-800 text-primary-500 dark:text-gray-300 shadow-md'
                 : 'bg-transparent text-gray-600 dark:text-gray-300'
             ]"
             @click="activeTab = 'globalInteractions'"
@@ -31,7 +31,7 @@
             :class="[
               'w-1/2 py-2 rounded-lg font-medium transition-colors duration-150 focus:outline-none',
               activeTab === 'chatbot'
-                ? 'bg-white dark:bg-gray-800 text-primary-500 dark:text-gray-300 shadow'
+                ? 'bg-white dark:bg-gray-800 text-primary-500 dark:text-gray-300 shadow-md'
                 : 'bg-transparent text-gray-600 dark:text-gray-300'
             ]"
             @click="activeTab = 'chatbot'"
@@ -86,7 +86,7 @@
     <DeleteModal
       v-if="friendStore.showDeleteConfirmation"
       :friend="editingFriend"
-      @close="friendStore.showDeleteConfirmation = false"
+      @close="closeModal"
       @confirm="deleteFriend"
     />
 
@@ -186,7 +186,6 @@ const openAddFriendModal = () => {
 
 const editFriend = (friend) => {
   editingFriend.value = friend;
-  friendStore.setFriendForm({ ...friend });
   friendStore.isFriendModalOpen = true;
 };
 

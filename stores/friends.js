@@ -227,10 +227,6 @@ export const useFriendsStore = defineStore('friends', {
       ];
     },
 
-    setFriendForm(formData) {
-      this.friendForm = { ...formData };
-    },
-
     resetFriendForm() {
       this.friendForm = {
         id: null,

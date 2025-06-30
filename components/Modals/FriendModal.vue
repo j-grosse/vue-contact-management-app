@@ -337,10 +337,11 @@ const addNewInteraction = (interaction) => {
   form.interactions.push({
     id: Date.now().toString(),
     date: interaction.date,
-    text: interaction.text
+    text: interaction.text,
+    photo: interaction.photo
   });
   
-  // Immediately update the store when adding a new interaction
+  // Update the store if editing an existing friend
   if (props.editing) {
     friendsStore.updateFriend(props.editing.id, {
       ...form,

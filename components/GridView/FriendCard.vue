@@ -6,7 +6,7 @@
     <div class="relative">
       <img
         :src="friend.photo || 'https://i.imgur.com/tdi3NGa.png'"
-        alt="Freund"
+        alt="Friend"
         class="w-full h-40 w-40 object-cover"
       />
       <div
@@ -19,7 +19,7 @@
       <div
         class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-1"
       >
-        <div class="flex justify-between items-center">
+        <div class="flex justify-between items-end p-0.5">
           <span
             :class="getContactStatusClass(friend)"
             class="px-2 py-1 rounded-full text-xs font-medium"
@@ -28,10 +28,10 @@
           </span>
           <button
             @click.stop="$emit('contact', friend)"
-            class="bg-primary hover:bg-primary/80 text-white w-7 h-7 rounded-full flex items-center justify-center"
+            class="bg-primary hover:bg-green-600 text-white w-10 h-10 rounded-full flex items-center justify-center"
             title="Als kontaktiert markieren"
           >
-            <FontAwesomeIcon icon="fa-check" class="text-xs"></FontAwesomeIcon>
+            <FontAwesomeIcon icon="fa-check" class="text-xl"></FontAwesomeIcon>
           </button>
         </div>
       </div>

@@ -8,9 +8,9 @@
       @click.stop
     >
       <!-- Header and content area -->
-      <div class="p-6 flex-1 overflow-y-auto">
+      <div class="p-4 flex-1">
         <h2 class="text-2xl font-bold text-gray-800 dark:text-white mb-4">
-          {{ editing ? 'Freund bearbeiten' : 'Freund hinzufügen' }}
+          {{ editing ? 'Friend bearbeiten' : 'Friend hinzufügen' }}
         </h2>
 
         <!-- Tab -->
@@ -19,7 +19,7 @@
             :class="[
               'w-1/2 py-2 rounded-lg font-medium transition-colors duration-150 focus:outline-none',
               activeTab === 'interactions'
-                ? 'bg-white dark:bg-gray-800 text-primary-500 dark:text-gray-300 shadow'
+                ? 'bg-white dark:bg-gray-800 text-primary-500 dark:text-gray-300 shadow-md'
                 : 'bg-transparent text-gray-600 dark:text-gray-300'
             ]"
             @click="activeTab = 'interactions'"
@@ -31,7 +31,7 @@
             :class="[
               'w-1/2 py-2 rounded-lg font-medium transition-colors duration-150 focus:outline-none',
               activeTab === 'info'
-                ? 'bg-white dark:bg-gray-800 text-primary-500 dark:text-gray-300 shadow'
+                ? 'bg-white dark:bg-gray-800 text-primary-500 dark:text-gray-300 shadow-md'
                 : 'bg-transparent text-gray-600 dark:text-gray-300'
             ]"
             @click="activeTab = 'info'"
@@ -65,7 +65,7 @@
                     v-if="form.photo"
                     :src="form.photo"
                     class="w-full h-full object-cover"
-                    alt="Freund"
+                    alt="Friend"
                   />
                   <div
                     v-else
@@ -137,27 +137,13 @@
                 >
                 <textarea
                   v-model="form.notes"
-                  placeholder="Notizen zu diesem Freund"
-                  rows="3"
+                  placeholder="Notizen zu diesem Friend"
+                  rows="2"
                   class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary dark:bg-gray-700 dark:text-white dark:border-gray-600 text-base"
                 ></textarea>
               </div>
 
               <div class="flex justify-between gap-3">
-                <!-- Contact Interval -->
-                <div>
-                  <label class="block text-gray-700 dark:text-gray-300 mb-1"
-                    >Kontaktintervall</label
-                  >
-                  <input
-                    type="number"
-                    v-model="form.contactInterval"
-                    min="1"
-                    required
-                    class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary dark:bg-gray-700 dark:text-white dark:border-gray-600 text-base"
-                  />
-                </div>
-
                 <!-- Last Contact Date -->
                 <div>
                   <label class="block text-gray-700 dark:text-gray-300 mb-1"
@@ -170,6 +156,19 @@
                     class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary dark:bg-gray-700 dark:text-white dark:border-gray-600 text-base"
                   />
                 </div>
+                 <!-- Contact Interval -->
+                 <div>
+                  <label class="block text-gray-700 dark:text-gray-300 mb-1"
+                    >Intervall</label
+                  >
+                  <input
+                    type="number"
+                    v-model="form.contactInterval"
+                    min="1"
+                    required
+                    class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary dark:bg-gray-700 dark:text-white dark:border-gray-600 text-base text-right"
+                  />
+                </div>
               </div>
             </div>
           </form>
@@ -178,7 +177,7 @@
       </div>
 
       <!-- Fixed bottom buttons -->
-      <div class="p-6 bg-white dark:bg-gray-800">
+      <div class="p-4 bg-white dark:bg-gray-800">
         <div class="flex justify-between">
           <button
             v-if="editing && activeTab === 'info'"
@@ -189,7 +188,6 @@
             <FontAwesomeIcon icon="fa-trash"></FontAwesomeIcon>
           </button>
           <div v-if="editing && activeTab === 'interactions'"></div>
-          <button v-if="!editing"></button>
           <div class="flex justify-between gap-3">
             <button
               type="button"
@@ -291,7 +289,7 @@ const saveForm = () => {
   emit('save', friendData);
 };
 
-// Handle file upload for profile picture
+// Handle file upload for profile picture (image to Base64)
 const handleFileUpload = (event) => {
   const file = event.target.files[0];
   if (!file) return;
@@ -320,20 +318,11 @@ const handleFileUpload = (event) => {
 
       // Draw the scaled and centered image
       ctx.drawImage(img, offsetX, offsetY, scaledWidth, scaledHeight);
-
-      // Reduce to 1024 colors (5 bits per channel, simple quantization)
       const imageData = ctx.getImageData(0, 0, cropSize, cropSize);
-      const data = imageData.data;
-      for (let i = 0; i < data.length; i += 4) {
-        // Quantize each channel to 5 bits (0-248, step 8)
-        data[i] = Math.round(data[i] / 8) * 8;
-        data[i + 1] = Math.round(data[i + 1] / 8) * 8;
-        data[i + 2] = Math.round(data[i + 2] / 8) * 8;
-        // Alpha stays the same
-      }
       ctx.putImageData(imageData, 0, 0);
 
-      form.photo = canvas.toDataURL('image/jpeg');
+      // Use JPEG for smaller base64 size
+      form.photo = canvas.toDataURL('image/jpeg', 0.85);
     };
     img.src = e.target.result;
   };

@@ -14,7 +14,7 @@
           <div class="flex flex-col text-center gap-2">
             <img
               :src="friend.photo || 'https://i.imgur.com/tdi3NGa.png'"
-              alt="Freund"
+              alt="Friend"
               class="w-12 h-12 rounded-lg object-cover"
             />
             <span
@@ -43,7 +43,7 @@
         v-if="friends.length === 0"
         class="text-center py-3 text-gray-500 dark:text-gray-400"
       >
-        Keine kürzlich kontaktierten Freunde
+        Keine kürzlich kontaktierten Friends
       </div>
     </div>
   </div>

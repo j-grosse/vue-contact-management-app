@@ -105,8 +105,7 @@ definePageMeta({
 import { ref, computed, onMounted } from 'vue';
 import { useFriendsStore } from '~/stores/friends';
 import { useAppStore } from '~/stores/app';
-import AppHeader from '~/components/AppHeader.vue';
-import SearchBar from '~/components/SearchBar.vue';
+// import SearchBar from '~/components/SearchBar.vue';
 import GridView from '~/components/GridView/index.vue';
 import TableView from '~/components/TableView/index.vue';
 import EmptyState from '~/components/EmptyState.vue';
@@ -130,6 +129,7 @@ const activeTab = ref('globalInteractions');
 // Initialize app
 onMounted(() => {
   friendStore.initializeFriends();
+  friendStore.saveFriendsToStorage();
 
   // Setup dark mode from user preferences
   if (

@@ -1,18 +1,17 @@
 <template>
   <div class="min-h-[24rem] dark:bg-yellow-900/20 rounded-lg shadow-md overflow-hidden my-2 mb-4"
   >
-    <!-- Chatbot window content -->
+    <!-- global interactions window content-->
     <div class="p-4">
       <div
         class="mb-4 h-80 overflow-y-auto overflow-x-hidden bg-gray-50 dark:bg-gray-900 rounded-lg p-3"
       >
-        <!-- global interactions window content-->
         <div class="space-y-2 max-h-[400px]">
           <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
             <div
               v-for="interaction in visibleInteractions"
               :key="interaction.id"
-              class="bg-white dark:bg-gray-800 rounded-lg px-3 py-2 cursor-pointer transition-transform shadow-md"
+              class="bg-white dark:bg-gray-800 rounded-lg px-3 py-2 cursor-pointer transition-transform shadow-md hover:shadow-xl"
               @click="$emit('edit', interaction.friend)"
             >
               <div class="flex items-start gap-3">

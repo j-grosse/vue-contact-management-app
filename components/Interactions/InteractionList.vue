@@ -3,7 +3,7 @@
     <!-- sort entries by date and reverse order -->
     <label class="block text-gray-700 dark:text-gray-300 mb-1"
     >Interaktionen</label>
-    <div class="border border-gray-300 dark:border-gray-600 rounded-lg p-2 pt-3 overflow-y-auto h-[10rem]">
+    <div class="border border-gray-300 dark:border-gray-600 rounded-lg p-2 pt-3 overflow-y-auto h-48">
       <div
         v-for="interaction in [...interactions].sort((a, b) => new Date(a.date) - new Date(b.date)).reverse()"
         :key="interaction.id"
@@ -12,11 +12,11 @@
       >
         <div class="flex items-start">
           <div class="flex-1">
-            <div class="date text-lg block text-gray-700 dark:text-gray-300">
+            <div class="date block text-gray-700 dark:text-gray-300">
               {{ getDaysAgo(interaction.date) }}
               ({{ formatDate(interaction.date) }})
             </div>
-            <div class="border-l pl-2 text-md text-gray-700 dark:text-gray-300 p-1 rounded-lg">{{ interaction.text }}</div>
+            <div class="border-l pl-2 text-gray-700 dark:text-gray-300 p-1">{{ interaction.text }}</div>
           </div>
           <div class="flex flex-col items-end ml-3">
             <img
@@ -45,12 +45,12 @@
             <input
               v-model="editForm.date"
               type="date"
-              class="border border-gray-300 text-lg block rounded-lg text-gray-700 dark:text-gray-300 dark:bg-gray-700 mb-2 p-2"
+              class="border border-gray-300 block rounded-lg text-gray-700 dark:text-gray-300 dark:bg-gray-700 mb-2 p-2"
               required
             />
           </div>
           
-          <div class="mb-6">
+          <div class="mb-3">
             <!-- <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
               Interaktion
             </label> -->

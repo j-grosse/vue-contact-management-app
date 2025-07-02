@@ -1,29 +1,29 @@
 <template>
-    <input
-      type="file"
-      ref="imageFileInput"
-      class="hidden"
-      accept="image/*"
-      @change="handleFileUpload"
+  <input
+    type="file"
+    ref="imageFileInput"
+    class="hidden"
+    accept="image/*"
+    @change="handleFileUpload"
+  />
+  <div
+    @click="imageFileInput?.click()"
+    class="min-h-32 w-full rounded-lg overflow-hidden bg-gray-200 dark:bg-gray-700 cursor-pointer mb-4"
+  >
+    <img
+      v-if="preview"
+      :src="preview"
+      class="w-full h-full object-cover"
+      alt="Interaction photo"
     />
     <div
-      @click="imageFileInput?.click()"
-      class="min-h-20 min-w-32 rounded-lg overflow-hidden bg-gray-200 dark:bg-gray-700 mb-2 cursor-pointer"
+      v-else
+      class="w-full h-full min-h-32 flex items-center justify-center text-gray-400"
     >
-      <img
-        v-if="preview"
-        :src="preview"
-        class="w-full h-full object-cover"
-        alt="Interaction photo"
-      />
-      <div
-        v-else
-        class="w-full h-full flex items-center justify-center text-gray-400 my-auto"
-      >
-        <FontAwesomeIcon icon="fa-image" class="text-xl" />
-      </div>
+      <FontAwesomeIcon icon="fa-image" class="text-xl" />
     </div>
-  </template>
+  </div>
+</template>
 
 <script setup>
 import { ref, watch } from 'vue';

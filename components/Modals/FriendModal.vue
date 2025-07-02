@@ -4,11 +4,11 @@
     @click="$emit('close')"
   >
     <div
-      class="bg-white dark:bg-gray-800 rounded-lg shadow-xl w-full max-w-md mx-auto overflow-hidden max-h-[90vh] flex flex-col h-[44rem]"
+      class="bg-white dark:bg-gray-800 rounded-lg shadow-xl w-full max-w-md mx-auto overflow-y-auto max-h-[90vh] flex flex-col h-[44rem]"
       @click.stop
     >
       <!-- Header and content area -->
-      <div class="p-4 flex-1">
+      <div class="px-4 flex-1">
         <h2 class="text-2xl font-bold text-gray-800 dark:text-white mb-4">
           {{ editing ? 'Friend bearbeiten' : 'Friend hinzufügen' }}
         </h2>
@@ -59,7 +59,7 @@
               <div class="relative flex flex-col items-center">
                 <div
                   @click="imageFileInput?.click()"
-                  class="w-32 h-32 rounded-full overflow-hidden bg-gray-200 dark:bg-gray-700 mb-0 cursor-pointer"
+                  class="w-24 h-24 rounded-full overflow-hidden bg-gray-200 dark:bg-gray-700 mb-0 cursor-pointer"
                 >
                   <img
                     v-if="form.photo"

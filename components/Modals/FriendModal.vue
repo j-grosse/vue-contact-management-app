@@ -370,7 +370,8 @@ const editInteraction = (editedInteraction) => {
     form.interactions[index] = {
       ...form.interactions[index],
       date: editedInteraction.date,
-      text: editedInteraction.text
+      text: editedInteraction.text,
+      photo: editedInteraction.photo
     };
     
     // Update the store if we're editing an existing friend

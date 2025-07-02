@@ -17,36 +17,12 @@
           class="border border-gray-300 text-input text-gray-700 dark:text-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary dark:bg-gray-700 dark:caret-gray-300 px-3 py-2 w-full"
           >
         </textarea>
-        
       </div>
     </div>
-    <input
-        type="file"
-        ref="imageFileInput"
-        class="hidden"
-        accept="image/*"
-        @change="handleFileUpload"
-      />
+
     <div class="relative flex flex-col items-start mb-4">
       <div class="flex w-full justify-between">
-        <div
-          @click="imageFileInput?.click()"
-          class="min-h-20 min-w-32 rounded-lg overflow-hidden bg-gray-200 dark:bg-gray-700 mb-2 cursor-pointer"
-        >
-          <img
-            v-if="form.photo"
-            :src="form.photo"
-            class="w-full h-full object-cover"
-            alt="Interaction photo"
-          />
-          <div
-            v-else
-            class="w-full h-full flex items-center justify-center text-gray-400 my-auto"
-          >
-            <FontAwesomeIcon icon="fa-image" class="text-xl" />
-          </div>
-        </div>
-        
+        <ImageUpload v-model="form.photo" />
         <div class="mt-auto">
           <button
             type="submit"
@@ -63,6 +39,7 @@
 <script setup>
 import { ref, reactive } from 'vue';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
+import ImageUpload from '~/components/ImageUpload.vue';
 
 const emit = defineEmits(['add']);
 const date = ref(new Date().toISOString().split('T')[0]);

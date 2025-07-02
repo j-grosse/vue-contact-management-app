@@ -89,14 +89,8 @@
               required
             ></textarea>
           </div>
-          <!-- Show the photo if it exists -->
-          <div v-if="editForm.photo" class="mb-4">
-            <img
-              :src="editForm.photo"
-              alt="Interaction Photo"
-              class="w-full rounded-lg object-cover"
-            />
-            </div>
+          <ImageUpload v-model="editForm.photo" />
+
           <div class="bg-white dark:bg-gray-800">
             <div class="flex justify-between">
               <button
@@ -135,6 +129,7 @@ import { ref } from 'vue';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { getDaysAgo } from '~/utils/dateHelper';
 import { formatDate } from '~/utils/dateHelper';
+import ImageUpload from '~/components/ImageUpload.vue';
 
 const props = defineProps({
   interactions: {

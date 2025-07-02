@@ -8,6 +8,7 @@
         v-for="interaction in [...interactions].sort((a, b) => new Date(a.date) - new Date(b.date)).reverse()"
         :key="interaction.id"
         class="interaction-item mb-6 pl-1"
+        @click="editInteraction(interaction)"
       >
         <div class="flex items-start">
           <div class="flex-1">
@@ -15,7 +16,7 @@
               {{ getDaysAgo(interaction.date) }}
               ({{ formatDate(interaction.date) }})
             </div>
-            <div class="text-md text-gray-700 dark:text-gray-300 p-1 rounded-lg">{{ interaction.text }}</div>
+            <div class="border-l pl-2 text-md text-gray-700 dark:text-gray-300 p-1 rounded-lg">{{ interaction.text }}</div>
           </div>
           <div class="flex flex-col items-end ml-3">
             <img
@@ -24,15 +25,6 @@
               class="w-10 h-10 rounded-lg object-cover mb-2 mr-1"
               alt="Interaction"
             />
-            <button
-              @click="editInteraction(interaction)"
-              class="px-2 py-2 rounded-lg text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
-              title="Edit interaction"
-            >
-              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
-              </svg>
-            </button>
           </div>
         </div>
       </div>

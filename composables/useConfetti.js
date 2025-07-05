@@ -8,10 +8,10 @@ export const useConfetti = (friend = null) => {
 
   confetti({
     angle: randomInRange(55, 125),
-    spread: randomInRange(700, 1400),
-    ticks: 50,
+    spread: randomInRange(400, 1000),
+    ticks: 100,
     particleCount: randomInRange(150, 250),
-    origin: { y: 0.6},
+    origin: { y: 0.4},
     scalar: 1.5,
   });
 
@@ -23,12 +23,12 @@ export const useConfetti = (friend = null) => {
 function showFriendImage(friend) {
   const overlay = document.createElement('div');
   overlay.className = 'fixed inset-0 flex items-center justify-center z-[9999] pointer-events-none';
-  overlay.style.animation = 'fadeInOut 2s ease-in-out forwards';
+  overlay.style.animation = 'fadeInOut 2.5s ease-in-out forwards';
   
   const imageContainer = document.createElement('div');
   imageContainer.className = 'bg-white dark:bg-gray-800 rounded-full p-1 shadow-2xl border-1 border-white';
   imageContainer.style.transform = 'scale(0)';
-  imageContainer.style.animation = 'scaleInOut 2s ease-in-out forwards';
+  imageContainer.style.animation = 'scaleInOut 2.5s ease-in-out forwards';
   
   const img = document.createElement('img');
   img.src = friend.photo || 'https://i.imgur.com/tdi3NGa.png';
@@ -71,5 +71,5 @@ function showFriendImage(friend) {
     if (document.head.contains(style)) {
       document.head.removeChild(style);
     }
-  }, 2500);
+  }, 4000);
 }

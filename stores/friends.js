@@ -345,7 +345,8 @@ export const useFriendsStore = defineStore('friends', {
             {
               id: Date.now().toString(),
               date: interaction.date,
-              text: interaction.text
+              text: interaction.text,
+              photo: interaction.photo
             }
           ]
         };

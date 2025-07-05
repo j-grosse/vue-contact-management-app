@@ -7,7 +7,7 @@
       class="bg-white dark:bg-gray-800 rounded-lg shadow-xl w-full max-w-md mx-auto overflow-hidden max-h-[90vh] overflow-y-auto"
       @click.stop
     >
-      <div class="p-6">
+      <div class="p-4">
         <h2 class="text-2xl font-bold text-gray-800 dark:text-white mb-4">
           Einstellungen
         </h2>

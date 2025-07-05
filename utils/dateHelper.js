@@ -11,9 +11,9 @@ export const getDaysAgo = (date) => {
     if (diffDays === 0) return 'heute';
     if (diffDays === 1) return 'gestern';
     if (diffDays < 14) return `vor ${diffDays} Tg.`;
-    if (diffDays < 30) return `vor ${Math.floor(diffDays / 7)} Wo.`;
-    if (diffDays < 365) return `vor ${Math.floor(diffDays / 30)} Mo.`;
-    return `Vor ${Math.floor(diffDays / 365)} J.`;
+    if (diffDays < 30) return `vor über ${Math.floor(diffDays / 7)} Wo.`;
+    if (diffDays < 365) return `vor über ${Math.floor(diffDays / 30)} Mo.`;
+    return `Vor über ${Math.floor(diffDays / 365)} J.`;
   };
 
   export const formatDate = (date) => {

@@ -1,12 +1,12 @@
 <template>
   <div
-    class="min-h-[24rem] dark:bg-yellow-900/20 rounded-lg shadow-md overflow-hidden my-2 mb-4"
+    class="min-h-[24rem] dark:bg-yellow-900/20 rounded-lg shadow-md overflow-hidden my-1 mb-4"
   >
     <!-- Chatbot window content -->
-    <div class="p-4">
+    <div class="p-2">
       <div
         ref="chatContainerRef"
-        class="mb-4 h-64 overflow-y-auto overflow-x-hidden bg-gray-50 dark:bg-gray-900 rounded-lg p-3"
+        class="mb-3 h-64 overflow-y-auto overflow-x-hidden bg-gray-50 dark:bg-gray-900 rounded-lg p-2"
       >
         <div v-for="(message, index) in chatMessages" :key="index" class="mb-3">
           <!-- User message -->
@@ -33,6 +33,27 @@
         </div>
       </div>
 
+      <div class="flex my-3 gap-2">
+        <!-- <p class="text-xs pl-2 text-gray-500 dark:text-gray-400">
+          Tipp: Schreibe "Events" oder "Julia", um Empfehlungen zu erhalten.
+        </p> -->
+        <button
+          type="button"
+          @click="userInput = 'Events'; sendMessage()"
+          class="px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 text-base shadow"
+        >Events
+          <!-- <FontAwesomeIcon icon="fa-check" /> -->
+        </button>
+
+        <button
+          type="button"
+          @click="getRecommendation()"
+          class="px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 text-base shadow"
+        >
+          Empfehlung
+        </button>
+      </div>
+
       <div class="flex items-center">
         <input
           ref="userInputRef"
@@ -51,11 +72,6 @@
         </button>
       </div>
 
-      <div class="mt-3">
-        <p class="text-xs pl-2 text-gray-500 dark:text-gray-400">
-          Tipp: Schreibe "Events" oder "Julia", um Empfehlungen zu erhalten.
-        </p>
-      </div>
     </div>
   </div>
 </template>
@@ -271,21 +287,8 @@ const sendMessage = async () => {
   }
 };
 
-// Make initial API calls on app start
-onMounted(async () => {
-  // Fetch events on mount
-  await fetchEvents();
-
-  // Convert fetched events JSON Array into a string
-  eventList = events.value
-    .map((event: Event) => `${event.title}: ${event.link}`)
-    .join(', ');
-  console.log(
-    '\n\nEventList length: ',
-    eventList.length,
-    ' characters'
-  );
   // Check if there are any friends to contact and get a recommendation from the Google Gemini API
+  const getRecommendation = async () => {
   const friendDue = getNextFriendToContact();
   if (friendDue) {
     // show photo of due friend
@@ -305,7 +308,7 @@ onMounted(async () => {
 
     const initialPrompt = `Du bist ein deutscher Recommendation-Chatbot. Schlage dem User eine Nachricht für die anstehende Kontaktaufnahme mit ${friendDue.name} vor.
     Nutze die Notizen ${friendDue.notes}.
-    Bitte antworte in mehreren Absätzen. Beginne deine Antwort mit: Stay in touch!`;
+    Bitte antworte in mehreren Absätzen. Beginne deine Antwort mit: Stay in touch! und mache nur einen kurzen Vorschlag für eine Nachricht.`;
     try {
       const { text } = await $fetch('/api/chat', {
         method: 'POST',
@@ -329,6 +332,23 @@ onMounted(async () => {
       isLoading.value = false;
     }
   }
+}
+
+// Make initial API calls on app start
+onMounted(async () => {
+  // Fetch events on mount
+  await fetchEvents();
+
+  // Convert fetched events JSON Array into a string
+  eventList = events.value
+    .map((event: Event) => `${event.title}: ${event.link}`)
+    .join(', ');
+  console.log(
+    '\n\nEventList length: ',
+    eventList.length,
+    ' characters'
+  );
+
   // set focus on chatbot input field
   userInputRef.value?.focus();
 });

@@ -1,13 +1,13 @@
 <template>
   <div
-    class="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden transition-transform hover:shadow-lg hover:scale-[1.05] border border-gray-300 dark:border-gray-700 cursor-pointer"
+    class="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden transition-transform hover:shadow-lg group hover:scale-[1.05] border border-gray-300 dark:border-gray-700 cursor-pointer"
     @click="$emit('edit', friend)"
   >
     <div class="relative">
       <img
         :src="friend.photo || 'https://i.imgur.com/tdi3NGa.png'"
         alt="Friend"
-        class="w-full h-40 w-40 object-cover"
+        class="w-full h-40 w-40 object-cover transition-transform group-hover:scale-[1.07]"
       />
       <div
         class="absolute top-0 left-0 right-0 bg-gradient-to-b from-black/70 to-transparent p-1"

@@ -7,18 +7,19 @@
       <div
         v-for="friend in friends.slice(0, 4)"
         :key="'recent-photo-' + friend.id"
-        class="relative cursor-pointer"
+        class="relative cursor-pointer object-cover"
         @click="$emit('edit', friend)"
       >
         <div class="relative flex flex-col items-center">
           <img
             :src="friend.photo || 'https://i.imgur.com/tdi3NGa.png'"
             :alt="friend.name"
-            class="w-16 h-16 md:w-28 md:h-28 rounded-full object-cover border-2 border-white dark:border-gray-800 shadow-md hover:shadow-lg transition-transform hover:scale-[1.10]"
+            class="w-16 h-16 md:w-28 md:h-28 rounded-full object-cover border-2 border-white dark:border-gray-800 shadow-md hover:shadow-lg transition-transform hover:scale-[1.12]"
           />
-          <span class="text-sm text-gray-700 dark:text-gray-300 mt-1">{{
+
+          <h3 class="text-sm font-semibold text-gray-700 dark:text-gray-300 mt-1">{{
             getFirstName(friend.name)
-          }}</span>
+          }}</h3>
         </div>
       </div>
     </div>

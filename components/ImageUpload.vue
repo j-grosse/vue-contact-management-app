@@ -8,7 +8,7 @@
   />
   <div
     @click="imageFileInput?.click()"
-    class="min-h-32 w-full rounded-lg overflow-hidden bg-gray-200 dark:bg-gray-700 cursor-pointer mb-4"
+    class="w-full rounded-lg overflow-hidden bg-gray-200 dark:bg-gray-700 cursor-pointer"
   >
     <img
       v-if="preview"
@@ -18,7 +18,7 @@
     />
     <div
       v-else
-      class="w-full h-full min-h-32 flex items-center justify-center text-gray-400"
+      class="w-full h-full min-h-20 flex items-center justify-center text-gray-400"
     >
       <FontAwesomeIcon icon="fa-image" class="text-xl" />
     </div>
@@ -52,7 +52,7 @@ function handleFileUpload(event) {
   reader.onload = (e) => {
     const img = new Image();
     img.onload = () => {
-      const maxSize = 256;
+      const maxSize = 512;
       let { width, height } = img;
       let newWidth = width;
       let newHeight = height;

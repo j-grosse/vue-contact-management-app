@@ -1,17 +1,17 @@
 <template>
-  <div class="min-h-[24rem] dark:bg-yellow-900/20 rounded-lg shadow-md overflow-hidden my-2 mb-4"
+  <div class="dark:bg-yellow-900/20 rounded-lg shadow-md overflow-hidden my-1 mb-4"
   >
     <!-- global interactions window content-->
-    <div class="p-4">
+    <div class="p-2">
       <div
-        class="mb-4 h-80 overflow-y-auto overflow-x-hidden bg-gray-50 dark:bg-gray-900 rounded-lg p-3"
+        class="mb-0 overflow-y-auto overflow-x-hidden bg-gray-50 dark:bg-gray-900 rounded-lg p-2"
       >
-        <div class="space-y-2 max-h-[400px]">
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+        <div class="space-y-2 max-h-[22rem]">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
             <div
               v-for="interaction in visibleInteractions"
               :key="interaction.id"
-              class="bg-white dark:bg-gray-800 rounded-lg px-3 py-2 cursor-pointer transition-transform shadow-md hover:shadow-xl"
+              class="bg-white dark:bg-gray-800 rounded-lg px-3 py-2 cursor-pointer transition-transform shadow hover:shadow-lg"
               @click="$emit('edit', interaction.friend)"
             >
               <div class="flex justify-between gap-3">
@@ -20,7 +20,7 @@
                     <img
                       :src="interaction.friend.photo || 'https://i.imgur.com/tdi3NGa.png'"
                       alt="Friend"
-                      class="min-w-12 min-h-12 w-12 h-12 rounded-lg object-cover"
+                      class="min-w-12 min-h-12 w-12 h-12 rounded-full object-cover"
                     />
                   </div>
                   <div class="flex">
@@ -37,7 +37,7 @@
                 <img
                   v-if="interaction.photo"
                   :src="interaction.photo"
-                  class="w-12 h-12 rounded-lg object-cover overflow-hidden hover:scale-110 transition-transform duration-300"
+                  class="h-12 rounded-lg object-cover overflow-hidden"
                   alt="Interaction photo"
                 />
               </div>

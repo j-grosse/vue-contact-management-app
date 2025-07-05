@@ -14,17 +14,17 @@
           v-model="text" 
           placeholder="Interaktion..." 
           required
-          class="border border-gray-300 text-input text-gray-700 dark:text-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary dark:bg-gray-700 dark:caret-gray-300 px-3 py-2 w-full"
+          class="border border-gray-300 text-input text-gray-700 dark:text-gray-300 rounded-lg dark:bg-gray-700 dark:caret-gray-300 px-3 py-2 w-full"
           >
         </textarea>
       </div>
     </div>
 
-    <div class="relative flex flex-col items-start">
+    <div class="relative flex items-start gap-2">
       <div class="flex w-full justify-between">
         <ImageUpload v-model="form.photo" />
       </div>
-      <div class="ml-auto">
+      <div class="mt-auto">
         <button
           type="submit"
           class="submit-button px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 px-4 py-2 ml-auto"
@@ -90,7 +90,7 @@ function handleFileUpload(event) {
       canvas.height = newHeight;
       const ctx = canvas.getContext('2d');
       ctx.drawImage(img, 0, 0, newWidth, newHeight);
-      form.photo = canvas.toDataURL('image/jpeg', 0.60);
+      form.photo = canvas.toDataURL('image/jpeg', 0.85);
     };
     img.src = e.target.result;
   };

@@ -3,18 +3,18 @@
     <!-- sort entries by date and reverse order -->
     <label class="block text-gray-700 dark:text-gray-300 mb-1"
     >Interaktionen</label>
-    <div class="border border-gray-300 dark:border-gray-600 rounded-lg p-2 pt-3 overflow-y-auto h-48">
+    <div class="bg-gray-50 dark:bg-gray-900 border border-gray-300 dark:border-gray-600 rounded-lg p-2 pt-3 overflow-y-auto h-48">
       <div
         v-for="interaction in [...interactions].sort((a, b) => new Date(a.date) - new Date(b.date)).reverse()"
         :key="interaction.id"
-        class="interaction-item mb-6 pl-1"
+        class="interaction-item bg-white dark:bg-gray-800 rounded-lg mb-2 p-2 cursor-pointer shadow hover:shadow-md"
         @click="editInteraction(interaction)"
       >
         <div class="flex items-start">
           <div class="flex-1">
-            <div class="date block text-gray-700 dark:text-gray-300">
+            <div class="date block text-gray-700 dark:text-gray-300 pb-2">
               {{ getDaysAgo(interaction.date) }}
-              ({{ formatDate(interaction.date) }})
+              ({{ formatDate(interaction.date).slice(0, -4) }})
             </div>
             <div class="border-l pl-2 text-gray-700 dark:text-gray-300 p-1">{{ interaction.text }}</div>
           </div>
@@ -22,7 +22,7 @@
             <img
               v-if="interaction.photo"
               :src="interaction.photo"
-              class="w-10 h-10 rounded-lg object-cover mb-2 mr-1"
+              class="h-12 rounded-lg object-cover"
               alt="Interaction"
             />
           </div>
@@ -31,7 +31,7 @@
     </div>
 
     <!-- Edit Interaction Modal -->
-    <div v-if="showEditModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50" @click.self="closeEditModal()">
+    <div v-if="showEditModal" class="fixed inset-0 bg-black bg-opacity-20 flex items-center justify-center z-50" @click.self="closeEditModal()">
       <div class="bg-white dark:bg-gray-800 rounded-lg p-4 w-full max-w-md mx-4">
         <h2 class="text-2xl font-bold text-gray-800 dark:text-white mb-4">
           Interaktion bearbeiten
@@ -57,14 +57,14 @@
             <textarea
               v-model="editForm.text"
               rows="4"
-              class="border border-gray-300 text-input text-gray-700 dark:text-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary dark:bg-gray-700 dark:caret-gray-300 px-3 py-2 w-full"
+              class="border border-gray-300 text-input text-gray-700 dark:text-gray-300 rounded-lg dark:bg-gray-700 dark:caret-gray-300 px-3 py-2 w-full"
               placeholder="Enter interaction details..."
               required
             ></textarea>
           </div>
-          <ImageUpload v-model="editForm.photo" />
+          <ImageUpload v-model="editForm.photo"/>
 
-          <div class="bg-white dark:bg-gray-800">
+          <div class="bg-white dark:bg-gray-800 mt-3">
             <div class="flex justify-between">
               <button
                 type="button"

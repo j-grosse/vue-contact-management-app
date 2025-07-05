@@ -1,14 +1,14 @@
 <template>
   <div
     class="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50"
-    @click="$emit('close')"
+    @click="handleClose"
   >
     <div
-      class="bg-white dark:bg-gray-800 rounded-lg shadow-xl w-full max-w-md mx-auto overflow-y-auto max-h-[90vh] flex flex-col h-[44rem]"
+      class="bg-white dark:bg-gray-800 rounded-lg shadow-xl w-full max-w-md mx-auto overflow-hidden overflow-y-auto flex flex-col h-[44rem] pt-4 px-4 max-h-[80vh]"
       @click.stop
     >
       <!-- Header and content area -->
-      <div class="px-4 flex-1">
+      <div class="flex-1">
         <h2 class="text-2xl font-bold text-gray-800 dark:text-white mb-4">
           {{ editing ? 'Friend bearbeiten' : 'Friend hinzufügen' }}
         </h2>
@@ -17,7 +17,7 @@
         <div class="tabs flex justify-center gap-2 bg-gray-300 dark:bg-gray-700 border-2 border-gray-300 dark:border-gray-600 rounded-lg p-1 mb-4">
           <button
             :class="[
-              'w-1/2 py-2 rounded-lg font-medium transition-colors duration-150 focus:outline-none',
+              'w-1/2 py-2 rounded-lg font-medium transition-colors duration-150',
               activeTab === 'interactions'
                 ? 'bg-white dark:bg-gray-800 text-primary-500 dark:text-gray-300 shadow-md'
                 : 'bg-transparent text-gray-600 dark:text-gray-300'
@@ -29,7 +29,7 @@
           </button>
           <button
             :class="[
-              'w-1/2 py-2 rounded-lg font-medium transition-colors duration-150 focus:outline-none',
+              'w-1/2 py-2 rounded-lg font-medium transition-colors duration-150',
               activeTab === 'info'
                 ? 'bg-white dark:bg-gray-800 text-primary-500 dark:text-gray-300 shadow-md'
                 : 'bg-transparent text-gray-600 dark:text-gray-300'
@@ -138,7 +138,7 @@
                 <textarea
                   v-model="form.notes"
                   placeholder="Notizen zu diesem Friend"
-                  rows="2"
+                  rows="1"
                   class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary dark:bg-gray-700 dark:text-white dark:border-gray-600 text-base"
                 ></textarea>
               </div>
@@ -177,7 +177,7 @@
       </div>
 
       <!-- Fixed bottom buttons -->
-      <div class="p-4 bg-white dark:bg-gray-800">
+      <div class="py-4 bg-white dark:bg-gray-800">
         <div class="flex justify-between">
           <button
             v-if="editing && activeTab === 'info'"
@@ -188,10 +188,11 @@
             <FontAwesomeIcon icon="fa-trash"></FontAwesomeIcon>
           </button>
           <div v-if="editing && activeTab === 'interactions'"></div>
+          <div v-else=""></div>
           <div class="flex justify-between gap-3">
             <button
               type="button"
-              @click="$emit('close')"
+              @click="handleClose"
               class="px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 text-base"
             >
               <FontAwesomeIcon icon="fa-times" />
@@ -239,21 +240,26 @@ const form = reactive({
   interactions: [],
 });
 
+function resetForm() {
+  form.id = null;
+  form.name = '';
+  form.photo = '';
+  form.notes = '';
+  form.lastContactDate = new Date().toISOString().split('T')[0];
+  form.contactInterval = 30;
+  form.interactions = [];
+}
+
 // Initialize form with editing data if available
 onMounted(() => {
   document.body.classList.add('modal-open');
   if (props.editing) {
-    // Copy all properties except interactions
     const { interactions, ...otherProps } = props.editing;
     Object.assign(form, otherProps);
-    
-    // Properly copy the interactions array
     form.interactions = interactions ? [...interactions] : [];
-    
-    // Set tab to interactions when editing (since they likely want to see existing interactions)
     activeTab.value = 'interactions';
   } else {
-    // Set tab to info when adding a new friend
+    resetForm();
     activeTab.value = 'info';
   }
 });
@@ -382,5 +388,10 @@ const editInteraction = (editedInteraction) => {
       });
     }
   }
+};
+
+const handleClose = () => {
+  resetForm();
+  emit('close');
 };
 </script>

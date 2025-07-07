@@ -32,7 +32,7 @@
               <span class="flex justify-end mt-1">
                 <button
                   @click.stop="$emit('contact', friend)"
-                  class="bg-primary hover:bg-green-600 text-white w-10 h-10 rounded-full flex items-center justify-center"
+                  class="bg-primary hover:bg-green-500 text-white w-10 h-10 rounded-full flex items-center justify-center"
                   title="Als kontaktiert markieren"
                 >
                   <FontAwesomeIcon icon="fa-check"></FontAwesomeIcon>

@@ -40,7 +40,7 @@
         <button
           type="button"
           @click="userInput = 'Events'; sendMessage()"
-          class="px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 text-base shadow"
+          class="btn-variant text-base shadow"
         >Events
           <!-- <FontAwesomeIcon icon="fa-check" /> -->
         </button>
@@ -48,7 +48,7 @@
         <button
           type="button"
           @click="getRecommendation()"
-          class="px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 text-base shadow"
+          class="btn-variant text-base shadow"
         >
           Empfehlung
         </button>

@@ -193,14 +193,14 @@
             <button
               type="button"
               @click="handleClose"
-              class="px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 text-base"
+              class="btn-variant text-base"
             >
               <FontAwesomeIcon icon="fa-times" />
             </button>
             <button
               type="button"
               @click="saveForm"
-              class="px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 text-base"
+              class="btn-variant text-base"
             >
               <FontAwesomeIcon icon="fa-check" />
             </button>

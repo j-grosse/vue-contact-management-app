@@ -28,7 +28,7 @@
           </span>
           <button
             @click.stop="$emit('contact', friend)"
-            class="bg-primary hover:bg-green-500 text-white w-10 h-10 rounded-full flex items-center justify-center"
+            class="bg-primary text-white w-10 h-10 rounded-full flex items-center justify-center"
             title="Als kontaktiert markieren"
           >
             <FontAwesomeIcon icon="fa-check" class="text-xl"></FontAwesomeIcon>

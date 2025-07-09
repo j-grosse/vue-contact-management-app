@@ -13,8 +13,8 @@
         <div class="flex items-start">
           <div class="flex-1">
             <div class="date block text-gray-700 dark:text-gray-300 pb-2">
-              {{ getDaysAgo(interaction.date) }}
-              ({{ formatDate(interaction.date).slice(0, -4) }})
+              {{ getDaysAgo(interaction.date) }}&nbsp;
+              ({{ getGermanWeekday(interaction.date) }} {{ formatDate(interaction.date).slice(0, -4) }})
             </div>
             <div class="border-l pl-2 text-gray-700 dark:text-gray-300 p-1">{{ interaction.text }}</div>
           </div>
@@ -102,6 +102,7 @@ import { ref } from 'vue';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { getDaysAgo } from '~/utils/dateHelper';
 import { formatDate } from '~/utils/dateHelper';
+import { getGermanWeekday } from '~/utils/dateHelper';
 import ImageUpload from '~/components/ImageUpload.vue';
 
 const props = defineProps({

@@ -4,7 +4,7 @@
     @click="handleClose"
   >
     <div
-      class="bg-white dark:bg-gray-800 rounded-lg shadow-xl w-full max-w-md mx-auto overflow-hidden overflow-y-auto flex flex-col h-[44rem] pt-4 px-4 max-h-[80vh]"
+      class="bg-white dark:bg-gray-800 rounded-lg shadow-xl w-full max-w-md mx-auto overflow-hidden overflow-y-auto flex flex-col h-[44rem] pt-4 px-4 max-h-[90vh]"
       @click.stop
     >
       <!-- Header and content area -->
@@ -111,7 +111,7 @@
                   type="text"
                   v-model="form.photo"
                   placeholder="Foto URL eingeben"
-                  class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary dark:bg-gray-700 dark:text-white dark:border-gray-600 text-base"
+                  class="w-full p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary dark:bg-gray-700 dark:text-white dark:border-gray-600 text-base"
                 />
               </div>
               -->
@@ -126,7 +126,7 @@
                   v-model="form.name"
                   placeholder="Name eingeben"
                   required
-                  class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary dark:bg-gray-700 dark:text-white dark:border-gray-600 text-base"
+                  class="w-full p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary dark:bg-gray-700 dark:text-white dark:border-gray-600 text-base"
                 />
               </div>
 
@@ -138,14 +138,14 @@
                 <textarea
                   v-model="form.notes"
                   placeholder="Notizen zu diesem Friend"
-                  rows="1"
-                  class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary dark:bg-gray-700 dark:text-white dark:border-gray-600 text-base"
+                  rows="2"
+                  class="w-full p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary dark:bg-gray-700 dark:text-white dark:border-gray-600 text-base"
                 ></textarea>
               </div>
 
               <div class="flex justify-between gap-3">
                 <!-- Last Contact Date -->
-                <div>
+                <div class="w-3/4">
                   <label class="block text-gray-700 dark:text-gray-300 mb-1"
                     >Letzter Kontakt</label
                   >
@@ -153,9 +153,9 @@
                     type="date"
                     v-model="form.lastContactDate"
                     required
-                    class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary dark:bg-gray-700 dark:text-white dark:border-gray-600 text-base"
+                    class="w-full p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary dark:bg-gray-700 dark:text-white dark:border-gray-600 text-base"
                   />
-                </div>
+                </div class="w-1/4">
                  <!-- Contact Interval -->
                  <div>
                   <label class="block text-gray-700 dark:text-gray-300 mb-1"
@@ -166,7 +166,7 @@
                     v-model="form.contactInterval"
                     min="1"
                     required
-                    class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary dark:bg-gray-700 dark:text-white dark:border-gray-600 text-base text-right"
+                    class="w-full p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary dark:bg-gray-700 dark:text-white dark:border-gray-600 text-base text-right"
                   />
                 </div>
               </div>

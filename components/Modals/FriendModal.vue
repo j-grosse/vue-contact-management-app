@@ -1,6 +1,6 @@
 <template>
   <div
-    class="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50"
+    class="app-min-width fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50"
     @click="handleClose"
   >
     <div

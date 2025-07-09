@@ -1,8 +1,8 @@
 <template>
   <div class="interactions-list">
     <!-- sort entries by date and reverse order -->
-    <label class="block text-gray-700 dark:text-gray-300 mb-1"
-    >Interaktionen</label>
+    <!-- <label class="block text-gray-700 dark:text-gray-300 mb-1"
+    >Interaktionen</label> -->
     <div class="bg-gray-50 dark:bg-gray-900 border border-gray-300 dark:border-gray-600 rounded-lg p-2 pt-3 overflow-y-auto h-48">
       <div
         v-for="interaction in [...interactions].sort((a, b) => new Date(a.date) - new Date(b.date)).reverse()"
@@ -31,26 +31,24 @@
     </div>
 
     <!-- Edit Interaction Modal -->
-    <div v-if="showEditModal" class="fixed inset-0 bg-black bg-opacity-20 flex items-center justify-center z-50" @click.self="closeEditModal()">
-      <div class="bg-white dark:bg-gray-800 rounded-lg p-4 w-full max-w-md mx-4">
+    <div v-if="showEditModal" class="app-min-width fixed inset-0 bg-black bg-opacity-20 flex items-center justify-center z-50" @click.self="handleCloseEditModal()">
+      <div class="flex flex-col h-[44rem] bg-white dark:bg-gray-800 rounded-lg p-4 w-full max-w-md mx-4">
         <h2 class="text-2xl font-bold text-gray-800 dark:text-white mb-4">
           Interaktion bearbeiten
         </h2>
         
-        <form @submit.prevent="saveEditedInteraction">
-          <div class="mb-4">
+        <form @submit.prevent="saveEditedInteraction" class="flex flex-col h-full">
+          <div class="flex flex-col gap-3">
             <!-- <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
               Datum
             </label> -->
             <input
               v-model="editForm.date"
               type="date"
-              class="border border-gray-300 block rounded-lg text-gray-700 dark:text-gray-300 dark:bg-gray-700 mb-2 p-2"
+              class="border border-gray-300 block rounded-lg text-gray-700 dark:text-gray-300 dark:bg-gray-700 p-2 cursor-pointer"
               required
             />
-          </div>
           
-          <div class="mb-3">
             <!-- <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
               Interaktion
             </label> -->
@@ -58,17 +56,17 @@
               v-model="editForm.text"
               rows="4"
               class="border border-gray-300 text-input text-gray-700 dark:text-gray-300 rounded-lg dark:bg-gray-700 dark:caret-gray-300 px-3 py-2 w-full"
-              placeholder="Enter interaction details..."
+              placeholder="Interaktion..."
               required
             ></textarea>
+            <ImageUpload v-model="editForm.photo"/>
           </div>
-          <ImageUpload v-model="editForm.photo"/>
 
-          <div class="bg-white dark:bg-gray-800 mt-3">
+          <div class="bg-white dark:bg-gray-800 mt-auto">
             <div class="flex justify-between">
               <button
                 type="button"
-                @click="$emit('delete', editForm.id); closeEditModal()"
+                @click="$emit('delete', editForm.id); handleCloseEditModal()"
                 class="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg text-base flex items-center"
                 title="Delete interaction"
               >
@@ -77,7 +75,7 @@
               <div class="flex justify-between gap-3">
                 <button
                 type="button"
-                @click="closeEditModal"
+                @click="handleCloseEditModal"
                 class="btn-variant text-base"
                 >
                   <FontAwesomeIcon icon="fa-times" />
@@ -90,6 +88,7 @@
                 </button>
               </div>
             </div>
+
           </div>
         </form>
       </div>
@@ -135,7 +134,7 @@ const editInteraction = (interaction) => {
 };
 
 // Function to close edit modal
-const closeEditModal = () => {
+const handleCloseEditModal = () => {
   showEditModal.value = false;
   editForm.value = {
     id: null,
@@ -153,6 +152,6 @@ const saveEditedInteraction = () => {
     text: editForm.value.text,
     photo: editForm.value.photo
   });
-  closeEditModal();
+  handleCloseEditModal();
 };
 </script>

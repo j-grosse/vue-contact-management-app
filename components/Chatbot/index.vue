@@ -39,7 +39,7 @@
         </p> -->
         <button
           type="button"
-          @click="userInput = 'Events'; sendMessage()"
+          @click="userInput = 'Events'; sendMessage(); scrollToBottom()"
           class="btn-variant text-base shadow"
         >Events
           <!-- <FontAwesomeIcon icon="fa-check" /> -->
@@ -47,7 +47,7 @@
 
         <button
           type="button"
-          @click="getRecommendation()"
+          @click="getRecommendation(); scrollToBottom()"
           class="btn-variant text-base shadow"
         >
           Empfehlung
@@ -61,7 +61,7 @@
           @keyup.enter="sendMessage"
           type="text"
           placeholder="Frage nach Friends, Freizeitaktivitäten etc. ..."
-          class="flex-1 px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary dark:bg-gray-800 dark:text-white dark:border-gray-700"
+          class="flex-1 px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary dark:bg-gray-800 dark:text-white dark:border-gray-600"
         />
         <button
           @click="sendMessage"
@@ -164,6 +164,13 @@ const buildConversationContext = () => {
   return context.trim();
 };
 
+const scrollToBottom = () => {
+  chatContainerRef.value?.scrollTo({
+    top: chatContainerRef.value.scrollHeight,
+    behavior: 'smooth'
+  });
+}
+
 // Function to send a message to the chatbot
 const sendMessage = async () => {
   if (!userInput.value.trim() || isLoading.value) return;
@@ -181,10 +188,7 @@ const sendMessage = async () => {
 
   // Scroll to the bottom before the chatbot answered
   await nextTick();
-  chatContainerRef.value?.scrollTo({
-    top: chatContainerRef.value.scrollHeight,
-    behavior: 'smooth',
-  });
+  scrollToBottom();
 
   // Add loading message
   chatMessages.value.push({

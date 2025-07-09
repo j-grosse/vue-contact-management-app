@@ -1,15 +1,23 @@
 <template>
-  <form @submit.prevent="submitInteraction" class="add-interaction flex flex-col justify-between mb-6 gap-3">
+  <form @submit.prevent="submitInteraction" class="add-interaction flex flex-col justify-between gap-3">
     <div class="flex w-full flex-col">
       <label class="block text-gray-700 dark:text-gray-300 mb-1"
         >Interaktion hinzufügen</label>
-      <input 
-        type="date" 
-        v-model="date" 
-        required 
-        class="date-input border border-gray-300 block rounded-lg text-gray-700 dark:text-gray-300 dark:bg-gray-700 mb-2 p-2"
-        />
-      <div class="flex gap-2">
+      <div class="flex justify-between gap-2 mb-2">
+        <input 
+          type="date" 
+          v-model="date" 
+          required 
+          class="date-input border border-gray-300 block rounded-lg text-gray-700 dark:text-gray-300 dark:bg-gray-700 p-2 cursor-pointer"
+          />
+        <button
+          type="submit"
+          class="submit-button border border-gray-300 dark:border-gray-600 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 px-4 py-2 ml-auto"
+          >
+          <FontAwesomeIcon icon="fa-floppy-disk" class="text-lg"/>
+        </button>
+      </div>
+      <div class="flex gap-2 mb-2">
         <textarea 
           v-model="text" 
           placeholder="Interaktion..." 
@@ -18,20 +26,7 @@
           >
         </textarea>
       </div>
-    </div>
-
-    <div class="relative flex items-start gap-2">
-      <div class="flex w-full justify-between">
-        <ImageUpload v-model="form.photo" />
-      </div>
-      <div class="mt-auto">
-        <button
-          type="submit"
-          class="submit-button px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 px-4 py-2 ml-auto"
-          >
-          <FontAwesomeIcon icon="fa-floppy-disk" class="text-lg"/>
-        </button>
-      </div>
+      <ImageUpload v-model="form.photo" />
     </div>
   </form>
 </template>

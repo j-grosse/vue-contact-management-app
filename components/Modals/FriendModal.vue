@@ -10,7 +10,7 @@
       <!-- Header and content area -->
       <div class="flex-1">
         <h2 class="text-2xl font-bold text-gray-800 dark:text-white mb-4">
-          {{ editing ? 'Friend bearbeiten' : 'Friend hinzufügen' }}
+          {{ editing ? (form.name || 'Friend') : 'Friend hinzufügen' }}
         </h2>
 
         <!-- Tab -->
@@ -42,13 +42,13 @@
         </div>
 
         <!-- Interactions Tab active  -->
-        <div v-if="activeTab === 'interactions'">
-          <AddInteraction @add="addNewInteraction" />
+        <div v-if="activeTab === 'interactions'" class="flex flex-col gap-6">
           <InteractionList 
             :interactions="form.interactions" 
             @delete="deleteInteraction"
             @edit="editInteraction"
           />
+          <AddInteraction @add="addNewInteraction" class="mb-3"/>
         </div>
 
         <!-- Info Tab active  -->

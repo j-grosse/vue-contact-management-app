@@ -1,6 +1,6 @@
 <template>
   <div
-    class="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden transition-transform hover:shadow-lg group hover:scale-[1.05] border border-gray-300 dark:border-gray-700 cursor-pointer"
+    class="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden transition-transform hover:shadow-lg group hover:scale-[1.05] border border-gray-300 dark:border-gray-600 cursor-pointer"
     @click="$emit('edit', friend)"
   >
     <div class="relative">
@@ -28,7 +28,7 @@
           </span>
           <button
             @click.stop="$emit('contact', friend)"
-            class="bg-primary hover:bg-green-600 text-white w-10 h-10 rounded-full flex items-center justify-center"
+            class="bg-primary text-white w-10 h-10 rounded-full flex items-center justify-center"
             title="Als kontaktiert markieren"
           >
             <FontAwesomeIcon icon="fa-check" class="text-xl"></FontAwesomeIcon>

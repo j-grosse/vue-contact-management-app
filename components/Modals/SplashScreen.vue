@@ -1,7 +1,7 @@
 <template>
   <div class="splash-screen-overlay" v-if="visible">
     <div
-      class="fixed inset-0 bg-black/70 flex items-center justify-center p-4 z-50"
+      class="app-min-width fixed inset-0 bg-black/70 flex items-center justify-center p-4 z-50"
       @click="closeModal()"
     >
       <div
@@ -50,7 +50,7 @@
         <div class="flex justify-end gap-3">
           <button
             @click="closeModal()"
-            class="px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
+            class="btn-variant"
           >
             <FontAwesomeIcon icon="fa-check" />
           </button>

@@ -1,16 +1,16 @@
 <template>
   <div
-    class="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50"
+    class="app-min-width fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50"
     @click="handleClose"
   >
     <div
-      class="bg-white dark:bg-gray-800 rounded-lg shadow-xl w-full max-w-md mx-auto overflow-hidden overflow-y-auto flex flex-col h-[44rem] pt-4 px-4 max-h-[80vh]"
+      class="bg-white dark:bg-gray-800 rounded-lg shadow-xl w-full max-w-md mx-auto overflow-hidden overflow-y-auto flex flex-col h-[44rem] pt-4 px-4 max-h-[90vh]"
       @click.stop
     >
       <!-- Header and content area -->
       <div class="flex-1">
         <h2 class="text-2xl font-bold text-gray-800 dark:text-white mb-4">
-          {{ editing ? 'Friend bearbeiten' : 'Friend hinzufügen' }}
+          {{ editing ? (form.name || 'Friend') : 'Friend hinzufügen' }}
         </h2>
 
         <!-- Tab -->
@@ -42,13 +42,13 @@
         </div>
 
         <!-- Interactions Tab active  -->
-        <div v-if="activeTab === 'interactions'">
-          <AddInteraction @add="addNewInteraction" />
+        <div v-if="activeTab === 'interactions'" class="flex flex-col gap-6">
           <InteractionList 
             :interactions="form.interactions" 
             @delete="deleteInteraction"
             @edit="editInteraction"
           />
+          <AddInteraction @add="addNewInteraction" class="mb-3"/>
         </div>
 
         <!-- Info Tab active  -->
@@ -111,7 +111,7 @@
                   type="text"
                   v-model="form.photo"
                   placeholder="Foto URL eingeben"
-                  class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary dark:bg-gray-700 dark:text-white dark:border-gray-600 text-base"
+                  class="w-full p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary dark:bg-gray-700 dark:text-white dark:border-gray-600 text-base"
                 />
               </div>
               -->
@@ -126,7 +126,7 @@
                   v-model="form.name"
                   placeholder="Name eingeben"
                   required
-                  class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary dark:bg-gray-700 dark:text-white dark:border-gray-600 text-base"
+                  class="w-full p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary dark:bg-gray-700 dark:text-white dark:border-gray-600 text-base"
                 />
               </div>
 
@@ -138,14 +138,14 @@
                 <textarea
                   v-model="form.notes"
                   placeholder="Notizen zu diesem Friend"
-                  rows="1"
-                  class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary dark:bg-gray-700 dark:text-white dark:border-gray-600 text-base"
+                  rows="2"
+                  class="w-full p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary dark:bg-gray-700 dark:text-white dark:border-gray-600 text-base"
                 ></textarea>
               </div>
 
               <div class="flex justify-between gap-3">
                 <!-- Last Contact Date -->
-                <div>
+                <div class="w-3/4">
                   <label class="block text-gray-700 dark:text-gray-300 mb-1"
                     >Letzter Kontakt</label
                   >
@@ -153,9 +153,9 @@
                     type="date"
                     v-model="form.lastContactDate"
                     required
-                    class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary dark:bg-gray-700 dark:text-white dark:border-gray-600 text-base"
+                    class="w-full p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary dark:bg-gray-700 dark:text-white dark:border-gray-600 text-base"
                   />
-                </div>
+                </div class="w-1/4">
                  <!-- Contact Interval -->
                  <div>
                   <label class="block text-gray-700 dark:text-gray-300 mb-1"
@@ -166,7 +166,7 @@
                     v-model="form.contactInterval"
                     min="1"
                     required
-                    class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary dark:bg-gray-700 dark:text-white dark:border-gray-600 text-base text-right"
+                    class="w-full p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary dark:bg-gray-700 dark:text-white dark:border-gray-600 text-base text-right"
                   />
                 </div>
               </div>
@@ -193,14 +193,14 @@
             <button
               type="button"
               @click="handleClose"
-              class="px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 text-base"
+              class="btn-variant text-base"
             >
               <FontAwesomeIcon icon="fa-times" />
             </button>
             <button
               type="button"
               @click="saveForm"
-              class="px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 text-base"
+              class="btn-variant text-base"
             >
               <FontAwesomeIcon icon="fa-check" />
             </button>

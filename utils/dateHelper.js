@@ -13,7 +13,7 @@ export const getDaysAgo = (date) => {
     if (diffDays < 14) return `vor ${diffDays} Tg.`;
     if (diffDays < 30) return `vor über ${Math.floor(diffDays / 7)} Wo.`;
     if (diffDays < 365) return `vor über ${Math.floor(diffDays / 30)} Mo.`;
-    return `Vor über ${Math.floor(diffDays / 365)} J.`;
+    return `vor über ${Math.floor(diffDays / 365)} J.`;
   };
 
   export const formatDate = (date) => {
@@ -23,3 +23,12 @@ export const getDaysAgo = (date) => {
     const year = d.getFullYear();
     return `${day}.${month}.${year}`;
   };
+
+  export const getGermanWeekday = (date) => {
+  // Accepts a Date object or a date string (e.g., "2024-06-30")
+  const d = new Date(date);
+  const weekdays = [
+    'So.', 'Mo.', 'Di.', 'Mi.', 'Do.', 'Fr.', 'Sa.'
+  ];
+  return weekdays[d.getDay()];
+}

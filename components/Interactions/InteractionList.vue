@@ -45,7 +45,7 @@
             <input
               v-model="editForm.date"
               type="date"
-              class="border border-gray-300 block rounded-lg text-gray-700 dark:text-gray-300 dark:bg-gray-700 p-2 cursor-pointer"
+              class="border border-gray-300 block rounded-lg text-gray-700 dark:text-gray-300 dark:bg-gray-700 p-2 cursor-pointer appearance-none"
               required
             />
           

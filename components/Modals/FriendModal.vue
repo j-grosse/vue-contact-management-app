@@ -153,7 +153,7 @@
                     type="date"
                     v-model="form.lastContactDate"
                     required
-                    class="w-full p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary dark:bg-gray-700 dark:text-white dark:border-gray-600 text-base"
+                    class="w-full p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary dark:bg-gray-700 dark:text-white dark:border-gray-600 text-base appearance-none"
                   />
                 </div class="w-1/4">
                  <!-- Contact Interval -->

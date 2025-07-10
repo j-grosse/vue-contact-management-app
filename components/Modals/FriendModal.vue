@@ -253,7 +253,7 @@ function resetForm() {
 // Initialize form with editing data if available
 onMounted(() => {
   // Simple approach - just add a class
-  document.body.classList.add('modal-open');
+  friendsStore.isFriendModalOpen = true;
   
   if (props.editing) {
     const { interactions, ...otherProps } = props.editing;
@@ -268,7 +268,7 @@ onMounted(() => {
 
 onBeforeUnmount(() => {
   // Simple cleanup
-  document.body.classList.remove('modal-open');
+  friendsStore.isFriendModalOpen = false;
 });
 
 // Calculate next contact date and prepare the form data for saving

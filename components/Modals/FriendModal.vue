@@ -252,7 +252,16 @@ function resetForm() {
 
 // Initialize form with editing data if available
 onMounted(() => {
-  document.body.classList.add('modal-open');
+  // Prevent body scrolling on mobile
+  const body = document.body;
+  const scrollY = window.scrollY;
+  
+  body.classList.add('modal-open');
+  body.style.position = 'fixed';
+  body.style.top = `-${scrollY}px`;
+  body.style.width = '100%';
+  body.style.overflow = 'hidden';
+  
   if (props.editing) {
     const { interactions, ...otherProps } = props.editing;
     Object.assign(form, otherProps);
@@ -265,7 +274,20 @@ onMounted(() => {
 });
 
 onBeforeUnmount(() => {
-  document.body.classList.remove('modal-open');
+  // Restore body scrolling
+  const body = document.body;
+  const scrollY = body.style.top;
+  
+  body.classList.remove('modal-open');
+  body.style.position = '';
+  body.style.top = '';
+  body.style.width = '';
+  body.style.overflow = '';
+  
+  // Restore scroll position
+  if (scrollY) {
+    window.scrollTo(0, parseInt(scrollY || '0') * -1);
+  }
 });
 
 // Calculate next contact date and prepare the form data for saving
@@ -395,3 +417,18 @@ const handleClose = () => {
   emit('close');
 };
 </script>
+
+<style scoped>
+/* Additional iOS-specific fixes */
+@media (max-width: 768px) {
+  .app-min-width {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    overflow: hidden;
+    -webkit-overflow-scrolling: touch;
+  }
+}
+</style>

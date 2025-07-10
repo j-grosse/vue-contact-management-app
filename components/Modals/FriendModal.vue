@@ -252,15 +252,8 @@ function resetForm() {
 
 // Initialize form with editing data if available
 onMounted(() => {
-  // Prevent body scrolling on mobile
-  const body = document.body;
-  const scrollY = window.scrollY;
-  
-  body.classList.add('modal-open');
-  body.style.position = 'fixed';
-  body.style.top = `-${scrollY}px`;
-  body.style.width = '100%';
-  body.style.overflow = 'hidden';
+  // Simple approach - just add a class
+  document.body.classList.add('modal-open');
   
   if (props.editing) {
     const { interactions, ...otherProps } = props.editing;
@@ -274,20 +267,8 @@ onMounted(() => {
 });
 
 onBeforeUnmount(() => {
-  // Restore body scrolling
-  const body = document.body;
-  const scrollY = body.style.top;
-  
-  body.classList.remove('modal-open');
-  body.style.position = '';
-  body.style.top = '';
-  body.style.width = '';
-  body.style.overflow = '';
-  
-  // Restore scroll position
-  if (scrollY) {
-    window.scrollTo(0, parseInt(scrollY || '0') * -1);
-  }
+  // Simple cleanup
+  document.body.classList.remove('modal-open');
 });
 
 // Calculate next contact date and prepare the form data for saving
@@ -419,16 +400,15 @@ const handleClose = () => {
 </script>
 
 <style scoped>
-/* Additional iOS-specific fixes */
-@media (max-width: 768px) {
-  .app-min-width {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    overflow: hidden;
-    -webkit-overflow-scrolling: touch;
-  }
+/* Simple modal scroll prevention */
+.app-min-width {
+  overscroll-behavior: contain;
+  touch-action: none;
+}
+
+/* Allow scrolling within modal content */
+.app-min-width > div {
+  touch-action: pan-y;
+  overscroll-behavior: contain;
 }
 </style>

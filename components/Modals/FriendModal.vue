@@ -153,7 +153,7 @@
                     type="date"
                     v-model="form.lastContactDate"
                     required
-                    class="w-full p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary dark:bg-gray-700 dark:text-white dark:border-gray-600 text-base appearance-none"
+                    class="w-full p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary dark:bg-gray-700 dark:text-white dark:border-gray-600 text-base"
                   />
                 </div class="w-1/4">
                  <!-- Contact Interval -->
@@ -252,7 +252,7 @@ function resetForm() {
 
 // Initialize form with editing data if available
 onMounted(() => {
-  // Simple approach - just add a class
+  // Set Friend Modal open state in the friends store
   friendsStore.isFriendModalOpen = true;
   
   if (props.editing) {
@@ -267,7 +267,7 @@ onMounted(() => {
 });
 
 onBeforeUnmount(() => {
-  // Simple cleanup
+  // Set Friend Modal open state in the friends store
   friendsStore.isFriendModalOpen = false;
 });
 
@@ -399,16 +399,4 @@ const handleClose = () => {
 };
 </script>
 
-<style scoped>
-/* Simple modal scroll prevention */
-.app-min-width {
-  overscroll-behavior: contain;
-  touch-action: none;
-}
 
-/* Allow scrolling within modal content */
-.app-min-width > div {
-  touch-action: pan-y;
-  overscroll-behavior: contain;
-}
-</style>

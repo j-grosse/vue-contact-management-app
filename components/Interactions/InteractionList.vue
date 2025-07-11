@@ -31,8 +31,8 @@
     </div>
 
     <!-- Edit Interaction Modal -->
-    <div v-if="showEditModal" class="app-min-width fixed inset-0 bg-black bg-opacity-20 flex items-center justify-center z-50" @click.self="handleCloseEditModal()">
-      <div class="flex flex-col h-[44rem] bg-white dark:bg-gray-800 rounded-lg p-4 w-full max-w-md mx-4">
+    <div v-if="showEditModal" class="app-min-width fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50" @click.self="handleCloseEditModal()">
+      <div class="flex flex-col h-[42rem] bg-white dark:bg-gray-800 rounded-lg p-4 w-full max-w-md mx-4">
         <h2 class="text-2xl font-bold text-gray-800 dark:text-white mb-4">
           Interaktion bearbeiten
         </h2>

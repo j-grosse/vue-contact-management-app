@@ -250,11 +250,11 @@ function resetForm() {
   form.interactions = [];
 }
 
-// Initialize form with editing data if available
 onMounted(() => {
-  // Set Friend Modal open state in the friends store
-  friendsStore.isFriendModalOpen = true;
+  // prevent scrolling of the page if modal is open
+  document.body.classList.add('modal-open');
   
+  // Initialize form with editing data if available
   if (props.editing) {
     const { interactions, ...otherProps } = props.editing;
     Object.assign(form, otherProps);
@@ -267,8 +267,8 @@ onMounted(() => {
 });
 
 onBeforeUnmount(() => {
-  // Set Friend Modal open state in the friends store
-  friendsStore.isFriendModalOpen = false;
+  // allow scrolling of the page if modal is closed
+  document.body.classList.remove('modal-open');
 });
 
 // Calculate next contact date and prepare the form data for saving

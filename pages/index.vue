@@ -1,7 +1,9 @@
 <template>
   <div>
     <div class="mb-4 flex justify-between gap-2">
-      <div></div>
+      <div class="p-1 py-2">
+        <InteractionsHistory />
+      </div>
       <!-- <SearchBar v-if="appStore.viewMode === 'cards'" v-model="searchQuery" />
       <div v-else></div> -->
       <button
@@ -108,6 +110,7 @@ import { useAppStore } from '~/stores/app';
 // import SearchBar from '~/components/SearchBar.vue';
 import GridView from '~/components/GridView/index.vue';
 import TableView from '~/components/TableView/index.vue';
+import InteractionsHistory from '~/components/InteractionsHistory';
 import EmptyState from '~/components/EmptyState.vue';
 import FriendModal from '~/components/Modals/FriendModal.vue';
 import DeleteModal from '~/components/Modals/DeleteModal.vue';

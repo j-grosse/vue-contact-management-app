@@ -352,6 +352,35 @@ export const useFriendsStore = defineStore('friends', {
         };
         this.saveFriendsToStorage();
       }
+    },
+
+    // 14 days interactions history table
+    hasInteractionOnDate(dateString) {
+      return this.friends.some(friend => {
+        if (!friend.interactions) return false;
+        return friend.interactions.some(interaction => {
+          return interaction.date === dateString;
+        });
+      });
+    },
+
+    getInteractionsOnDate(dateString) {
+      const interactions = [];
+      
+      this.friends.forEach(friend => {
+        if (friend.interactions) {
+          friend.interactions.forEach(interaction => {
+            if (interaction.date === dateString) {
+              interactions.push({
+                ...interaction,
+                friendName: friend.name
+              });
+            }
+          });
+        }
+      });
+      
+      return interactions;
     }
   },
 });

@@ -4,7 +4,7 @@
     @click="handleClose"
   >
     <div
-      class="bg-white dark:bg-gray-800 rounded-lg shadow-xl w-full max-w-md mx-auto overflow-hidden overflow-y-auto flex flex-col h-[44rem] pt-4 px-4 max-h-[90vh]"
+      class="modal-style flex flex-col h-[44rem] pt-4 px-4 "
       @click.stop
     >
       <!-- Header and content area -->

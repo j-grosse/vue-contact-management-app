@@ -13,12 +13,12 @@
     <img
       v-if="preview"
       :src="preview"
-      class="w-full h-full object-cover"
+      class="w-full h-48 object-cover"
       alt="Interaction photo"
     />
     <div
       v-else
-      class="w-full h-full min-h-20 flex items-center justify-center text-gray-400"
+      class="w-full h-48 flex items-center justify-center text-gray-400"
     >
       <FontAwesomeIcon icon="fa-image" class="text-xl" />
     </div>

@@ -5,7 +5,7 @@
       @click="closeModal()"
     >
       <div
-        class="text-gray-600 dark:text-gray-300 bg-white dark:bg-gray-800 rounded-lg shadow-xl w-full max-w-sm mx-auto p-4 overflow-hidden max-h-[90vh] overflow-y-auto"
+        class="modal-style p-4 text-gray-600 dark:text-gray-300"
         @click.stop
       >
         <h3 class="text-xl font-bold my-4">

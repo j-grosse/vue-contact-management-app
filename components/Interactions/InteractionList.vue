@@ -32,7 +32,7 @@
 
     <!-- Edit Interaction Modal -->
     <div v-if="showEditModal" class="app-min-width fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50" @click.self="handleCloseEditModal()">
-      <div class="flex flex-col h-[42rem] bg-white dark:bg-gray-800 rounded-lg p-4 w-full max-w-md mx-4">
+      <div class="flex flex-col h-[42rem] max-h-[80vh] bg-white dark:bg-gray-800 rounded-lg p-4 w-full max-w-md mx-4 overflow-y-auto">
         <h2 class="text-2xl font-bold text-gray-800 dark:text-white mb-4">
           Interaktion bearbeiten
         </h2>
@@ -54,7 +54,7 @@
             </label> -->
             <textarea
               v-model="editForm.text"
-              rows="4"
+              rows="3"
               class="border border-gray-300 text-input text-gray-700 dark:text-gray-300 rounded-lg dark:bg-gray-700 dark:caret-gray-300 px-3 py-2 w-full"
               placeholder="Interaktion..."
               required
@@ -62,7 +62,7 @@
             <ImageUpload v-model="editForm.photo"/>
           </div>
 
-          <div class="bg-white dark:bg-gray-800 mt-auto">
+          <div class="bg-white dark:bg-gray-800 mt-auto py-4">
             <div class="flex justify-between">
               <button
                 type="button"

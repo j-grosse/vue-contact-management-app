@@ -4,7 +4,7 @@
     @click="$emit('close')"
   >
     <div
-      class="bg-white dark:bg-gray-800 rounded-lg shadow-xl w-full max-w-md mx-auto overflow-hidden max-h-[90vh] overflow-y-auto"
+      class="modal-style"
       @click.stop
     >
       <div class="p-4">

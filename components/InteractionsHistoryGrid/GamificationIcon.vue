@@ -53,7 +53,7 @@ const gamificationIcon = computed(() => {
 } else if (count >= 1) {
     return {
       icon: 'fa-face-meh',
-      class: 'text-green-500 dark:text-green-400',
+      class: 'text-yellow-500 dark:text-yellow-400',
       title: 'Gut gemacht! 1-2 Interaktionen in den letzten 7 Tagen'
     };
   } else {

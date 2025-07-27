@@ -1,19 +1,9 @@
 <template>
   <div>
     <div class="mb-4 flex justify-between gap-2">
-      <div class="flex gap-3 p-1 py-2">
-        <InteractionsHistoryGrid />
-        <GamificationIcon />
-      </div>
       <!-- <SearchBar v-if="appStore.viewMode === 'cards'" v-model="searchQuery" />
       <div v-else></div> -->
-      <button
-        @click="openAddFriendModal"
-        class="bg-primary hover:bg-primary/80 text-white p-2 rounded-full flex items-center justify-center w-10 h-10"
-        title="Friend hinzufügen"
-      >
-        <FontAwesomeIcon icon="fa-plus"></FontAwesomeIcon>
-      </button>
+      
     </div>
 
     <!-- Tab -->
@@ -111,8 +101,6 @@ import { useAppStore } from '~/stores/app';
 // import SearchBar from '~/components/SearchBar.vue';
 import GridView from '~/components/GridView/index.vue';
 // import TableView from '~/components/TableView/index.vue';
-import InteractionsHistoryGrid from '~/components/InteractionsHistoryGrid';
-import GamificationIcon from '~/components/InteractionsHistoryGrid/GamificationIcon.vue';
 import EmptyState from '~/components/EmptyState.vue';
 import FriendModal from '~/components/Modals/FriendModal.vue';
 import DeleteModal from '~/components/Modals/DeleteModal.vue';

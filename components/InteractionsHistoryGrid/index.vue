@@ -1,5 +1,5 @@
 <template>
-  <div class="border-2 border-gray-300 dark:border-gray-600 rounded-lg p-3 bg-white dark:bg-gray-800 shadow-sm">
+  <div class="border-2 border-gray-300 dark:border-gray-600 rounded-lg p-3 bg-white dark:bg-gray-800 shadow-md">
     <!-- Grid container -->
     <div class="grid grid-cols-7 gap-1">
       <div
@@ -7,8 +7,10 @@
         :key="index"
         :class="[
           'w-3 h-3 rounded-sm',
+          // Add dark border for the last cell (most recent day)
+          index === 13 ? 'border-2 border-gray-500 dark:border-gray-400' : '',
           day.hasInteraction 
-            ? 'bg-green-300 dark:bg-green-500' 
+            ? 'bg-green-400 dark:bg-green-500' 
             : day.isWeekend
               ? 'bg-gray-400 dark:bg-gray-500'
               : 'bg-gray-200 dark:bg-gray-700'
@@ -22,7 +24,7 @@
       <div
         v-for="(weekday, index) in weekdayLabels"
         :key="index"
-        class="w-3 text-center"
+        class="w-3 h-3 text-center"
       >
         <span class="text-xs text-gray-500 dark:text-gray-400 font-medium">
           {{ weekday }}

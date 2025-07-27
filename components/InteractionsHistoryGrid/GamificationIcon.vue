@@ -1,16 +1,16 @@
 <template>
-  <div class="flex gap-2 items-center">
-    <FontAwesomeIcon 
-      :icon="gamificationIcon.icon" 
+  <div class="items-center">
+    <div 
       :class="[
-        'text-2xl transition-all duration-300',
+        'text-2xl transition-all duration-300 mt-3 pr-1 flex gap-2',
         gamificationIcon.class
       ]"
       :title="gamificationIcon.title"
-    />
-    <span class="text-xs text-gray-500 dark:text-gray-400 mt-1">
-      {{ interactionsLast7Days }}
-    </span>
+    >
+      <span>{{ gamificationIcon.emoji }}</span>
+      <span>{{ interactionsLast7Days }}</span>
+  </div>
+
   </div>
 </template>
 
@@ -40,25 +40,25 @@ const gamificationIcon = computed(() => {
   
   if (count >= 3) {
     return {
-      icon: 'fa-trophy',
-      class: 'text-yellow-500 dark:text-yellow-400',
+      emoji: '🏆',
+      class: 'text-green-500 dark:text-green-400',
       title: 'Ausgezeichnet! 3 oder mehr Interaktionen in den letzten 7 Tagen'
     };
   } else if (count >= 2) {
     return {
-      icon: 'fa-face-smile',
+      emoji: '😃',
       class: 'text-green-500 dark:text-green-400',
-      title: 'Gut gemacht! 1-2 Interaktionen in den letzten 7 Tagen'
+      title: 'Gut gemacht! 2 Interaktionen in den letzten 7 Tagen'
     };
-} else if (count >= 1) {
+  }else if (count >= 1) {
     return {
-      icon: 'fa-face-meh',
+      emoji: '🙂',
       class: 'text-yellow-500 dark:text-yellow-400',
-      title: 'Gut gemacht! 1-2 Interaktionen in den letzten 7 Tagen'
+      title: 'Gut gemacht! 1 Interaktion in den letzten 7 Tagen'
     };
   } else {
     return {
-      icon: 'fa-face-frown',
+      emoji: '🙁',
       class: 'text-red-500 dark:text-red-400',
       title: 'Keine Interaktionen in den letzten 7 Tagen - Zeit für Kontakt!'
     };

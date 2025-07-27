@@ -1,16 +1,9 @@
 <template>
   <div>
     <div class="mb-4 flex justify-between gap-2">
-      <div></div>
       <!-- <SearchBar v-if="appStore.viewMode === 'cards'" v-model="searchQuery" />
       <div v-else></div> -->
-      <button
-        @click="openAddFriendModal"
-        class="bg-primary hover:bg-primary/80 text-white p-2 rounded-full flex items-center justify-center w-10 h-10"
-        title="Friend hinzufügen"
-      >
-        <FontAwesomeIcon icon="fa-plus"></FontAwesomeIcon>
-      </button>
+      
     </div>
 
     <!-- Tab -->
@@ -43,7 +36,7 @@
 
         <!-- Interactions Tab active  -->
         <div v-show="activeTab === 'globalInteractions'">
-          <GlobalInteractions @edit="editFriend"
+          <InteractionsGlobal @edit="editFriend"
             />  
         </div>
 
@@ -52,16 +45,16 @@
             <Chatbot />
           </div>
 
-    <TableView
+    <!-- <TableView
       v-if="appStore.viewMode === 'table'"
       :upcoming-contacts="upcomingContacts"
       :recent-contacts="recentlyContactedFriends"
       @edit="editFriend"
       @contact="markAsContacted"
-    />
+    /> -->
 
     <GridView
-      v-else
+      v-if="appStore.viewMode === 'cards'"      
       :filtered-friends="filteredFriends"
       :recent-contacts="recentlyContactedFriends"
       @edit="editFriend"
@@ -107,13 +100,13 @@ import { useFriendsStore } from '~/stores/friends';
 import { useAppStore } from '~/stores/app';
 // import SearchBar from '~/components/SearchBar.vue';
 import GridView from '~/components/GridView/index.vue';
-import TableView from '~/components/TableView/index.vue';
+// import TableView from '~/components/TableView/index.vue';
 import EmptyState from '~/components/EmptyState.vue';
 import FriendModal from '~/components/Modals/FriendModal.vue';
 import DeleteModal from '~/components/Modals/DeleteModal.vue';
 import PreferencesModal from '~/components/Modals/PreferencesModal.vue';
 import Chatbot from '~/components/Chatbot';
-import GlobalInteractions from '~/components/GlobalInteractions';
+import InteractionsGlobal from '~/components/InteractionsGlobal';
 const friendStore = useFriendsStore();
 const appStore = useAppStore();
 import { useConfetti } from '~/composables/useConfetti';
